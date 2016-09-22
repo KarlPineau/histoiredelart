@@ -1,0 +1,15 @@
+{# src/DATA/PublicBundle/Resources/views/Artwork/view.html.twig #}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Enseignements</h3>
+    </div>
+    <ul class="list-group">
+        {% for teaching in teachings %}
+            <li class="list-group-item">
+                <div class="pull-right"><a href="{{path(data_data_entity_routing_service.getRoutingDeleteTeaching(), {'id': entity.id, 'slug_teaching': teaching.slug})}}" class="main-JS-delete" title="Supprimer l'enseignement"><span class="glyphicon glyphicon-remove"></span></a></div>
+                <a href="{{path('data_teaching_teaching_view', {'slug': teaching.slug})}}">{{teaching.name}}</a>
+            </li>
+        {% else %}<li class="list-group-item alert alert-warning">Pas d'enseignement ...</li>
+        {% endfor %}
+    </ul>
+</div>

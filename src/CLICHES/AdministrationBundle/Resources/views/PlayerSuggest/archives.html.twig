@@ -1,0 +1,127 @@
+{# src/HDA/AdministrationBundle/Resources/views/Suggest/index.html.twig #}
+ 
+{% extends "CLICHESAdministrationBundle::layout.html.twig" %}
+ 
+{% block title %}
+    Suggestions Archivées - Gestion des Suggestions - {{ parent() }}
+{% endblock %}
+
+{% block brandtitle %}
+    Suggestions archivées
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li><a href="{{ path('cliches_administration_playersuggest_index') }}">Suggestions</a></li>
+    <li class="active">Archives</li>
+{% endblock %}
+
+{% block h1 %}
+    Suggestions Archivées :
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <section id="content" class="col-lg-12">
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="alert alert-success">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+
+        <div class="col-md-12">
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th class="text-center">#</th>
+                    <th class="text-center">Oeuvre</th>
+                    <th class="text-center">Modification</th>
+                    <th class="text-center">User</th>
+                    <th class="text-center">Traitement</th>
+                </tr>
+                {% for playerSuggest in playerSuggests %}
+                    <tr>
+                        <td class="text-center">
+                            {{ loop.index }}<br />
+                            {% if playerSuggest.playerSuggestField != null %}<p><span class="label label-warning">Suggest</span></p>
+                            {% else %}<p><span class="label label-success">Error</span></p>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <strong><a href="{{ path(data_data_entity_routing_service.getRoutingView(), { 'id' : playerSuggest.view.entity.id} ) }}">{{ data_data_entity_service.getName(playerSuggest.view.entity) }}</a></strong>
+                            <div class="thumbnail">{{ render(controller('DATAImageBundle:Image:renderImage', {'view_id': playerSuggest.view.id, 'class': 'image-cliches-list thumbnail'})) }}</div>
+                        </td>
+                        <td>
+                            {% if playerSuggest.playerSuggestField != null %}
+                                <strong>{{ playerSuggest.playerSuggestField }} :</strong>
+                                <ul>
+                                    <li><em>Valeur actuelle :</em> <strong>{{ cliches_player_playersuggest_service.findCurrentValue(playerSuggest) }}</strong></li>
+                                    <li><em>Valeur proposée :</em> <strong>{{ playerSuggest.playerSuggestContent }}</strong></li>
+                                </ul>
+                            {% else %}<strong>{{ playerSuggest.playerSuggestContent }}</strong>
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            {% if playerSuggest.createUser != null %}{{ playerSuggest.createUser.username }}{% endif %}
+                            <small>{{ playerSuggest.ipCreateUser }}</small>
+                        </td>
+                        <td class="text-center">
+                            {% if playerSuggest.playerSuggestAccept == true %}<p class="text-success">Validé</p>
+                            {% else %}<p class="text-warning">Refusé</p>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5" style="text-align: center; font-weight: bold;">Aucune suggestion.</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <h2>Champs non pertinents :</h2>
+        <table class="table table-striped" style="width: 100%">
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">Nom</th>
+                <th class="text-center">Champs</th>
+                <th class="text-center">User</th>
+                <th class="text-center">Traitement</th>
+            </tr>
+            {% for unrelevantField in unrelevantFields %}
+                {% set entity = unrelevantField.entity %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>
+                        <strong><a href="{{ path(data_data_entity_routing_service.getRoutingView(), { 'id' : entity.id } ) }}" target="_blank">{{ data_data_entity_service.getName(entity) }}</a></strong>
+                        <div class="thumbnail">
+                            {% for view in data_data_entity_service.getViews(entity) %}
+                                {% if loop.index == 1 %}
+                                    {{ render(controller('DATAImageBundle:Image:renderImage', {'view_id': view.id, 'class': 'image-cliches-list fancybox'})) }}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <strong>{{ unrelevantField.field }}</strong>
+                    </td>
+                    <td class="text-center">
+                        {% if unrelevantField.createUser != null %} {{ unrelevantField.createUser.username }}<br />{% endif %}
+                        {% if unrelevantField.ipCreateUser != null %} {{ unrelevantField.ipCreateUser }}{% endif %}
+                    </td>
+                    <td class="text-center">
+                        <a href="{{path('cliches_administration_unrelevantfield_validate', {'unrelevantField_id': unrelevantField.id})}}" class="btn btn-success">Valider</a>
+                        <a href="{{path('cliches_administration_unrelevantfield_refuse', {'unrelevantField_id': unrelevantField.id})}}" class="btn btn-warning">Refuser</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5" class="text-center"><strong>Aucun signalement</strong></td>
+                </tr>
+            {% endfor %}
+        </table>
+    </section>
+</div>
+{% endblock %}
+    
+{% block javascripts_block %}
+{% endblock %}

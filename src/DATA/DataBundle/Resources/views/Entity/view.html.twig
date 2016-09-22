@@ -1,0 +1,83 @@
+{# src/DATA/DataBundle/Resources/views/Entity/view.html.twig #}
+ 
+{% extends "DATADataBundle::layout.html.twig" %}
+
+{% block title %}
+    {{ data_data_entity_service.getName(entity) }} - {{ parent() }}
+{% endblock %}
+    
+{% block h1 %}
+    {{ data_data_entity_service.getName(entity)|slice(0, 45) }}{% if data_data_entity_service.getName(entity)|length > 45 %}...{% endif %}
+{% endblock %}
+    
+{% block h1_extend %}
+    <input value="{{ entity.id }}" id="entityId" type="hidden" />
+    <input value="http://data.histoiredelart.fr/item/{{ entity.id }}" type="text" class="form-control input-sm" readonly style="display: inline; width: auto;" />
+    <div class="btn-group">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Actions <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-right">
+            <li><a href="{{ path(data_data_entity_routing_service.getRoutingEdit(entity), {'slug': data_data_entity_service.getSlug(entity)}) }}" title="Editer" ><span class="glyphicon glyphicon-edit"></span> Editer</a></li>
+            <li><a href="{{ path('data_data_entity_addview', {'id': entity.id}) }}" ><span class="glyphicon glyphicon-plus"></span> Nouvelle vue</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="{{ path('data_duplicate_duplicate_index', {'id': entity.id}) }}" >Check Doublons</a></li>
+            <li><a href="{{ path('data_data_entity_edit_sources', {'id': entity.id}) }}" >Sources</a></li>
+            <li><a href="{{ path('data_data_entity_edit_sameas', {'id': entity.id}) }}" >SameAs</a></li>
+            <li><a href="{{ path(data_data_entity_routing_service.getRoutingEditTeaching(), {'id': entity.id}) }}" >Enseignements</a></li>
+            {% if is_granted("ROLE_ADMIN") %}
+            <li role="separator" class="divider"></li>
+            <li><a href="{# path('tools_ner_creator_generateNameEntityRecognitionCreatorForEntity', {'id': entity.id}) #}#">Ner Auteurs</a></li>
+            <li class="bg-danger"><a class="main-JS-delete" href="{{ path(data_data_entity_routing_service.getRoutingSwitch(), {'id': entity.id}) }}" title="Switcher" ><span class="glyphicon glyphicon-random"></span> Echanger</a></li>
+            <li class="bg-danger"><a class="main-JS-delete" href="{{ path(data_data_entity_routing_service.getRoutingDelete(), {'id': entity.id}) }}" title="Supprimer" ><span class="glyphicon glyphicon-remove"></span> Supprimer</a></li>
+            {% endif %}
+        </ul>
+    </div>
+    <a href="{{ path('data_public_entity_view', {'id': entity.id}) }}" class="btn btn-default">Public</a>
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li><a href="{{path('data_data_entity_index')}}">Items</a></li>
+    <li class="active">{{ data_data_entity_service.getName(entity)|slice(0, 60) }}{% if data_data_entity_service.getName(entity)|length > 60 %}...{% endif %}</li>
+{% endblock %} 
+
+{% block content %}
+<div class="row">
+    <section id="content" class="col-lg-12">
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="alert alert-success">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+
+        <div class="row">
+            <div class="col-md-6">
+                {% include 'DATADataBundle:Entity:View/view-views.html.twig' %}
+                <hr />
+                {% include 'DATADataBundle:Entity:View/view-teaching.html.twig' %}
+
+                {% include 'DATADataBundle:Entity:View/view-sources.html.twig' %}
+
+                {% include 'DATADataBundle:Entity:View/view-sameas.html.twig' %}
+            </div>
+            <div class="col-md-6">
+                {% include 'DATADataBundle:Entity:View/view-informations.html.twig' %}
+                {% include 'DATADataBundle:Entity:View/view-maps.html.twig' %}
+                <hr />
+                {% include 'DATADataBundle:Entity:View/view-visits.html.twig' %}
+                <hr />
+                {% include 'DATADataBundle:Entity:View/view-pad.html.twig' %}
+                <hr />
+                {% include 'DATADataBundle:Entity:View/view-system-informations.html.twig' %}
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block javascript_sub %}
+    {% javascripts  '@DATADataBundle/Resources/public/js/view.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

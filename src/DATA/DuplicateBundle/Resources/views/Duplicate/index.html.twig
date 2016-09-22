@@ -1,0 +1,46 @@
+{% extends "DATADuplicateBundle::layout.html.twig" %}
+
+{% block title %}Détection - {{ parent() }}{% endblock %}
+
+{% block h1 %}Détection des doublons{% endblock %}
+
+{% block breadcrumb %}
+    {{parent()}}
+    <li class="active">Détection des doublons</li>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <section id="content" class="col-xs-12">
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    {# -- Cette boucle tient EN PARTIE compte des entités pures -- #}
+    {%  for array in return %}
+        {% set entity = array['entity'] %}
+        {% set duplicates = array['duplicates'] %}
+        {% set entityType = data_data_entity_service.getType(entity) %}
+
+        {% if loop.index > 1 %}<hr />{% endif %}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">{{ loop.index }} : <a href="{{ path(data_data_entity_routing_service.getRoutingView(), {'id': entity.id}) }}">{{ data_data_entity_service.getName(entity) }}</a></div>
+                    <div class="panel-body">
+                        {% include 'DATADuplicateBundle:Duplicate:index-reference.html.twig' %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                {% include 'DATADuplicateBundle:Duplicate:index-duplicates.html.twig' %}
+            </div>
+        </div>
+    {% else %}
+        <p class="alert alert-info">Pas de doublon détecté. <a href="{{ path('data_duplicate_duplicate_index') }}">Relancez la machine !</a></p>
+    {% endfor %}
+    </section>
+</div>
+{% endblock %}

@@ -1,0 +1,11 @@
+cas_user_remove_index:
+    path:     /suppression
+    defaults: { _controller: CASUserBundle:Remove:index }
+
+cas_user_userpreferences_mail:
+    path:     /preferences/mail
+    defaults: { _controller: CASUserBundle:UserPreferences:mail }
+
+cas_user_userpreferences_cliches:
+    path:     /preferences/cliches
+    defaults: { _controller: CASUserBundle:UserPreferences:cliches }

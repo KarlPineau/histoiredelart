@@ -1,0 +1,88 @@
+{% extends "CLICHESLayoutBundle::layout.html.twig" %}
+
+{% block h1 %}
+    Mes suggestions :
+{% endblock %}
+
+{% block brandtitle %}
+    Mes suggestions
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li><a href="{{ path('fos_user_profile_show') }}">Profil</a></li>
+    <li class="active">Mes suggestions</li>
+{% endblock %}
+
+
+{% block content %}
+    {% if  playerModifications is not empty %}
+        <table class="table table-striped table-bordered" style="width: 100%">
+            <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">Oeuvre</th>
+                <th class="text-center">Suggestion</th>
+                <th class="text-center">Traitement</th>
+            </tr>
+            {% for playerModification in playerModifications %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>
+                    <strong>
+                        {% if playerModification['type'] == 'playerSuggest' %}{{ data_data_entity_service.getName(null, playerModification['entity'].view) }}
+                        {% elseif playerModification['type'] == 'playerError' %}{{ data_data_entity_service.getName(null, playerModification['entity'].playerOeuvre.view) }}
+                        {% endif %}
+                    </strong>
+                    <div class="thumbnail">
+                        {% if playerModification['type'] == 'playerSuggest' %}{{ render(controller('DATAImageBundle:Image:renderImage', {'view_id': playerModification['entity'].view.id, 'class': 'image-cliches-list'})) }}
+                        {% elseif playerModification['type'] == 'playerError' %}{{ render(controller('DATAImageBundle:Image:renderImage', {'view_id': playerModification['entity'].playerOeuvre.view.id, 'class': 'image-cliches-list'})) }}
+                        {% endif %}
+                    </div>
+                </td>
+                <td>
+                    {% if playerModification['type'] == 'playerSuggest' %}
+                        <dl class="dl-horizontal">
+                            <dt>{{ playerModification['entity'].playerSuggestField }} :</dt>
+                            <dd>{{ playerModification['entity'].playerSuggestContent }}</dd>
+                        </dl>
+                    {% elseif playerModification['type'] == 'playerError' %}<p class="text-center"><strong>{{ playerModification['entity'].playerErrorComment }}</strong></p>
+                    {% endif %}
+                </td>
+                <td class="text-center">
+                    {% if playerModification['type'] == 'playerSuggest' %}
+                        {% if playerModification['entity'].playerSuggestTraitement == false %}
+                            <p><span class="label label-info">Pas encore été traitée</span></p>
+                        {% else %}
+                            {% if playerModification['entity'].playerSuggestAccept == true %}<p><span class="label label-success">Acceptée</span></p>
+                            {% else %}<p><span class="label label-warning">Refusée</span></p>
+                            {% endif %}
+                        {% endif %}
+                    {% elseif playerModification['type'] == 'playerError' %}
+                        {% if playerModification['entity'].playerErrorTraitement == false %}
+                            <p><span class="label label-info">Pas encore été traitée</span></p>
+                        {% else %}
+                            {% if playerModification['entity'].playerErrorAccept == true %}<p><span class="label label-success">Acceptée</span></p>
+                            {% else %}<p><span class="label label-warning">Refusée</span></p>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div class="well">
+            <h2>Suggestions rejettées :</h2>
+            <p>Si certaines de vos suggestions sont indiquées au statut "Refusée", c'est que nous avons jugé que les données présentes dans ces dernières n'étaient pas correctes. N'hésitez pas à nous contacter pour toute information supplémentaire.</p>
+        </div>
+    {% else %}
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <h3 class="panel-title">Oups ... Aucune suggestion ...</h3>
+            </div>
+            <div class="panel-body">
+                <p class="text-center"><strong>Oups ... Vous n'avez pour le moment fait aucune suggestion d'amélioration du contenu de Clichés!. Faire des suggestions de contenu nous aide fortement à améliorer la pertinence de Clichés!. N'hésitez pas à en faire à l'avenir.<br />
+                <a href="{{ path('cliches_home_home_index') }}">Lancez une partie</a> et revenez ensuite pour que vos suggestions s'affichent.</strong></p>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

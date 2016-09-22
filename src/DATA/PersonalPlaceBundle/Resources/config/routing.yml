@@ -1,0 +1,3 @@
+data_personalplace_favorite_index:
+    path:     /profile/favoris
+    defaults: { _controller: DATAPersonalPlaceBundle:Favorite:index }

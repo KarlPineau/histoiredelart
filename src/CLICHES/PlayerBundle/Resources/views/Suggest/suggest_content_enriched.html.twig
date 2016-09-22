@@ -1,0 +1,33 @@
+{# src/HDA/ClichesBundle/Resources/views/Oeuvre/register_content.html.twig #}
+
+<form class="form-horizontal" method="post" action="{{ path('cliches_player_result_result', {'playerProposal_id': playerProposal.id, 'validation': 'suggest'}) }}" role="form">
+    {% if not form.vars.valid %}
+    
+    <div class="alert alert-error">
+        <strong>Votre formulaire contient les erreurs suivantes :</strong>
+        {{ form_errors(form) }}
+        {{ form_errors(form.playerSuggestContent) }}
+        {{ form_errors(form.unrelevantField) }}
+    </div>
+    <br />
+    {% endif %}
+    
+    <div class="form-group" style="margin-bottom: 0px;">
+        {{ form_label(form.playerSuggestContent, "Une proposition de " ~ fieldSuggestLabel ~ " ?", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+        <div class="col-md-9">
+            {{ form_widget(form.playerSuggestContent, {'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-12 text-right">
+            {{ form_widget(form.unrelevantField) }} <small>{{ form_label(form.unrelevantField, "Le champ " ~ fieldSuggestLabel ~ " n'est pas pertinent pour cette oeuvre", {'label_attr': {'class': 'control-label'}}) }}</small>
+        </div>
+    </div>
+        
+    <hr/>
+    <div class="pull-right"><a href="{{ path('cliches_player_end_end', {'playerSession_id' : playerProposal.playerOeuvre.playerSession.id }) }}" class="btn btn-default" title="Terminer la partie" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-log-out"></span></a></div>
+    <div class="text-center"><input type="submit" class="btn btn-success" value="Continuer" title="Continuer vers le cliché suivant" /> <span class=""></span></div>
+
+    {{ form_rest(form) }}
+</form>

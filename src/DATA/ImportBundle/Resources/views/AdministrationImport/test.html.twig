@@ -1,0 +1,23 @@
+{# src/DATA/DataBundle/Resources/views/Artwork/index.html.twig #}
+ 
+{% extends "DATAImportBundle::layout.html.twig" %}
+
+{% block title %}
+    Administration Importation - {{ parent() }}
+{% endblock %} 
+    
+{% block h1 %}
+    Administration Importation :
+{% endblock %}
+
+{% block h1_extend %}
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li class="active">Administration</li>
+{% endblock %}    
+    
+{% block content %}
+    {{ dump(array) }}
+{% endblock %}

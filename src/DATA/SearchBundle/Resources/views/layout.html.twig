@@ -1,0 +1,30 @@
+{# src/DATA/DataBundle/Resources/views/layout.html.twig #}
+ 
+{% extends "DATALayoutBundle::layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }}
+{% endblock %}
+    
+{% block follow %}
+    <meta name="robots" content="noindex,nofollow" />
+{% endblock %} 
+
+{% block h1 %}{% endblock %}
+
+{% block h1_extend %}{% endblock %}
+
+{% block breadcrumb %}
+    {{parent()}}
+    {% if app.request.get('_route') != 'data_search_search_index' %}<li><a href="{{ path('data_search_search_index') }}">Recherche</a></li>
+    {% else %}<li class="active">Recherche</li>
+    {% endif %}
+{% endblock %}
+
+{% block content %}{% endblock %}
+
+{% block javascript %}
+    {{parent()}}
+    {% block javascript_sub %}
+    {% endblock %}
+{% endblock %}

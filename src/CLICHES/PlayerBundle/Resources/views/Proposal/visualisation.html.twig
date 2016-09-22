@@ -1,0 +1,48 @@
+{# src/HDA/PlayerBundle/Resources/views/Player/game.html.twig #}
+ 
+{% extends "CLICHESLayoutBundle::layout.html.twig" %}
+
+{% block title %}
+    Jeu - {{ parent() }}
+{% endblock %}
+
+{% block brandtitle %}
+    Clichés!
+{% endblock %}
+    
+{% block h1 %}
+    Questionnaire :
+{% endblock %}
+
+{% block brandhomelink %}{{ path('cliches_home_home_index', {'sid': playerSession.id}) }}{% endblock %}
+
+{% block content %}
+<input type="hidden" value="{{playerSession.id}}" id="session-id" />
+<div class="row">
+    <section id="content" class="col-lg-12">
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="alert alert-success">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+        <div id="countdown" class="text-center text-success"></div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="thumbnail">
+                    {{ render(controller('DATAImageBundle:Image:renderImage', {'view_id': view.id, 'class': 'image-cliches fancybox', 'session': playerSession.id })) }}
+                    <div class="caption text-muted text-right">
+                        <small><span class="glyphicon glyphicon-zoom-in"></span> Cliquer pour zoomer</small>
+                    </div>
+                </div>
+                <div class="text-right"><a href="{{ path('cliches_player_end_end', {'playerSession_id' : playerSession.id }) }}" class="btn btn-default" title="Terminer la partie" data-toggle="tooltip" data-placement="left" ><span class="glyphicon glyphicon-log-out"></span></a></div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+    
+{% block javascript_sub %}
+    {% javascripts  '@CLICHESPlayerBundle/Resources/public/js/visualisation.js'  %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

@@ -1,0 +1,10 @@
+services:
+    data_image.view:
+        class: DATA\ImageBundle\Service\view
+        arguments: [ "@doctrine.orm.entity_manager", "@security.context", "@data_data.entity", "@data_image.viewaction"]
+    data_image.viewaction:
+        class: DATA\ImageBundle\Service\viewAction
+        arguments: [ "@doctrine.orm.entity_manager", "@security.context", "@cliches_player.playeroeuvreaction"]
+    data_image.image:
+        class: DATA\ImageBundle\Service\image
+        arguments: [ "@doctrine.orm.entity_manager", "@security.context", "@data_data.entity"]

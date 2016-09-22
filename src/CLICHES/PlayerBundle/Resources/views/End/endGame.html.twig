@@ -1,0 +1,71 @@
+{# src/HDA/PlayerBundle/Resources/views/Player/endGame.html.twig #}
+ 
+{% extends "CLICHESLayoutBundle::layout.html.twig" %}
+
+{% block title %}
+    Félicitations ! - Partie terminée - {{ parent() }}
+{% endblock %}
+
+{% block brandtitle %}
+    Partie terminée !
+{% endblock %}
+    
+{% block h1 %}
+    Partie terminée :
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <section id="content" class="col-lg-12">
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="alert alert-success">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+
+        <div class="pull-right">
+            <a href="{{path('cliches_home_home_index')}}" class="btn btn-primary btn-lg" title="Retourner à l'accueil" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-log-out"></span></a>
+        </div>
+        <h2>Félicitations, vous venez d'achever votre partie !</h2>
+        <br />
+        <div class="row">
+            <div class="col-md-6">
+                {% for playerOeuvreCollection in playerOeuvres %}
+                    {% if loop.index is not even %}
+                        {% set playerOeuvre = playerOeuvreCollection['playerOeuvre'] %}
+                        {% set playerProposal = playerOeuvreCollection['playerProposal'] %}
+                        {% set entity = data_data_entity_service.getByView(playerOeuvre.view) %}
+
+                        {% include 'CLICHESPlayerBundle:End:endGame-templateEntity.html.twig' %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="col-md-6">
+                {% for playerOeuvreCollection in playerOeuvres %}
+                    {% if loop.index is even %}
+                        {% set playerOeuvre = playerOeuvreCollection['playerOeuvre'] %}
+                        {% set playerProposal = playerOeuvreCollection['playerProposal'] %}
+                        {% set entity = data_data_entity_service.getByView(playerOeuvre.view) %}
+
+                        {% include 'CLICHESPlayerBundle:End:endGame-templateEntity.html.twig' %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            <div class="alert alert-info text-center">
+                <strong><a href="{{ path('fos_user_registration_register') }}">Inscris-toi</a> pour retrouver l'historique de toutes tes parties !</strong><br />
+                <small>Déjà inscrit(e) ? N'oubliez pas de <a href="{{ path('fos_user_security_login') }}">te connecter</a>.</small>
+            </div>
+        {% endif %}
+
+        <div class="text-right">
+            <a href="{{path('cliches_home_home_index')}}" class="btn btn-primary btn-lg" title="Retourner à l'accueil" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-log-out"></span></a>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block javascript_sub %}
+{% endblock %}

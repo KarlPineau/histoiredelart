@@ -1,0 +1,4 @@
+services:
+    cliches_administration.modifications:
+        class: CLICHES\AdministrationBundle\Service\modifications
+        arguments: [ "@doctrine.orm.entity_manager", "@security.context"]

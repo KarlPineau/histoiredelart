@@ -1,0 +1,19 @@
+cliches_home_home_index:
+    path:     /
+    defaults: { _controller: CLICHESHomeBundle:Home:index }
+
+cliches_home_home_load:
+     path:     /accueil/partie
+     defaults: { _controller: CLICHESHomeBundle:Home:load }
+
+cliches_home_home_version:
+     path:     /version
+     defaults: { _controller: CLICHESHomeBundle:Home:version }
+
+cliches_home_home_discover:
+     path:     /découvrir
+     defaults: { _controller: CLICHESHomeBundle:Home:discover }
+
+cliches_home_home_cgu:
+     path:     /cgu
+     defaults: { _controller: CLICHESHomeBundle:Home:cgu }

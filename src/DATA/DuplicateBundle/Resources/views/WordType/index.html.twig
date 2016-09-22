@@ -1,0 +1,33 @@
+{# src/DATA/DuplicateBundle/Resources/views/WordType/index.html.twig #}
+ 
+{% extends "DATADuplicateBundle::layout.html.twig" %}
+
+{% block title %}
+    Accueil - {{ parent() }}
+{% endblock %} 
+    
+{% block h1 %}
+    Gestion des Expressions :
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li class="active">Expressions</li>
+{% endblock %}    
+    
+{% block content %}
+<div class="row">
+    <section class="col-md-12">
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="alert col-md-12 alert-success">
+                {{ flashMessage }}
+            </div>
+            <br />
+        {% endfor %}
+
+        <div class="well">
+            {% include "DATADuplicateBundle:WordType:edit_content.html.twig" %}
+        </div>
+    </section>
+</div>
+{% endblock %}

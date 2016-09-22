@@ -1,0 +1,11 @@
+<div class="panel-heading text-center">
+    <div class="pull-left" style="padding: 10px;">
+        {% if relatedViews|length > 1 and loop.first == false %}<a href="{{ path('data_data_entity_view_reorder', {'view_id': view.id, 'currentOrder': view.orderView, 'way': 'up'}) }}" title="Placer au-dessus"><span class="glyphicon glyphicon-chevron-up"></span></a><br>{% endif %}
+        <strong class="">#{{ loop.index }}</strong>
+        {% if relatedViews|length > 1 and loop.last == false  %}<br /><a href="{{ path('data_data_entity_view_reorder', {'view_id': view.id, 'currentOrder': view.orderView, 'way': 'down'}) }}" title="Placer au-dessous"><span class="glyphicon glyphicon-chevron-down"></span></a>{% endif %}
+    </div>
+    <div class="">
+        {{ render(controller('DATAImageBundle:Image:renderImage', {'view_id': view.id, 'class': 'image-cliches-list fancybox'})) }}
+        <div class="caption"><small>&copy; {{ data_image_image_service.getImageForView(view).copyright }}</small></div>
+    </div>
+</div>

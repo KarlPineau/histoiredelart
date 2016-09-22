@@ -1,0 +1,58 @@
+{% extends "TOOLSAdministrationBundle::layout.html.twig" %}
+
+{% block h1 %}Accueil - Administration{% endblock %}
+
+{% block content %}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    <strong>{{ dates|length }}</strong>
+    <div class="row">
+        <div class="col-md-2">
+            <ul>
+                {% for date in dates if date['type'] == 'autre' %}
+                    <li>{{ date['content'] }} <span class="glyphicon glyphicon-arrow-right"></span> {{ date['type'] }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-md-2">
+            <ul>
+                {% for date in dates if date['type'] == 'vers' %}
+                    <li>{{ date['content'] }} <span class="glyphicon glyphicon-arrow-right"></span> {{ date['type'] }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="col-md-2">
+            <ul>
+                {% for date in dates if date['type'] == 'interval' %}
+                    <li>{{ date['content'] }} <span class="glyphicon glyphicon-arrow-right"></span> {{ date['type'] }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-md-2">
+            <ul>
+                {% for date in dates if date['type'] == 'date pure' %}
+                    <li>{{ date['content'] }} <span class="glyphicon glyphicon-arrow-right"></span> {{ date['type'] }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-md-2">
+            <ul>
+                {% for date in dates if date['type'] == 'siecle' %}
+                    <li>{{ date['content'] }} <span class="glyphicon glyphicon-arrow-right"></span> {{ date['type'] }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-md-2">
+            <ul>
+                {% for date in dates if date['type'] == 'dynastie' %}
+                    <li>{{ date['content'] }} <span class="glyphicon glyphicon-arrow-right"></span> {{ date['type'] }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

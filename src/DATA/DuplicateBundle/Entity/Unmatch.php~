@@ -1,0 +1,349 @@
+<?php
+
+namespace DATA\DuplicateBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+
+
+/**
+ * Unmatch
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="DATA\DuplicateBundle\Entity\UnmatchRepository")
+ */
+class Unmatch
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="DATA\DataBundle\Entity\Entity")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $entityLeft;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="DATA\DataBundle\Entity\Entity")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $entityRight;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="DATA\DataBundle\Entity\Artwork")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $artworkLeft;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="DATA\DataBundle\Entity\Artwork")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $artworkRight;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="DATA\DataBundle\Entity\Building")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $buildingLeft;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="DATA\DataBundle\Entity\Building")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $buildingRight;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="unmatch", type="boolean", nullable=true)
+     */
+    private $unmatch;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="KP\UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $createUser;
+
+    /**
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="createDate", type="datetime", nullable=false)
+     */
+    protected $createDate;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="KP\UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $updateUser;
+
+    /**
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="updateDate", type="datetime", nullable=true)
+     */
+    protected $updateDate;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="updateComment", type="string", length=255, nullable=true)
+     * @Assert\Length(
+     *      max = "255",
+     *      maxMessage = "Le commentaire ne doit pas dépasser {{ limit }} caractères."
+     * )
+     */
+    protected $updateComment;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set unmatch
+     *
+     * @param boolean $unmatch
+     * @return Unmatch
+     */
+    public function setUnmatch($unmatch)
+    {
+        $this->unmatch = $unmatch;
+
+        return $this;
+    }
+
+    /**
+     * Get unmatch
+     *
+     * @return boolean 
+     */
+    public function getUnmatch()
+    {
+        return $this->unmatch;
+    }
+
+    /**
+     * Set artworkLeft
+     *
+     * @param \DATA\DataBundle\Entity\Artwork $artworkLeft
+     * @return Unmatch
+     */
+    public function setArtworkLeft(\DATA\DataBundle\Entity\Artwork $artworkLeft = null)
+    {
+        $this->artworkLeft = $artworkLeft;
+
+        return $this;
+    }
+
+    /**
+     * Get artworkLeft
+     *
+     * @return \DATA\DataBundle\Entity\Artwork 
+     */
+    public function getArtworkLeft()
+    {
+        return $this->artworkLeft;
+    }
+
+    /**
+     * Set artworkRight
+     *
+     * @param \DATA\DataBundle\Entity\Artwork $artworkRight
+     * @return Unmatch
+     */
+    public function setArtworkRight(\DATA\DataBundle\Entity\Artwork $artworkRight = null)
+    {
+        $this->artworkRight = $artworkRight;
+
+        return $this;
+    }
+
+    /**
+     * Get artworkRight
+     *
+     * @return \DATA\DataBundle\Entity\Artwork 
+     */
+    public function getArtworkRight()
+    {
+        return $this->artworkRight;
+    }
+
+    /**
+     * Set buildingLeft
+     *
+     * @param \DATA\DataBundle\Entity\Building $buildingLeft
+     * @return Unmatch
+     */
+    public function setBuildingLeft(\DATA\DataBundle\Entity\Building $buildingLeft = null)
+    {
+        $this->buildingLeft = $buildingLeft;
+
+        return $this;
+    }
+
+    /**
+     * Get buildingLeft
+     *
+     * @return \DATA\DataBundle\Entity\Building 
+     */
+    public function getBuildingLeft()
+    {
+        return $this->buildingLeft;
+    }
+
+    /**
+     * Set buildingRight
+     *
+     * @param \DATA\DataBundle\Entity\Building $buildingRight
+     * @return Unmatch
+     */
+    public function setBuildingRight(\DATA\DataBundle\Entity\Building $buildingRight = null)
+    {
+        $this->buildingRight = $buildingRight;
+
+        return $this;
+    }
+
+    /**
+     * Get buildingRight
+     *
+     * @return \DATA\DataBundle\Entity\Building 
+     */
+    public function getBuildingRight()
+    {
+        return $this->buildingRight;
+    }
+
+    /**
+     * Set createDate
+     *
+     * @param \DateTime $createDate
+     * @return Unmatch
+     */
+    public function setCreateDate($createDate)
+    {
+        $this->createDate = $createDate;
+
+        return $this;
+    }
+
+    /**
+     * Get createDate
+     *
+     * @return \DateTime 
+     */
+    public function getCreateDate()
+    {
+        return $this->createDate;
+    }
+
+    /**
+     * Set updateDate
+     *
+     * @param \DateTime $updateDate
+     * @return Unmatch
+     */
+    public function setUpdateDate($updateDate)
+    {
+        $this->updateDate = $updateDate;
+
+        return $this;
+    }
+
+    /**
+     * Get updateDate
+     *
+     * @return \DateTime 
+     */
+    public function getUpdateDate()
+    {
+        return $this->updateDate;
+    }
+
+    /**
+     * Set updateComment
+     *
+     * @param string $updateComment
+     * @return Unmatch
+     */
+    public function setUpdateComment($updateComment)
+    {
+        $this->updateComment = $updateComment;
+
+        return $this;
+    }
+
+    /**
+     * Get updateComment
+     *
+     * @return string 
+     */
+    public function getUpdateComment()
+    {
+        return $this->updateComment;
+    }
+
+    /**
+     * Set createUser
+     *
+     * @param \KP\UserBundle\Entity\User $createUser
+     * @return Unmatch
+     */
+    public function setCreateUser(\KP\UserBundle\Entity\User $createUser = null)
+    {
+        $this->createUser = $createUser;
+
+        return $this;
+    }
+
+    /**
+     * Get createUser
+     *
+     * @return \KP\UserBundle\Entity\User 
+     */
+    public function getCreateUser()
+    {
+        return $this->createUser;
+    }
+
+    /**
+     * Set updateUser
+     *
+     * @param \KP\UserBundle\Entity\User $updateUser
+     * @return Unmatch
+     */
+    public function setUpdateUser(\KP\UserBundle\Entity\User $updateUser = null)
+    {
+        $this->updateUser = $updateUser;
+
+        return $this;
+    }
+
+    /**
+     * Get updateUser
+     *
+     * @return \KP\UserBundle\Entity\User 
+     */
+    public function getUpdateUser()
+    {
+        return $this->updateUser;
+    }
+}

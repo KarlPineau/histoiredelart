@@ -1,0 +1,72 @@
+{% extends "DATAAdministrationBundle::layout.html.twig" %}
+
+{% block h1 %}Accueil - Administration{% endblock %}
+
+{% block content %}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    <div class="well">
+        {{ render(controller('DATASearchBundle:Search:search', {'access': 'true', 'type': ''})) }}
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="well">
+                <h2>Entities</h2>
+
+                <ul>
+                    <li><a href="{{path('data_data_entity_index')}}">Liste des oeuvres</a></li>
+                </ul>
+                <ul>
+                    <li><a href="{{path('data_search_searchindex_buildindex')}}">Construction de l'index de recherche</a>
+                    <li><a href="{{ path('data_public_sitemap_sitemap') }}">Sitemap</a></li>
+                </ul>
+                <ul>
+                    <li><a href="{{path('data_administration_semanticEnrichment_generate')}}">Enrichissement sémantique</a>
+                </ul>
+                <hr />
+                <h3>Stats :</h3>
+                <a href="{{ path('data_administration_visualization_index') }}">Visualisation Globale</a><br />
+                Date Artwork : {{ data_administration_statistics_service.getStats('DATADataBundle:Artwork', 'datation')|round(2) }}% de champ vide<br />
+                Date Building : {{ data_administration_statistics_service.getStats('DATADataBundle:Building', 'datation')|round(2) }}% de champ vide
+            </div>
+            <div class="well">
+                <h2>Enseignements</h2>
+                <ul>
+                    <li><a href="{{path('data_teaching_university_index')}}">Universités</a></li>
+                    <li><a href="{{path('data_teaching_teaching_index')}}">Enseignements</a></li>
+                    <li><a href="{{path('data_administration_teachingtest_index')}}">Enseignements - Par oeuvre</a></li>
+                    <li><a href="{{path('data_administration_teachingtest_lastvotes')}}">Enseignements - Derniers votes</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="well">
+                <h2>Public</h2>
+                <ul>
+                    <li><a href="{{ path('data_administration_public_index') }}">Accueil Admin <- A voir si on garde ?</a></li>
+                    <li><a href="{{ path('data_administration_reporting_index') }}">Signalements <label class="label label-info">{{ reportings }}</label></a></li>
+                </ul>
+            </div>
+            <div class="well">
+                <h2>Importation</h2>
+                <ul>
+                    <li><a href="{{path('data_import_import_index')}}">Importation</a></li>
+                    <li><a href="{{path('data_import_administrationimport_index')}}">Administration <label class="label label-info">{{ import }}</label></a></li>
+                </ul>
+            </div>
+            <div class="well">
+                <h2>Doublons</h2>
+                <ul>
+                    <li><a href="{{ path('data_duplicate_duplicate_index') }}">Détection</a></li>
+                    <li><a href="{{ path('data_duplicate_type_index') }}">Types de mot</a></li>
+                    <li><a href="{{ path('data_duplicate_wordtype_index') }}">Mots</a> - <a href="{{ path('data_duplicate_wordtype_list') }}">Liste des Mots</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

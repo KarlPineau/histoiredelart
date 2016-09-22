@@ -1,0 +1,4 @@
+services:
+#    cas_home.example:
+#        class: CAS\HomeBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

@@ -1,0 +1,61 @@
+#Teaching :
+data_teaching_teaching_index:
+    path:     /enseignement/accueil
+    defaults: { _controller: DATATeachingBundle:Teaching:index }
+    
+data_teaching_teaching_register:
+    path:     /enseignement/nouveau
+    defaults: { _controller: DATATeachingBundle:Teaching:register }
+    
+data_teaching_teaching_view:
+    path:     /enseignement/voir/{slug}
+    defaults: { _controller: DATATeachingBundle:Teaching:view }
+    requirements:
+        slug: \S{0,255}
+    
+data_teaching_teaching_edit:
+    path:     /enseignement/editer/{slug}
+    defaults: { _controller: DATATeachingBundle:Teaching:edit }
+    requirements:
+        slug: \S{0,255}
+    
+data_teaching_teaching_delete:
+    path:     /enseignement/supprimer/{slug}
+    defaults: { _controller: DATATeachingBundle:Teaching:delete }
+    requirements:
+        slug: \S{0,255}
+    
+data_teaching_teaching_list:
+    path:     /enseignement/liste
+    defaults: { _controller: DATATeachingBundle:Teaching:list }
+
+#University :
+data_teaching_university_index:
+    path:     /universite/accueil
+    defaults: { _controller: DATATeachingBundle:University:index }
+
+data_teaching_university_register:
+    path:     /universite/nouveau
+    defaults: { _controller: DATATeachingBundle:University:register }
+
+data_teaching_university_view:
+    path:     /universite/voir/{slug}
+    defaults: { _controller: DATATeachingBundle:University:view }
+    requirements:
+        slug: \S{0,255}
+
+data_teaching_university_edit:
+    path:     /universite/editer/{slug}
+    defaults: { _controller: DATATeachingBundle:University:edit }
+    requirements:
+        slug: \S{0,255}
+
+data_teaching_university_delete:
+    path:     /universite/supprimer/{slug}
+    defaults: { _controller: DATATeachingBundle:University:delete }
+    requirements:
+        slug: \S{0,255}
+
+data_teaching_university_list:
+    path:     /universite/liste
+    defaults: { _controller: DATATeachingBundle:University:list }

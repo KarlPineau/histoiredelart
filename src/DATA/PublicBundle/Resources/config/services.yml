@@ -1,0 +1,4 @@
+services:
+    data_public.reporting:
+        class: DATA\PublicBundle\Service\reporting
+        arguments: [ "@doctrine.orm.entity_manager", "@security.context"]

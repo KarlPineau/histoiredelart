@@ -1,0 +1,51 @@
+{# src/DATA/DataBundle/Resources/views/Artwork/index.html.twig #}
+ 
+{% extends "DATAImportBundle::layout.html.twig" %}
+
+{% block title %}
+    Archives - Importation - {{ parent() }}
+{% endblock %} 
+    
+{% block h1 %}
+    Archives
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li><a href="{{ path('data_import_administrationimport_index') }}">Administration</a></li>
+    <li class="active">Archives</li>
+{% endblock %}    
+    
+{% block content %}
+<div class="row">
+    <section class="col-md-12">
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="alert col-md-12 alert-success">
+                {{ flashMessage }}
+            </div>
+            <br />
+        {% endfor %}
+
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <th>#</th>
+                        <th>Session</th>
+                    </tr>
+                    {% for entityImportSession in entitiesImportSession %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{% if entityImportSession.createUser != null %}{{ entityImportSession.createUser.username }}{% endif %}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="2">Oups ... Pas de données ...</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+cliches_personalplace_stats_stats:
+    path:     /statistiques
+    defaults: { _controller: CLICHESPersonalPlaceBundle:Stats:stats }
+
+cliches_personalplace_suggest_index:
+    path:     /suggestions
+    defaults: { _controller: CLICHESPersonalPlaceBundle:Suggest:index }
+
+cliches_personalplace_privateplayer_index:
+    path:     /parties-privées
+    defaults: { _controller: CLICHESPersonalPlaceBundle:PrivatePlayer:index }
+
+cliches_personalplace_privateplayer_register:
+    path:     /parties-privées/nouveau
+    defaults: { _controller: CLICHESPersonalPlaceBundle:PrivatePlayer:register }
+
+cliches_personalplace_privateplayer_end:
+    path:     /parties-privées/fin/{id}
+    defaults: { _controller: CLICHESPersonalPlaceBundle:PrivatePlayer:end }
+    requirements:
+        id: \d+

@@ -1,0 +1,69 @@
+<form class="form-horizontal" method="post" {{ form_enctype(form) }} role="form">
+    {% if not form.vars.valid %}
+        <div class="alert alert-error">
+            <strong>Votre formulaire contient les erreurs suivantes :</strong>
+            {{ form_errors(form) }}
+            {{ form_errors(form.copyright) }}
+            {{ form_errors(form.view.isPlan) }}
+            {{ form_errors(form.view.vue) }}
+            {{ form_errors(form.view.title) }}
+            {{ form_errors(form.view.iconography) }}
+            {{ form_errors(form.view.location) }}
+            {{ form_errors(form.fileImage) }}
+        </div>
+        <br />
+    {% endif %}
+
+    <fieldset>
+        <legend>Vue :</legend>
+        <div class="form-group">
+            {{ form_label(form.view.isPlan, "Est-ce un plan ?", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+            <div class="col-md-9">
+                {{ form_widget(form.view.isPlan, {'attr': {'placeholder': '', 'class': ''}}) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.view.vue, "Vue :", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+            <div class="col-md-9">
+                {{ form_widget(form.view.vue, {'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.view.title, "Titre :", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+            <div class="col-md-9">
+                {{ form_widget(form.view.title, {'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.view.iconography, "Sujet iconographique :", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+            <div class="col-md-9">
+                {{ form_widget(form.view.iconography, {'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.view.location, "Localisation :", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+            <div class="col-md-9">
+                {{ form_widget(form.view.location, {'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+            </div>
+        </div>
+
+        <legend>Image :</legend>
+        <div class="form-group">
+            {{ form_label(form.copyright, "Copyright :", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+            <div class="col-md-9">
+                {{ form_widget(form.copyright, {'attr': {'placeholder': '', 'value':'Inconnu', 'class': 'form-control'}}) }}
+            </div>
+        </div>
+
+        <legend>Fichier :</legend>
+        <div class="form-group">
+            {{ form_label(form.fileImage, "Sélectionnez un fichier :", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+            <div class="col-md-9">
+                {{ form_widget(form.fileImage, {'attr': {'placeholder': '', 'class': ''}}) }}
+            </div>
+        </div>
+    </fieldset>
+    <br />
+    {{ form_rest(form) }}
+    <div class="text-center"><input type="submit" class="btn btn-default" /></div>
+</form>

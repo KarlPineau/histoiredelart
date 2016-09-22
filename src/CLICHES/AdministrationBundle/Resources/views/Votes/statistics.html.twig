@@ -1,0 +1,243 @@
+{# src/HDA/AdministrationBundle/Resources/views/Index/index.html.twig #}
+ 
+{% extends "CLICHESAdministrationBundle::layout.html.twig" %}
+ 
+{% block title %}
+    Statistiques - Votes - {{ parent() }}
+{% endblock %}
+
+{% block brandtitle %}
+    Statistiques
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li class="active">Votes</li>
+    <li class="active">Statistiques</li>
+{% endblock %}
+
+{% block h1 %}
+    Statistiques
+{% endblock %}
+
+{% block h1_extend %}
+    <a href="{{ path('cliches_administration_votes_normalizeVotes') }}" class="btn btn-danger">NormalizeVotes</a>
+    <a class="btn btn-info disabled">Total: {{ countTeachingTestVotes }}</a>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            {% for flashMessage in app.session.flashbag.get('notice') %}
+                <div class="alert alert-success">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <canvas id="votesInTime" width="400" height="200"></canvas>
+            <div class="well">
+                <dl class="dl-horizontal"><dt>Total votes</dt><dd>{{ countTeachingTestVotes }}</dd></dl>
+                <dl class="dl-horizontal"><dt>Votes Oui</dt><dd>{{ countTeachingTestVotesYes }} ({{ ((countTeachingTestVotesYes*100)/countTeachingTestVotes)|round(2, 'floor') }}%)</dd></dl>
+                <dl class="dl-horizontal"><dt>Votes Non</dt><dd>{{ countTeachingTestVotesNo }} ({{ ((countTeachingTestVotesNo*100)/countTeachingTestVotes)|round(2, 'floor') }}%)</dd></dl>
+                <dl class="dl-horizontal"><dt>En moyenne</dt><dd>{{ averageVoteView|round(2, 'floor') }} votes / vue</dd></dl>
+                <dl class="dl-horizontal"><dt>En moyenne</dt><dd>{{ averageVoteSession|round(2, 'floor') }} votes / session Clichés</dd></dl>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <p class="alert alert-info">
+                Objectif: essayer de comprendre ce qui fait voter les gens
+            </p>
+            <div class="panel-group" id="last20Votes" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="last20VotesHeadingOne">
+                        <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#last20Votes" href="#last20VotesCollapseOne" aria-expanded="false" aria-controls="last20VotesCollapseOne">
+                                20 derniers votes
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="last20VotesCollapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="last20VotesHeadingOne">
+                        <div class="panel-body">
+                            <table class="table table-bordered table-striped">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Relation</th>
+                                    <th>Vote</th>
+                                    <th>User</th>
+                                </tr>
+                                {% for teachingTestVote in teachingTestVotes %}
+                                    {% set entity = data_data_entity_service.getByView(teachingTestVote.teachingTest.view) %}
+                                    <tr>
+                                        <td>{{ loop.index }}</td>
+                                        <td>
+                                            <a href="{{ path('data_teaching_teaching_view', {'slug': teachingTestVote.teachingTest.teaching.slug}) }}" target="_blank">{{ teachingTestVote.teachingTest.teaching.name }}</a>
+                                            <span class="glyphicon glyphicon-resize-horizontal"></span>
+                                            <a href="{{ path(data_data_entity_routing_service.getRoutingView(), {'id': entity.id}) }}" target="_blank">{{ data_data_entity_service.getName(entity) }}</a>
+                                        </td>
+                                        <td>
+                                            {% if teachingTestVote.vote == true %}<span class="text-success">Oui</span>
+                                            {% elseif teachingTestVote.vote == false %}<span class="text-warning">Non</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if teachingTestVote.createUser != null %}<a href="{{ path('cas_administration_user_view', {'id': teachingTestVote.createUser.id}) }}" target="_blank">{{ teachingTestVote.createUser.email }}</a>
+                                            {% else %}Inconnu
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="4">Aucun vote à l'heure actuelle</td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-group" id="teachingRate" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="teachingRateHeadingOne">
+                        <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#teachingRate" href="#teachingRateCollapseOne" aria-expanded="false" aria-controls="teachingRateCollapseOne">
+                                Classement des votes par matière:
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="teachingRateCollapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="teachingRateHeadingOne">
+                        <div class="list-group">
+                            {% for teachingRate in arrayTeachingRate %}
+                                <div class="list-group-item">{{ teachingRate['numberVote'] }} votes : <a href="{{ path('data_teaching_teaching_view', {'slug': teachingRate['teaching'].slug}) }}" target="_blank">{{ teachingRate['teaching'].name }}</a></div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-group" id="top10" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="top10HeadingOne">
+                        <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#top10" href="#top10CollapseOne" aria-expanded="false" aria-controls="top10CollapseOne">
+                                Top 20 des Vues les plus votées:
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="top10CollapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="top10HeadingOne">
+                        <div class="list-group">
+                            {% for teachingTest_id, number in top20 %}
+                                {% if loop.index <= 20 %}
+                                    <div class="list-group-item">{{ number }} votes : <a href="{{ path('data_data_entity_view', {'id': data_data_entity_service.getByView(data_teaching_teachingtest_service.getById(teachingTest_id).getView()).id}) }}" target="_blank">{{ data_data_entity_service.getName(data_data_entity_service.getByView(data_teaching_teachingtest_service.getById(teachingTest_id).getView())) }}</a></div>
+                                {% endif %}
+                            {% else %}
+                                <div class="list-group-item">Aucun élément</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-group" id="potentialErrors" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="potentialErrorsHeadingOne">
+                        <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#potentialErrors" href="#potentialErrorsCollapseOne" aria-expanded="false" aria-controls="potentialErrorsCollapseOne">
+                                Potentielles erreurs :
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="potentialErrorsCollapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="potentialErrorsHeadingOne">
+                        <div class="list-group">
+                            <div class="list-group-item-info">
+                                <p>Regroupe les vues pour lesquelles plus de 1 teachingTest existe. Peut être le résultat de 2 situations : plusieurs matières traitent une vue, plusieurs teachingTest traitent la même vue et la même matière.</p>
+                            </div>
+                            {% for view in potentialErrors %}
+                                <div class="list-group-item"><a href="{{ path('data_data_entity_view', {'id': data_data_entity_service.getByView(view).id}) }}" target="_blank">{{ data_data_entity_service.getName(data_data_entity_service.getByView(view)) }}</a></div>
+                            {% else %}
+                                <div class="list-group-item">Aucun élément</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript_sub %}
+    {{ parent() }}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.3/Chart.bundle.js"></script>
+    <script>
+        var sessionInTime = $("#votesInTime");
+        var labels = [];
+        function daysInMonth(month, year) {
+            return new Date(year, month, 0).getDate();
+        }
+        var today = new Date();
+        var yyyy = today.getFullYear();
+        var month = today.getMonth()+1;
+        var lastDay = today.getDate()-15;
+
+        for(var i = 0 ; i <= 15 ; i++) {
+            var current = lastDay+i;
+            if(current > 0) {
+                labels.push(current + '/' + month);
+            } else {
+                labels.push(daysInMonth(month-1, yyyy)-i);
+            }
+        }
+
+        $.ajax({
+            dataType: "json",
+            url: Routing.generate('cliches_administration_votes_statistics_intime'),
+            success: function(data){
+                var sessionInTimeChart = new Chart(sessionInTime, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: "Votes par jour",
+                                fill: false,
+                                lineTension: 0.1,
+                                backgroundColor: "rgba(75,192,192,0.4)",
+                                borderColor: "rgba(75,192,192,1)",
+                                borderCapStyle: 'butt',
+                                borderDash: [],
+                                borderDashOffset: 0.0,
+                                borderJoinStyle: 'miter',
+                                pointBorderColor: "rgba(75,192,192,1)",
+                                pointBackgroundColor: "#fff",
+                                pointBorderWidth: 1,
+                                pointHoverRadius: 5,
+                                pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                                pointHoverBorderColor: "rgba(220,220,220,1)",
+                                pointHoverBorderWidth: 2,
+                                pointRadius: 1,
+                                pointHitRadius: 10,
+                                data: data,
+                            }
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero:true
+                                }
+                            }]
+                        }
+                    }
+                });
+            },
+            error: function(error){
+                console.log(dump(error));
+            }
+        });
+    </script>
+{% endblock %}

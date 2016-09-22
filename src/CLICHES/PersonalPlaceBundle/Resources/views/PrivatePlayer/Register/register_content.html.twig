@@ -1,0 +1,31 @@
+{# src/DATA/DataBundle/Resources/views/Artwork/register_content.html.twig #}
+
+<form class="form-horizontal" method="post" {{ form_enctype(form) }} role="form">
+    {% if not form.vars.valid %}
+    <div class="alert alert-error">
+        <strong>Votre formulaire contient les erreurs suivantes :</strong>
+        {{ form_errors(form) }}
+        {{ form_errors(form.title) }}
+        {{ form_errors(form.simpleSession) }}
+    </div>
+    <br />
+    {% endif %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                {{ form_label(form.title, "Titre :", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+                <div class="col-md-9">
+                    {{ form_widget(form.title, {'attr': {'placeholder': 'Ma super session', 'class': 'form-control'}}) }}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12 text-center">{{ form_label(form.simpleSession, "Partie de type examen", {'label_attr': {'class': 'control-label'}}) }} : {{ form_widget(form.simpleSession) }}</div>
+            </div>
+        </div>
+    </div>
+
+        <br />
+    {{ form_rest(form) }}
+    <div class="text-center"><button type="submit" class="btn btn-success btn-lg">Continuer <span class="glyphicon glyphicon-chevron-right"></span></button></div>
+</form>

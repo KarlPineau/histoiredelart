@@ -1,0 +1,18 @@
+cas_administration_user_index:
+    path:     /utilisateurs
+    defaults: { _controller: CASAdministrationBundle:User:index }
+
+cas_administration_user_view:
+    path:     /utilisateur/voir/{id}
+    defaults: { _controller: CASAdministrationBundle:User:view }
+    requirements:
+        id:  \d+
+
+cas_administration_user_generatePreferences:
+    path:     /utilisateurs/generatePreferences
+    defaults: { _controller: CASAdministrationBundle:User:generatePreferences }
+
+cas_administration_user_generateUsernames:
+    path:     /utilisateurs/generateUsernames
+    defaults: { _controller: CASAdministrationBundle:User:generateUsernames }
+

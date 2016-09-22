@@ -1,0 +1,3 @@
+{% if isFancybox == true %}<a class="fancybox" rel="group" href="{{ asset('uploads/gallery/' ~ image.fileImage.imageName) }}" >{% endif %}
+<img src="{{ asset('uploads/gallery/' ~ image.fileImage.imageName) }}" alt="{{ data_image_image_service.getTitle(image) }} - data.histoiredelart.fr" class="{{ class }}" {% if id != null %}id="{{ id }}"{% endif %} {% if clichesnumber != null %}clichesnumber="{{ clichesnumber }}"{% endif %} {% if session != null %}session="{{ session }}"{% endif %}/>
+{% if isFancybox == true %}</a>{% endif %}

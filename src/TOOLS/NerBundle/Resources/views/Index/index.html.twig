@@ -1,0 +1,57 @@
+{% extends "TOOLSNerBundle::layout.html.twig" %}
+
+{% block h1 %}Field assessment{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li class="active">Name Entity Recognition</li>
+{% endblock %}
+
+{% block content %}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    <div class="well text-center">
+        <strong>
+            <a href="{{ path('tools_ner_index_index') }}">All</a> -
+            <a href="{{ path('tools_ner_creator_index') }}">Creators</a> -
+            <a href="{{ path('tools_ner_location_index') }}">Locations</a> -
+            <a href="{{ path('tools_ner_index_synsets') }}">WithSynsets</a> -
+            <a href="{{ path('tools_ner_index_noSynsets') }}">NoSynsets</a> -
+            <a href="{{ path('tools_ner_index_noSynset') }}">NoSynset</a>
+        </strong>
+    </div>
+
+    <table class="table table-bordered">
+        <caption>{{ entities|length }} results</caption>
+        <tr>
+            <th>#</th>
+            <th>Field</th>
+            <th>Tested Literal</th>
+            <th>UsedIn</th>
+            <th>All synsets</th>
+            <th>Selected synset</th>
+            <th>URI</th>
+            <th>Error Statement</th>
+        </tr>
+        {% for entity in entities %}
+        <tr {% if entity.uri == null %}class="danger"{% endif %}>
+            <td>{{ loop.index }}</td>
+            <td>{{ entity.field }}</td>
+            <td>{{ entity.literal }}</td>
+            <td>{# if entity.usedIn is not empty %}<a href="{{ path('data_public_entity_view', {'id': entity.usedIn.id}) }}">{{ data_data_entity_service.getName(entity.usedIn) }}</a>{% endif #}</td>
+            <td>{{ entity.synsets }}</td>
+            <td>
+                {% if entity.synset != null %}{{ entity.synset }}{% else %}<strong>NULL</strong>{% endif %}
+            </td>
+            <td>
+                {% if entity.uri != null %}<a href="{{ entity.uri }}">{{ entity.uri }}</a>{% else %}<strong>NULL</strong>{% endif %}
+            </td>
+            <td>{{ entity.errorStatement }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

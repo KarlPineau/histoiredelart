@@ -1,0 +1,4 @@
+services:
+#    tb_home.example:
+#        class: TB\HomeBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

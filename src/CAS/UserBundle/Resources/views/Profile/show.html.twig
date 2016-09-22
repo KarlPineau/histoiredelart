@@ -1,0 +1,49 @@
+{% extends "CASLayoutBundle::layout.html.twig" %}
+
+{% block title %}
+    Profil utilisateur
+{% endblock %}
+
+{% block h1 %}
+    Profil utilisateur
+{% endblock %}
+
+{% block h1_extend %}
+
+{% endblock %}
+
+{% block brandtitle %}
+    Profil utilisateur
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li class="active">CAS</li>
+    <li class="active">Profil</li>
+{% endblock %}
+
+{% block content %}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="well">
+                <h3>Mon profil</h3>
+                {% block fos_user_content %}
+                    {% include "FOSUserBundle:Profile:show_content.html.twig" %}
+                {% endblock fos_user_content %}
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="well">
+                <h3>Mes préférences</h3>
+                <dl class="dl-horizontal"><dt>Préférences mail</dt><dd><a href="{{ path('cas_user_userpreferences_mail') }}">Modifier</a></dd></dl>
+                <dl class="dl-horizontal"><dt>Préférences Clichés!</dt><dd><a href="{{ path('cas_user_userpreferences_cliches') }}">Modifier</a></dd></dl>
+                <dl class="dl-horizontal"><dt>Mon compte</dt><dd><a href="{{ path('cas_user_remove_index') }}" class="">Supprimer mon compte</a></dd></dl>
+            </div>
+        </div>
+    </div>
+{% endblock %}

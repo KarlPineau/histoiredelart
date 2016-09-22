@@ -1,0 +1,93 @@
+{# src/HDA/PlayerBundle/Resources/views/Player/result.html.twig #}
+ 
+{% extends "CLICHESLayoutBundle::layout.html.twig" %}
+
+{% block title %}
+    Résultat - {{ parent() }}
+{% endblock %}
+
+{% block brandtitle %}
+    Clichés!
+{% endblock %}
+    
+{% block h1 %}
+    Résultat :
+{% endblock %}
+
+{% block brandhomelink %}{{ path('cliches_home_home_index', {'sid': playerProposal.playerOeuvre.playerSession.id}) }}{% endblock %}
+
+{% block content %}
+<input type="hidden" value="{{playerProposal.id}}" id="playerproposal" />
+<input type="hidden" value="{{playerProposal.playerOeuvre.id}}" id="oeuvre-id" />
+<input type="hidden" value="{{playerProposal.playerOeuvre.playerSession.id}}" id="session-id" />
+<div class="row">
+    <section id="content" class="col-lg-12">
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="alert alert-success">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="thumbnail">
+                            {{ render(controller('DATAImageBundle:Image:renderImage', {'view_id': playerProposal.playerOeuvre.view.id, 'class': 'image-cliches fancybox'})) }}
+                            {% set image = data_image_image_service.getImageForView(playerProposal.playerOeuvre.view) %}
+                            <div class="caption text-muted">
+                                <div class="pull-right"><small><span class="glyphicon glyphicon-zoom-in"></span> Cliquer pour zoomer</small></div>
+                                <p>&copy; {{image.copyright}}</p>
+                            </div>
+                        </div>
+                        <div class="well">
+                            <div class="pull-right" style="line-height: 31px;">
+                                <a href="{{ path('data_public_entity_view', {'id': playerProposal.playerOeuvre.view.entity.id}) }}" target="_blank">DATA</a>
+                                {% for source in sources %}
+                                    <span class="glyphicon glyphicon-minus"></span>{% if source.authorityControl == true %}<span class="glyphicon glyphicon-thumbs-up" title="Ceci est une notice d'autorité"></span>{% endif %} <a href="{{ source.url }}" target="_blank" source-id="{{ source.id }}" context="player-result" class="source-link" >{{ source.title }}</a>
+                                {% endfor %}
+                            </div>
+                            <legend style="margin-bottom: 0px;">Plus d'infos sur :</legend>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="well">
+                    {% include "CLICHESPlayerBundle:Result:result_content.html.twig" %}
+                    <div>
+                        {% for flashMessage in app.session.flashbag.get('noticeAlert') %}
+                            <div class="alert alert-success">
+                                {{ flashMessage }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <br />
+                    {% if isSuggestEnriched == true or isVote == true %}
+                        <legend>Aidez-nous à améliorer Clichés!</legend>
+                        {% if isSuggestEnriched == true %}
+                            {% include "CLICHESPlayerBundle:Suggest:suggest_content_enriched.html.twig" %}
+                        {% elseif isVote == true %}
+                            {% include "CLICHESPlayerBundle:Result:vote_content.html.twig" %}
+                        {% endif %}
+                    {% elseif isSuggest == true %}
+                        <hr />
+                        <div class="text-right">
+                            {% include "CLICHESPlayerBundle:Suggest:suggest_content.html.twig" %}
+                        </div>
+                    {% else %}
+                        <div class="pull-right"><a href="{{ path('cliches_player_end_end', {'playerSession_id' : playerProposal.playerOeuvre.playerSession.id }) }}" class="btn btn-default" title="Terminer la partie" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-log-out"></span></a></div>
+                        <div class="text-center"><a class="btn btn-success" title="Continuer vers le cliché suivant" href="{{ path('cliches_player_selection_selection', {'playerSession_id': playerProposal.playerOeuvre.playerSession.id}) }}">Continuer</a></div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+    </section>
+</div>
+{% endblock %}
+
+{% block javascript_sub %}
+    {% javascripts  '@CLICHESPlayerBundle/Resources/public/js/result.js'  %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

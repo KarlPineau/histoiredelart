@@ -1,0 +1,53 @@
+<form class="form-horizontal" method="post" {{ form_enctype(form) }} role="form">
+    {% if not form.vars.valid %}
+        <div class="alert alert-error">
+            <strong>Votre formulaire contient les erreurs suivantes :</strong>
+            {{ form_errors(form) }}
+            {{ form_errors(form.isPlan) }}
+            {{ form_errors(form.vue) }}
+            {{ form_errors(form.title) }}
+            {{ form_errors(form.iconography) }}
+            {{ form_errors(form.location) }}
+            {{ form_errors(form.image) }}
+        </div>
+        <br />
+    {% endif %}
+
+    <fieldset>
+        <legend>Vue :</legend>
+
+        <div class="form-group">
+            {{ form_label(form.isPlan, "Est-ce un plan :", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+            <div class="col-md-9">
+                {{ form_widget(form.isPlan, {'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.vue, "Vue :", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+            <div class="col-md-9">
+                {{ form_widget(form.vue, {'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.title, "Titre :", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+            <div class="col-md-9">
+                {{ form_widget(form.title, {'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.iconography, "Iconographie :", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+            <div class="col-md-9">
+                {{ form_widget(form.iconography, {'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.location, "Localisation :", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+            <div class="col-md-9">
+                {{ form_widget(form.location, {'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+            </div>
+        </div>
+    </fieldset>
+    <br />
+    {{ form_rest(form) }}
+    <div class="text-center"><input type="submit" class="btn btn-default" /></div>
+</form>

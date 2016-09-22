@@ -1,0 +1,64 @@
+{# src/DATA/PublicBundle/Resources/views/Artwork/view.html.twig #}
+
+{% extends "DATAPersonalPlaceBundle::layout.html.twig" %}
+
+{% block title %}
+    Mes favoris - {{ parent() }}
+{% endblock %}
+
+{% block h1 %}
+    Mes favoris :
+{% endblock %}
+
+{% block h1_extend %}
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li class="active">Mes favoris</li>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <section id="content" class="col-lg-12">
+            {% for flashMessage in app.session.flashbag.get('notice') %}
+                <div class="alert alert-success">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+
+            <table class="table table-bordered table-striped">
+                <caption>{{ favorites.getTotalItemCount }} favoris</caption>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nom</th>
+                        <th>Auteur</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for favorite in favorites %}
+                    <tr>
+                        <td>{{ ((favorites.getPaginationData.current-1)*100)+loop.index }}</td>
+                        <td><a href="{{ path('data_public_entity_view', {'id': favorite.entity.id}) }}">{{data_data_entity_service.getName(favorite.entity)}}</a></td>
+                        <td>{% if data_data_entity_service.get('auteur', favorite.entity) != "" %}{{ data_data_entity_service.get('auteur', favorite.entity) }}{% else %}Auteur inconnu{% endif %}</td>
+                        <td>{% if data_data_entity_service.get('datation', favorite.entity) != "" %}{{ data_data_entity_service.get('datation', favorite.entity) }}{% else %}Datation inconnue{% endif %}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4" class="text-center">Aucun favoris connu pour le moment</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="text-center">{{ knp_pagination_render(favorites) }}</div>
+        </section>
+    </div>
+{% endblock %}
+
+{# block javascript_sub %}
+    {% javascripts  '@DATAPublicBundle/Resources/public/js/public.js'  %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock #}

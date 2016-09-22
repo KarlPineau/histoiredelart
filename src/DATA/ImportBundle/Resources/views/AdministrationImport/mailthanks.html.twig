@@ -1,0 +1,23 @@
+<div class="jumbotron">
+    <h1 style="text-align: center;">Merci d'avoir contribué à DATA !</h1>
+
+    <div style="text-align: center;"><a href="http://cliches.histoiredelart.fr"><img src="http://histoiredelart.fr/web/images/logo-big.png" style="max-width: 150px;"/></a></div>
+    <br />
+    <p>Hey ! Merci d'avoir contribué à l'enrichissement de la base de données de DATA. <br />
+    C'est grâce aux contributions comme la tienne que Clichés! s'enrichie et s'améliore chaque jour.</p>
+    <p>Voici la liste des oeuvres que tu nous as soumie et que nous avons validée :</p>
+    <ul>
+        {% for entity in entities %}
+            <li><a href="http://histoiredelart.fr/{{ path('data_public_entity_view', {'id': entity.id}) }}">{{ data_data_entity_service.getName(entity) }}</a></li>
+        {% endfor %}
+    </ul>
+    <p>Tu peux dès à présent les retrouver sur DATA et sur Clichés!<br />
+    <small>Il est possible que certaines oeuvres soumises ne soient pas dans cette liste. Nous supprimons notamment les doublons avant de valider les contributions.</small></p>
+    <br />
+    <p style="text-align: center;"><strong>Merci encore !</strong><br />
+    N'hésite pas à contribuer à nouveau et participer à l'enrichissement de Clichés!<br />
+    <a href="http://cliches.histoiredelart.fr">http://cliches.histiredelart.fr</a> - <a href="http://data.histoiredelart.fr">http://data.histoiredelart.fr</a></p>
+    <br />
+    <br />
+    <p><small>Vous pouvez à tout moment supprimer cette alerte mail en vous rendant sur <a href="http://histoiredelart.fr/{{ path('cas_user_userpreferences_mail') }}">vos préférences utilisateur</a>.</small></p>
+</div>

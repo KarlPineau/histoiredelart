@@ -1,0 +1,18 @@
+{# src/DATA/PublicBundle/Resources/views/Artwork/view.html.twig #}
+<div class="panel panel-default">
+    <div class="panel-heading"><h2 class="little-h2">Informations Système :</h2></div>
+    <div class="list-group">
+        <dl class="list-group-item dl-horizontal">
+            <dt>Crée :</dt>
+            <dd>le {{ data_data_entity_service.get("createDate", entity)|date('d-m-Y') }}{% if data_data_entity_service.get("createUser", entity) != null %}, par <a href="{{ path('cas_administration_user_view', {'id': data_data_entity_service.get("createUser", entity).id}) }}">{{ data_data_entity_service.get("createUser", entity).username }}</a>{% endif %}</dd>
+        </dl>
+        <dl class="list-group-item dl-horizontal">
+            <dt>Dernière MAJ :</dt>
+            <dd>
+                {% if data_data_entity_service.get("updateUser", entity) != null %}le {{ data_data_entity_service.get("updateDate", entity)|date('d-m-Y') }}, par <a href="{{ path('cas_administration_user_view', {'id': data_data_entity_service.get("updateUser", entity).id}) }}">{{ data_data_entity_service.get("updateUser", entity).username }}</a>
+                {% else %}Pas de mise à jour
+                {% endif %}
+            </dd>
+        </dl>
+    </div>
+</div>

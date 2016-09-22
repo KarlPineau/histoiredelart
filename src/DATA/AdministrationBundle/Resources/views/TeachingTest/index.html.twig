@@ -1,0 +1,51 @@
+{% extends "DATAAdministrationBundle::layout.html.twig" %}
+
+{% block title %}TeachingTest - {{ parent() }}{% endblock %}
+
+{% block h1 %}TeachingTest{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li class="active">TeachingTest</li>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <section class="col-md-12">
+
+            {% for flashMessage in app.session.flashbag.get('notice') %}
+                <div class="alert alert-success">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th>#</th>
+                    <th>Enseignement</th>
+                    <th>Oeuvre</th>
+                    <th>Votes</th>
+                </tr>
+                {% for teachingTest in teachingTests %}
+                    {% set entity = data_data_entity_service.getByView(teachingTest['teachingTest'].view) %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td><a href="{{ path('data_teaching_teaching_view', {'slug': teachingTest['teachingTest'].teaching.slug}) }}">{{ teachingTest['teachingTest'].teaching.name }}</a></td>
+                    <td><a href="{{ path(data_data_entity_routing_service.getRoutingView(), {'id': entity.id}) }}">{{ data_data_entity_service.getName(entity) }}</a></td>
+                    <td>
+                        Nombre de votes : {{ teachingTest['teachingTestVotes']|length }}<br />
+                        {% if teachingTest['teachingTestVotes']|length > 0 %}
+                            <dl class="dl-horizontal"><dt>Oui</dt><dd>{{ teachingTest['teachingTestVotesOui']|length }}</dd></dl>
+                            <dl class="dl-horizontal"><dt>Non</dt><dd>{{ teachingTest['teachingTestVotesNon']|length }}</dd></dl>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4"><p class="text-center">Aucun TeachingTest connu</p></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </section>
+    </div>
+{% endblock %}

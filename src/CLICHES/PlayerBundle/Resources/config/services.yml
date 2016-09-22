@@ -1,0 +1,28 @@
+services:
+    cliches_player.playersessionaction:
+        class: CLICHES\PlayerBundle\Service\playerSessionAction
+        arguments: [ "@doctrine.orm.entity_manager", "@security.context"]
+    cliches_player.playerselectionaction:
+        class: CLICHES\PlayerBundle\Service\playerSelectionAction
+        arguments: [ "@doctrine.orm.entity_manager", "@security.context", "@data_data.entity"]
+    cliches_player.playersuggestaction:
+        class: CLICHES\PlayerBundle\Service\playerSuggestAction
+        arguments: [ "@doctrine.orm.entity_manager", "@security.context", "@data_data.entity"]
+    cliches_player.playeroeuvreaction:
+        class: CLICHES\PlayerBundle\Service\playerOeuvreAction
+        arguments: [ "@doctrine.orm.entity_manager", "@security.context", "@cliches_player.playerproposalaction"]
+    cliches_player.playerproposalaction:
+        class: CLICHES\PlayerBundle\Service\playerProposalAction
+        arguments: [ "@doctrine.orm.entity_manager", "@security.context"]
+    cliches_player.playerproposalchoiceaction:
+        class: CLICHES\PlayerBundle\Service\playerProposalChoiceAction
+        arguments: [ "@doctrine.orm.entity_manager", "@data_data.entity"]
+    cliches_player.playerproposalfieldaction:
+        class: CLICHES\PlayerBundle\Service\playerProposalFieldAction
+        arguments: [ "@doctrine.orm.entity_manager", "@security.context", "@data_data.entity", "@data_image.view"]
+    cliches_player.playerresultaction:
+        class: CLICHES\PlayerBundle\Service\playerResultAction
+        arguments: [ "@doctrine.orm.entity_manager", "@security.context", "@data_data.entity"]
+    cliches_player.playerexcludeaction:
+        class: CLICHES\PlayerBundle\Service\playerExcludeAction
+        arguments: [ "@doctrine.orm.entity_manager", "@security.context"]

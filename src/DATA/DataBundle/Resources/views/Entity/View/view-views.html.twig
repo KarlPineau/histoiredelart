@@ -1,0 +1,41 @@
+{# src/DATA/PublicBundle/Resources/views/Artwork/view.html.twig #}
+{% for relatedView in relatedViews %}
+    {% set view = relatedView['view'] %}
+    {% set isExcluded = cliches_player_playerexclude_service.isExcluded(view) %}
+    <div class="panel panel-default">
+        {% include 'DATADataBundle:Entity:View/Views/view-views-image.html.twig' %}
+        <div class="list-group">
+            <div class="list-group-item text-center">
+                {% include 'DATADataBundle:Entity:View/Views/view-views-actions.html.twig' %}
+            </div>
+            {% include 'DATADataBundle:Entity:View/Views/view-views-informations.html.twig' %}
+            <dl class="dl-horizontal list-group-item">
+                <dt>Crédit :</dt>
+                <dd>{{ data_image_image_service.getImageForView(view).copyright }}</dd>
+            </dl>
+            <dl class="dl-horizontal list-group-item">
+                <dt>Fusionner vers :</dt>
+                <dd>
+                    {{ render(controller('DATADataBundle:EntityViews:mergeViews', {'view_id': view.id})) }}
+                </dd>
+            </dl>
+            <dl class="dl-horizontal list-group-item">
+                <dt>Clichés :</dt>
+                <dd>Tombé {{ cliches_player_playeroeuvre_service.countByView(view) }} fois -
+                    {% if isExcluded == true %}<a href="{{ path('data_data_entity_view_exclusion', {'view_id': view.id}) }}" class="btn btn-warning btn-sm" type="button">Inclure</a>
+                    {% else %}<a href="{{ path('data_data_entity_view_exclusion', {'view_id': view.id}) }}" class="btn btn-primary btn-sm" type="button" >Exclure</a>
+                    {% endif %}
+
+                </dd>
+            </dl>
+            <div class="list-group-item" style="padding:0px">
+                {% include 'DATADataBundle:Entity:View/Views/view-views-teaching.html.twig' %}
+            </div>
+            <div class="list-group-item" style="padding:0px">
+                {% include 'DATADataBundle:Entity:View/Views/view-views-proposals.html.twig' %}
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="alert alert-danger">Pas de vues relatives</div>
+{% endfor %}

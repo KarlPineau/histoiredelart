@@ -1,0 +1,36 @@
+{# src/DATA/DataBundle/Resources/views/Artwork/view.html.twig #}
+ 
+{% extends "DATADuplicateBundle::layout.html.twig" %}
+
+{% block title %}
+    {{ type.name }} - {{ parent() }}
+{% endblock %}
+    
+{% block h1 %}
+    {{ type.name }} :
+{% endblock %}
+    
+{% block h1_extend %}
+    <a class="btn btn-lg btn-primary" href="{{ path('data_duplicate_type_edit', {'slug': type.slug}) }}" >Modifier</a>
+    <a class="btn btn-lg btn-danger main-JS-delete" href="{{ path('data_duplicate_type_delete', {'slug': type.slug}) }}" >Supprimer</a>
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li><a href="{{path('data_duplicate_type_index')}}">Types</a></li>
+    <li class="active">{{type.name}}</li>
+{% endblock %} 
+
+{% block content %}
+<div class="row">
+    <section id="content" class="col-lg-12">
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="alert alert-success">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+
+        A venir
+    </section>
+</div>
+{% endblock %}

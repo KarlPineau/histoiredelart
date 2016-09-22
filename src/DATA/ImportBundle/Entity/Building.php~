@@ -1,0 +1,558 @@
+<?php
+
+namespace DATA\ImportBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * Building
+ *
+ * @ORM\Table(name="BuildingImport")
+ * @ORM\Entity(repositoryClass="DATA\ImportBundle\Entity\BuildingRepository")
+ */
+class Building
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      max = "255",
+     *      maxMessage = "Le champ 'Nom' ne peut pas dépasser {{ limit }} caractères"
+     * )
+     *
+     * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Slug(fields={"name"})
+     * @ORM\Column(name="slug", type="string", length=255, nullable=false, unique=true)
+     */
+    private $slug;
+
+    /**
+     * @var string
+     * @Assert\Length(
+     *      max = "255",
+     *      maxMessage = "Le champ 'Auteur' ne peut pas dépasser {{ limit }} caractères"
+     * )
+     *
+     * @ORM\Column(name="auteur", type="string", length=255, nullable=true)
+     */
+    private $auteur;
+
+    /**
+     * @var string
+     * @Assert\Length(
+     *      max = "255",
+     *      maxMessage = "Le champ 'Commanditaire' ne peut pas dépasser {{ limit }} caractères"
+     * )
+     *
+     * @ORM\Column(name="commanditaire", type="string", length=255, nullable=true)
+     */
+    private $commanditaire;
+
+    /**
+     * @var string
+     * @Assert\Length(
+     *      max = "255",
+     *      maxMessage = "Le champ 'Datation' ne peut pas dépasser {{ limit }} caractères"
+     * )
+     *
+     * @ORM\Column(name="datation", type="string", length=255, nullable=true)
+     */
+    private $datation;
+
+    /**
+     * @var string
+     * @Assert\Length(
+     *      max = "255",
+     *      maxMessage = "Le champ 'Matières et Techniques' ne peut pas dépasser {{ limit }} caractères"
+     * )
+     *
+     * @ORM\Column(name="mattech", type="string", length=255, nullable=true)
+     */
+    private $mattech;
+
+    /**
+     * @var string
+     * @Assert\Length(
+     *      max = "255",
+     *      maxMessage = "Le champ 'Dimensions' ne peut pas dépasser {{ limit }} caractères"
+     * )
+     *
+     * @ORM\Column(name="dimensions", type="string", length=255, nullable=true)
+     */
+    private $dimensions;
+
+    /**
+     * @var string
+     * @Assert\Length(
+     *      max = "255",
+     *      maxMessage = "Le champ 'style' ne peut pas dépasser {{ limit }} caractères"
+     * )
+     *
+     * @ORM\Column(name="style", type="string", length=255, nullable=true)
+     */
+    private $style;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="DATA\EDLBundle\Entity\Enseignement")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    protected $enseignement;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="buildingTraitement", type="boolean", options="default: false;")
+     */
+    private $buildingTraitement;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="buildingAccept", type="boolean", nullable=true, options="default: false;")
+     */
+    private $buildingAccept;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="buildingExplain", type="string", length=255, nullable=true)
+     */
+    private $buildingExplain;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="KP\UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $createUser;
+
+    /**
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="createDate", type="datetime", nullable=false)
+     */
+    protected $createDate;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="KP\UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $updateUser;
+
+    /**
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="updateDate", type="datetime", nullable=true)
+     */
+    protected $updateDate;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="updateComment", type="string", length=255, nullable=true)
+     * @Assert\Length(
+     *      max = "255",
+     *      maxMessage = "Le commentaire ne doit pas dépasser {{ limit }} caractères."
+     * )
+     */
+    protected $updateComment;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Building
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Building
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Set auteur
+     *
+     * @param string $auteur
+     * @return Building
+     */
+    public function setAuteur($auteur)
+    {
+        $this->auteur = $auteur;
+
+        return $this;
+    }
+
+    /**
+     * Get auteur
+     *
+     * @return string 
+     */
+    public function getAuteur()
+    {
+        return $this->auteur;
+    }
+
+    /**
+     * Set commanditaire
+     *
+     * @param string $commanditaire
+     * @return Building
+     */
+    public function setCommanditaire($commanditaire)
+    {
+        $this->commanditaire = $commanditaire;
+
+        return $this;
+    }
+
+    /**
+     * Get commanditaire
+     *
+     * @return string 
+     */
+    public function getCommanditaire()
+    {
+        return $this->commanditaire;
+    }
+
+    /**
+     * Set datation
+     *
+     * @param string $datation
+     * @return Building
+     */
+    public function setDatation($datation)
+    {
+        $this->datation = $datation;
+
+        return $this;
+    }
+
+    /**
+     * Get datation
+     *
+     * @return string 
+     */
+    public function getDatation()
+    {
+        return $this->datation;
+    }
+
+    /**
+     * Set mattech
+     *
+     * @param string $mattech
+     * @return Building
+     */
+    public function setMattech($mattech)
+    {
+        $this->mattech = $mattech;
+
+        return $this;
+    }
+
+    /**
+     * Get mattech
+     *
+     * @return string 
+     */
+    public function getMattech()
+    {
+        return $this->mattech;
+    }
+
+    /**
+     * Set dimensions
+     *
+     * @param string $dimensions
+     * @return Building
+     */
+    public function setDimensions($dimensions)
+    {
+        $this->dimensions = $dimensions;
+
+        return $this;
+    }
+
+    /**
+     * Get dimensions
+     *
+     * @return string 
+     */
+    public function getDimensions()
+    {
+        return $this->dimensions;
+    }
+
+    /**
+     * Set style
+     *
+     * @param string $style
+     * @return Building
+     */
+    public function setStyle($style)
+    {
+        $this->style = $style;
+
+        return $this;
+    }
+
+    /**
+     * Get style
+     *
+     * @return string 
+     */
+    public function getStyle()
+    {
+        return $this->style;
+    }
+
+    /**
+     * Set createDate
+     *
+     * @param \DateTime $createDate
+     * @return Building
+     */
+    public function setCreateDate($createDate)
+    {
+        $this->createDate = $createDate;
+
+        return $this;
+    }
+
+    /**
+     * Get createDate
+     *
+     * @return \DateTime 
+     */
+    public function getCreateDate()
+    {
+        return $this->createDate;
+    }
+
+    /**
+     * Set updateDate
+     *
+     * @param \DateTime $updateDate
+     * @return Building
+     */
+    public function setUpdateDate($updateDate)
+    {
+        $this->updateDate = $updateDate;
+
+        return $this;
+    }
+
+    /**
+     * Get updateDate
+     *
+     * @return \DateTime 
+     */
+    public function getUpdateDate()
+    {
+        return $this->updateDate;
+    }
+
+    /**
+     * Set updateComment
+     *
+     * @param string $updateComment
+     * @return Building
+     */
+    public function setUpdateComment($updateComment)
+    {
+        $this->updateComment = $updateComment;
+
+        return $this;
+    }
+
+    /**
+     * Get updateComment
+     *
+     * @return string 
+     */
+    public function getUpdateComment()
+    {
+        return $this->updateComment;
+    }
+
+    /**
+     * Set createUser
+     *
+     * @param \KP\UserBundle\Entity\User $createUser
+     * @return Building
+     */
+    public function setCreateUser(\KP\UserBundle\Entity\User $createUser = null)
+    {
+        $this->createUser = $createUser;
+
+        return $this;
+    }
+
+    /**
+     * Get createUser
+     *
+     * @return \KP\UserBundle\Entity\User 
+     */
+    public function getCreateUser()
+    {
+        return $this->createUser;
+    }
+
+    /**
+     * Set updateUser
+     *
+     * @param \KP\UserBundle\Entity\User $updateUser
+     * @return Building
+     */
+    public function setUpdateUser(\KP\UserBundle\Entity\User $updateUser = null)
+    {
+        $this->updateUser = $updateUser;
+
+        return $this;
+    }
+
+    /**
+     * Get updateUser
+     *
+     * @return \KP\UserBundle\Entity\User 
+     */
+    public function getUpdateUser()
+    {
+        return $this->updateUser;
+    }
+
+    /**
+     * Set buildingTraitement
+     *
+     * @param boolean $buildingTraitement
+     * @return Building
+     */
+    public function setBuildingTraitement($buildingTraitement)
+    {
+        $this->buildingTraitement = $buildingTraitement;
+
+        return $this;
+    }
+
+    /**
+     * Get buildingTraitement
+     *
+     * @return boolean 
+     */
+    public function getBuildingTraitement()
+    {
+        return $this->buildingTraitement;
+    }
+
+    /**
+     * Set buildingAccept
+     *
+     * @param boolean $buildingAccept
+     * @return Building
+     */
+    public function setBuildingAccept($buildingAccept)
+    {
+        $this->buildingAccept = $buildingAccept;
+
+        return $this;
+    }
+
+    /**
+     * Get buildingAccept
+     *
+     * @return boolean 
+     */
+    public function getBuildingAccept()
+    {
+        return $this->buildingAccept;
+    }
+
+    /**
+     * Set buildingExplain
+     *
+     * @param string $buildingExplain
+     * @return Building
+     */
+    public function setBuildingExplain($buildingExplain)
+    {
+        $this->buildingExplain = $buildingExplain;
+
+        return $this;
+    }
+
+    /**
+     * Get buildingExplain
+     *
+     * @return string 
+     */
+    public function getBuildingExplain()
+    {
+        return $this->buildingExplain;
+    }
+}

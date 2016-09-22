@@ -1,0 +1,139 @@
+#Gestion des entity :
+data_data_entity_index:
+    path:     /oeuvres
+    defaults: { _controller: DATADataBundle:Entity:index }
+
+data_data_entity_view:
+    path:     /{id}
+    defaults: { _controller: DATADataBundle:Entity:view }
+    requirements:
+        id:  \d+
+
+data_data_entity_delete:
+    path:     /delete/{id}
+    defaults: { _controller: DATADataBundle:Entity:delete }
+    requirements:
+        id:  \d+
+
+data_data_entity_setSujetAsIconography:
+    path:     /sujetasiconography/{entity_id}
+    defaults: { _controller: DATADataBundle:Entity:setSujetAsIconography }
+    options:
+        expose: true
+
+#Gestion des Vues pour une Entity
+data_data_entity_addview:
+    path:     /view/add/{id}
+    defaults: { _controller: DATADataBundle:EntityViews:addView }
+    requirements:
+        id:  \d+
+
+data_data_entity_view_exclusion:
+    path:     /view/exclude/{view_id}
+    defaults: { _controller: DATADataBundle:EntityViews:exclusionFromCliches }
+    requirements:
+        view_id:  \d+
+
+data_data_entity_view_reorder:
+    path:     /view/sort/{view_id}/{currentOrder}/{way}
+    defaults: { _controller: DATADataBundle:EntityViews:orderView }
+    requirements:
+        view_id:  \d+
+        currentOrder:  \d+
+        slug:  up|down
+
+data_data_entity_view_initialOrderViews:
+    path:     /view/sort-all
+    defaults: { _controller: DATADataBundle:EntityViews:initialOrderViews }
+
+data_data_entity_view_mergeViews:
+    path:     /view/merge/{view_id}
+    defaults: { _controller: DATADataBundle:EntityViews:mergeViews }
+    requirements:
+        view_id:  \d+
+
+data_data_entity_view_unrelated:
+    path:     /view/dislink/{id}
+    defaults: { _controller: DATADataBundle:EntityViews:unrelatedView }
+    requirements:
+        id:  \d+
+
+#Gestion des Sources pour une Entity
+data_data_entity_edit_sources:
+    path:     /source/edit/{id}
+    defaults: { _controller: DATADataBundle:EntitySources:sourcesForEntity }
+    requirements:
+        id:  \d+
+
+data_data_source_addClick:
+    path:     /source/click/{source_id}/{context}
+    defaults: { _controller: DATADataBundle:Source:addClick }
+    requirements:
+        source_id:  \d+
+        context: \S{0,255}
+    options:
+        expose: true
+
+#Gestion des SameAs pour une Entity
+data_data_entity_edit_sameas:
+    path:     /sameAs/edit/{id}
+    defaults: { _controller: DATADataBundle:EntitySameAs:getAllSameAsForEntity }
+    requirements:
+        id:  \d+
+
+#Gestion des Pad :
+data_data_entity_edit_pad:
+    path:     /pad/{id}
+    defaults: { _controller: DATADataBundle:Pad:editPad }
+    requirements:
+        id:  \d+
+
+#Gestion des Enseignements
+data_data_entity_edit_teaching:
+    path:     /teaching/edit/{id}
+    defaults: { _controller: DATADataBundle:EntityTeaching:edit }
+    requirements:
+        id:  \d+
+
+data_data_entity_delete_teaching:
+    path:     /teaching/delete/{id}/{slug_teaching}
+    defaults: { _controller: DATADataBundle:EntityTeaching:delete }
+    requirements:
+        id:  \d+
+        slug_teaching:  \S{0,255}
+
+# Gestion des switch :
+data_data_entity_switch:
+    path:     switch/{id}
+    defaults: { _controller: DATADataBundle:Entity:switch }
+    requirements:
+        id:  \d+
+
+#Gestion des oeuvres :
+data_data_artwork_edit:
+    path:     /oeuvre/modifier/{slug}
+    defaults: { _controller: DATADataBundle:Artwork:edit }
+    requirements:
+        slug:  \S{0,255}
+        
+# Gestion des Edifices :
+data_data_building_edit:
+    path:     /edifice/modifier/{slug}
+    defaults: { _controller: DATADataBundle:Building:edit }
+    requirements:
+        slug:  \S{0,255}
+
+#Gestion des Unrelevant :
+data_data_unrelevant_setunrelevant:
+    path:     /unrelevant/{id}/{field}
+    defaults: { _controller: DATADataBundle:Unrelevant:setUnrelevant }
+    requirements:
+        id:  \d+
+        field: \S{0,255}
+
+data_data_unrelevant_setrelevant:
+    path:     /relevant/{id}/{unrelevantField_id}
+    defaults: { _controller: DATADataBundle:Unrelevant:setRelevant }
+    requirements:
+        id:  \d+
+        unrelevantField_id:  \d+

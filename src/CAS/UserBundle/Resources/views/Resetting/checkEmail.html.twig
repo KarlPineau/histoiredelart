@@ -1,0 +1,21 @@
+{% extends "CASLayoutBundle::signin.html.twig" %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block title %}Mot de passe oublié - {{ parent() }}{% endblock %}
+
+{% block content %}
+    {% block fos_user_content %}
+        <div class="form-signin">
+            <div>
+                <div class="pull-right"><img src="{{ asset('images/logo.png') }}" style="max-height: 40px;"/></div>
+                <h2 class="form-signin-heading">Mot de passe oublié ?</h2>
+            </div>
+            <br />
+            <p class="alert alert-info">
+                {{ 'resetting.check_email'|trans({'%email%': email}) }}
+            </p>
+            <br />
+            <p class="text-center"><a href="{{ path('home_home_home_index') }}">Retour</a></p>
+        </div>
+    {% endblock %}
+{% endblock %}

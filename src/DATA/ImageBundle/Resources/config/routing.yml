@@ -1,0 +1,53 @@
+#Render Image :
+data_image_image_renderimage:
+    path:     /image/voir/{view_id}/{class}/{id}/{clichesnumber}/{session}/{import}/{image_id}
+    defaults:
+        _controller: DATAImageBundle:Image:renderView
+        id: 0
+        clichesnumber: 0
+        session: 0
+        import: false
+        image_id: 0
+    requirements:
+        view_id:  \d+
+        class: .{0,40}
+        id: .{0,20}
+        clichesnumber: .{0,40}
+        session: \d+
+        session: true|false
+        image_id: \d+
+
+#Gestion du FileImage
+data_image_fileimage_index:
+    path:     /fichier-image/accueil
+    defaults: { _controller: DATAImageBundle:FileImage:index }
+
+data_image_fileimage_register:
+    path:     /fichier-image/insertion
+    defaults: { _controller: DATAImageBundle:FileImage:register }
+
+data_image_fileimage_edit:
+    path:     /fichier-image/modifier/{view_id}
+    defaults: { _controller: DATAImageBundle:FileImage:edit }
+    requirements:
+        view_id:  \d+
+
+#Gestion des View :
+data_image_view_edit:
+    path:     /vue/modifier/{view_id}
+    defaults: { _controller: DATAImageBundle:View:edit }
+    requirements:
+        view_id:  \d+
+
+data_image_view_delete:
+    path:     /vue/supprimer/{view_id}
+    defaults: { _controller: DATAImageBundle:View:delete }
+    requirements:
+        view_id:  \d+
+
+#Gestion des Images :
+data_image_image_edit:
+    path:     /image/modifier/{view_id}
+    defaults: { _controller: DATAImageBundle:Image:edit }
+    requirements:
+        view_id:  \d+

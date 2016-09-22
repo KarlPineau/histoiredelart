@@ -1,0 +1,13 @@
+{# src/DATA/SearchBundle/Resources/views/Search/search.html.twig #}
+<form class="form-horizontal" action="{{ path('data_search_search_search', {'access': access, 'teaching': teaching, 'query': query}) }}" method="post" {{ form_enctype(form) }} role="form">
+    <div class="form-group">
+        {{ form_label(form.search, "Rechercher :", {'label_attr': {'class': 'control-label sr-only'}}) }}
+        <div class="input-group">
+            {{ form_widget(form.search, {'attr': {'value': query, 'placeholder': "Votre recherche", 'class': 'form-control input-lg'}}) }}
+            <div class="input-group-btn">
+                <button class="btn btn-primary btn-lg" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+            </div>
+        </div>
+    </div>
+    {{ form_rest(form) }}
+</form>

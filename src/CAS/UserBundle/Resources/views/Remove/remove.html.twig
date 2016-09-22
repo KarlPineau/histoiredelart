@@ -1,0 +1,32 @@
+{% extends "CASLayoutBundle::signin.html.twig" %}
+
+{% block title %}Suppression - {{ parent() }}{% endblock %}
+
+{% block content %}
+    <form class="form-signin" method="post" {{ form_enctype(form) }} role="form">
+        <a href="{{ path('fos_user_profile_show') }}" class="btn btn-lg btn-primary btn-block"><i class="fa fa-sign-out fa-rotate-180 pull-left"></i> Retour au profil</a>
+        <div>
+            <div class="pull-right">
+                <img src="{{ asset('images/logo.png') }}" style="max-height: 40px;"/>
+            </div>
+            <h2 class="form-signin-heading">Suppression</h2>
+        </div>
+        <br />
+        {% if not form.vars.valid %}
+            <div class="alert alert-error">
+                <strong>Votre formulaire contient les erreurs suivantes :</strong>
+                {{ form_errors(form) }}
+                {{ form_errors(form.password) }}
+            </div>
+        {% elseif status is defined and status == 'wrong' %}
+            <p class="alert alert-warning">Mot de passe incorrect.</p>
+        {% endif %}
+        <br />
+        {{ form_label(form.password, "Pour supprimer définitivement votre compte utilisateur, veuillez saisir votre mot de passe.", {'label_attr': {'class': 'control-label lead'}}) }}
+        {{ form_widget(form.password,  {'attr': {'placeholder':'Mot de passe','type': 'password', 'class': 'form-control'}}) }}
+
+        {{ form_rest(form) }}
+        <br />
+        <button class="btn btn-lg btn-danger btn-block main-JS-delete" type="submit"><i class="fa fa-exclamation-triangle pull-left"></i> Suppression définitive</button>
+    </form>
+{% endblock %}

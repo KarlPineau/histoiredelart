@@ -1,0 +1,132 @@
+<?php
+
+namespace CLICHES\PersonalPlaceBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * PrivatePlayerSession
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="CLICHES\PersonalPlaceBundle\Entity\PrivatePlayerSessionRepository")
+ */
+class PrivatePlayerSession
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var \stdClass
+     *
+     * @ORM\Column(name="privatePlayer", type="object")
+     */
+    private $privatePlayer;
+
+    /**
+     * @var \stdClass
+     *
+     * @ORM\Column(name="session", type="object")
+     */
+    private $session;
+
+    /**
+     * @var string
+     * @Assert\Ip
+     *
+     * @ORM\Column(name="ipCreateUser", type="string", length=255, nullable=true)
+     */
+    protected $ipCreateUser;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="KP\UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $createUser;
+
+    /**
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="createDate", type="datetime", nullable=false)
+     */
+    protected $createDate;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="KP\UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $updateUser;
+
+    /**
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="updateDate", type="datetime", nullable=true)
+     */
+    protected $updateDate;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set privatePlayer
+     *
+     * @param \stdClass $privatePlayer
+     * @return PrivatePlayerSession
+     */
+    public function setPrivatePlayer($privatePlayer)
+    {
+        $this->privatePlayer = $privatePlayer;
+
+        return $this;
+    }
+
+    /**
+     * Get privatePlayer
+     *
+     * @return \stdClass 
+     */
+    public function getPrivatePlayer()
+    {
+        return $this->privatePlayer;
+    }
+
+    /**
+     * Set session
+     *
+     * @param \stdClass $session
+     * @return PrivatePlayerSession
+     */
+    public function setSession($session)
+    {
+        $this->session = $session;
+
+        return $this;
+    }
+
+    /**
+     * Get session
+     *
+     * @return \stdClass 
+     */
+    public function getSession()
+    {
+        return $this->session;
+    }
+}

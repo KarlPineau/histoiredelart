@@ -1,0 +1,28 @@
+{% extends "TBHomeBundle::layout.html.twig" %}
+
+{% block h1 %}Accueil{% endblock %}
+
+{% block content %}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Les dernières parties</h2>
+
+            <table class="table table-striped table-bordered">
+                <tr>
+                    <th>Titre</th>
+                </tr>
+            {% for testedGame in testedGames %}
+                <tr>
+                    <td><a href="{{ path('tb_player_player_index', {'testedGame_id': testedGame.id}) }}">{{ testedGame.title }}</a></td>
+                </tr>
+            {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}

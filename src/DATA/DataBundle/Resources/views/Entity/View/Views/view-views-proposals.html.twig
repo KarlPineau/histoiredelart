@@ -1,0 +1,60 @@
+{# src/DATA/PublicBundle/Resources/views/Artwork/view.html.twig #}
+{% set countFullPlayerProposalField = 0 %}
+{% for playerOeuvre in relatedView['proposals'] %}
+    {% set fullPlayerProposalField = false %}
+    {% for playerProposalField in cliches_player_playerproposalfield_service.getByPlayerProposal(cliches_player_playerproposal_service.getPlayerProposalByPlayerOeuvre(playerOeuvre)) %}
+        {% if playerProposalField.value is not empty %}{% set fullPlayerProposalField = true %}{% endif %}
+    {% endfor %}
+
+    {% if fullPlayerProposalField == true %}
+        {% set countFullPlayerProposalField = countFullPlayerProposalField + 1 %}
+    {% endif %}
+{% endfor %}
+
+<div class="panel-group" id="view-views-proposals" role="tablist" aria-multiselectable="true" style="margin: 0px;">
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="view-views-proposalsHeading">
+            <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#view-views-proposals" href="#view-views-proposalsCollapse" aria-expanded="false" aria-controls="view-views-proposalsCollapse">
+                    <dl class="dl-horizontal" style="margin-bottom: 0px;"><dt>Rempli :</dt><dd>{{ countFullPlayerProposalField }}/{{ cliches_player_playeroeuvre_service.countByView(view) }}</dd></dl>
+                </a>
+            </h4>
+        </div>
+        <div id="view-views-proposalsCollapse" class="panel-collapse collapse" role="tabpanel" aria-labelledby="view-views-proposalsHeading">
+            <div class="panel-body">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    {% for playerOeuvre in relatedView['proposals'] %}
+                        {% set fullPlayerProposalField = false %}
+                        {% for playerProposalField in cliches_player_playerproposalfield_service.getByPlayerProposal(cliches_player_playerproposal_service.getPlayerProposalByPlayerOeuvre(playerOeuvre)) %}
+                            {% if playerProposalField.value is not empty %}{% set fullPlayerProposalField = true %}{% endif %}
+                        {% endfor %}
+
+                        {% if fullPlayerProposalField == true %}
+                            {% set countFullPlayerProposalField = countFullPlayerProposalField + 1 %}
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="heading{{ loop.index }}">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ loop.index }}" aria-expanded="true" aria-controls="collapse{{ loop.index }}">
+                                        #{{ loop.index }}
+                                    </a>
+                                </div>
+                                <div id="collapse{{ loop.index }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{ loop.index }}">
+                                    <div class="panel-body">
+                                        <ul>
+                                            {% for playerProposalField in cliches_player_playerproposalfield_service.getByPlayerProposal(cliches_player_playerproposal_service.getPlayerProposalByPlayerOeuvre(playerOeuvre)) %}
+                                                <li>{{ playerProposalField.field }} : >{{ playerProposalField.value }}<</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        <div class="panel panel-info">
+                            Pas de données ...
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

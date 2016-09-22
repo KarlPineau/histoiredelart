@@ -1,0 +1,32 @@
+<form class="form-signin" method="post" {{ form_enctype(form) }} role="form">
+    <div>
+        <div class="pull-right"><img src="{{ asset('images/logo.png') }}" style="max-height: 40px;"/></div>
+        <h2 class="form-signin-heading">Inscription</h2>
+    </div>
+    <br />
+    {% if not form.vars.valid %}
+        <div class="alert alert-danger">
+            <strong>Votre formulaire contient les erreurs suivantes :</strong>
+            {{ form_errors(form) }}
+            {{ form_errors(form.email) }}
+            {{ form_errors(form.plainPassword.first) }}
+            {{ form_errors(form.plainPassword.second) }}
+        </div>
+        <br />
+    {% endif %}
+
+        {{ form_label(form.email, "Adresse mail :", {'label_attr': {'class': 'sr-only'}}) }}
+    {{ form_widget(form.email, {'attr': {'placeholder': 'Adresse mail', 'class': 'form-control', 'autofocus':'autofocus', 'style': 'margin-bottom: 10px;'}}) }}
+
+        {{ form_label(form.plainPassword.first, "Mot de passe :", {'label_attr': {'class': 'sr-only'}}) }}
+    {{ form_widget(form.plainPassword.first, {'attr': {'placeholder': 'Mot de passe', 'class': 'form-control in'}}) }}
+
+        {{ form_label(form.plainPassword.second, "Confirmation :", {'label_attr': {'class': 'sr-only'}}) }}
+    {{ form_widget(form.plainPassword.second, {'attr': {'placeholder': 'Confirmer le mot de passe', 'class': 'form-control out'}}) }}
+
+    {{ form_rest(form) }}
+    <br />
+    <input type="submit" class="btn btn-lg btn-success btn-block" />
+    <div class="text-center" style="margin: 10px">OU</div>
+    <a class="btn btn-lg btn-primary btn-block" href="{{ path('fos_user_security_login') }}">Connexion</a>
+</form>

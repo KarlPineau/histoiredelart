@@ -1,0 +1,16 @@
+services:
+    data_teaching.teaching:
+        class: DATA\TeachingBundle\Service\teaching
+        arguments: [ "@doctrine.orm.entity_manager", "@security.context"]
+
+    data_teaching.teachingtest:
+        class: DATA\TeachingBundle\Service\teachingTest
+        arguments: [ "@doctrine.orm.entity_manager"]
+
+    data_teaching.teachingtestvote:
+        class: DATA\TeachingBundle\Service\teachingTestVote
+        arguments: [ "@doctrine.orm.entity_manager", "@security.context", "@data_data.entity"]
+
+    data_teaching.university:
+        class: DATA\TeachingBundle\Service\university
+        arguments: [ "@doctrine.orm.entity_manager", "@security.context"]

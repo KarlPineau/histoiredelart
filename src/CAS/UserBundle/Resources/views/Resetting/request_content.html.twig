@@ -1,0 +1,21 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<form class="form-signin" action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+    <div>
+        <div class="pull-right"><img src="{{ asset('images/logo.png') }}" style="max-height: 40px;"/></div>
+        <h2 class="form-signin-heading">Mot de passe oublié ?</h2>
+    </div>
+    <br />
+    {% if invalid_username is defined %}
+        <p class="alert alert-danger">{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}</p>
+        <br />
+    {% endif %}
+
+    <label for="username" class="sr-only">Adresse mail</label>
+    <input type="text" id="username" name="username" placeholder="Adresse mail" required="required" class="form-control" autofocus />
+
+    <br />
+    <input class="btn btn-lg btn-warning btn-block" type="submit" value="Réinitialiser" />
+    <br />
+    <p class="text-center"><a href="{{ path('home_home_home_index') }}">Retour</a></p>
+</form>

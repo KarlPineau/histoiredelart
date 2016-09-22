@@ -1,0 +1,3 @@
+tools_layout_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: TOOLSLayoutBundle:Default:index }

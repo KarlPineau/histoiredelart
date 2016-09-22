@@ -1,0 +1,4 @@
+services:
+    data_administration.statistics:
+        class: DATA\AdministrationBundle\Service\statistics
+        arguments: [ "@doctrine.orm.entity_manager", "@security.context", "@data_data.entity"]

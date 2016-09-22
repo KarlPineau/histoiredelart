@@ -1,0 +1,28 @@
+{% extends "CLICHESAdministrationBundle::layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }}
+{% endblock %}
+    
+{% block follow %}
+    <meta name="robots" content="noindex,nofollow" />
+{% endblock %} 
+
+{% block h1 %}{% endblock %}
+
+{% block h1_extend %}{% endblock %}
+
+{% block breadcrumb %}
+    {{parent()}}
+    {% if app.request.get('_route') == 'cas_administration_user_index' %}<li class="active">Utilisateurs</li>
+    {% else %}<li><a href="{{ path('cas_administration_user_index') }}">Utilisateurs</a></li>
+    {% endif %}
+{% endblock %}
+
+{% block content %}{% endblock %}
+
+{% block javascript %}
+    {{parent()}}
+    {% block javascript_sub %}
+    {% endblock %}
+{% endblock %}

@@ -1,0 +1,42 @@
+{# src/DATA/DataBundle/Resources/views/Artwork/index.html.twig #}
+ 
+{% extends "DATAImportBundle::layout.html.twig" %}
+
+{% block title %}
+    Fin de l'importation - {{ parent() }}
+{% endblock %} 
+    
+{% block h1 %}
+    Fin de l'importation
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li class="active">Fin de l'importation</li>
+{% endblock %}    
+    
+{% block content %}
+<div class="row">
+    <section class="col-md-12">
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="alert col-md-12 alert-success">
+                {{ flashMessage }}
+            </div>
+            <br />
+        {% endfor %}
+        
+        <div class="jumbotron text-center">
+            <h2>Fin de l'importation</h2>
+            <p>Merci pour votre contribution !</p>
+            <p>Nous allons traiter ces informations et les intégrer au plus vite à Clichés!<br />
+                Vous recevrez un email lorsque ce sera fait <i class="fa fa-smile-o" aria-hidden="true"></i>.</p>
+
+        </div>
+
+        <div class="text-center">
+            <a href="{{path('data_import_import_index')}}" class="btn btn-lg btn-primary">Retour</a>
+            <a href="{{path('cliches_home_home_index')}}" class="btn btn-lg btn-success">Clichés!</a>
+        </div>
+    </section>
+</div>
+{% endblock %}

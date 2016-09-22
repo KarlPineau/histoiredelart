@@ -1,0 +1,22 @@
+{% extends "CLICHESLayoutBundle::layout.html.twig" %}
+
+{% block brandtitle %}
+    Versions de Clichés!
+{% endblock %}
+
+{% block content %}
+    <div class="jumbotron">
+        <h1>Bienvenue sur la nouvelle version de Clichés!</h1>
+        <div class="text-center">
+            <p><strong>Partager, c'est nous aider !</strong></p>
+            <div class="addthis_sharing_toolbox"></div>
+        </div>
+
+            <h2>Version 2 - Tout est neuf mais rien ne change</h2>
+            <p>En ce mois de février 2016, Clichés! revient avec une nouvelle version ! Bon, a priori, ça ne vous sautera pas aux yeux. En effet, la version 2 de Clichés! a été développé pour que tout vous semble fonctionner comme avant.</p>
+            <p>Et pourtant, que de changements ... La principale nouveauté réside dans la <strong class="text-warning">création d'une base de données</strong> qui va dorénavant stocker derrière Clichés! des oeuvres d'art. Lorsque vous utilisez Clichés! et plus encore lorsque vous suggérez des améliorations, c'est cette base de données qui est améliorée. Si elle n'est pour l'instant pas publique, c'est bien l'objectif à terme.</p>
+            <p>Autre gros changement apporté par la version 2 de Clichés!, <strong class="text-warning">un module d'entrainement aux examens de clichés</strong> de l'Ecole du Louvre. Celui-ci fonctionne de manière très simple : vous choisissez une matière, l'algorithme tire au sort le nombre d'oeuvres voulu. Il ne vous reste plus qu'à prendre une feuille de papier et un crayon et à composer. A la fin de la session, Clichés! vous donnera les cartels des oeuvres pour que vous puissiez vous auto-corriger. Pour activer le module, il suffit de cliquer sur "Mode examen" au lancement d'une session.</p>
+            <p>Enfin, vous pouvez à présent <strong class="text-warning">vous inscrire sur Clichés!</strong> D'ailleurs, <a href="{{ path('fos_user_registration_register') }}">c'est par ici que ça se passe</a>. L'inscription à Clichés! vous permettra de retrouver toutes les sessions que vous aurez effectuées sur le site, sur une page centralisée. Si vous recherchez une oeuvre que vous avez vue tomber sur Clichés!, ce sera donc chose aisée de la retrouver. A terme, d'autres fonctionnalités viendront compléter cet espace utilisateur.</p>
+
+    </div>
+{% endblock %}

@@ -1,0 +1,75 @@
+{# src/DATA/DataBundle/Resources/views/Artwork/index.html.twig #}
+ 
+{% extends "DATAImportBundle::layout.html.twig" %}
+
+{% block title %}
+    Administration Importation - {{ parent() }}
+{% endblock %} 
+    
+{% block h1 %}
+    Administration Importation
+{% endblock %}
+
+{% block h1_extend %}
+    <a class="btn btn-primary" href="{{ path('data_import_administrationimport_archives') }}">OldImport</a>
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li class="active">Administration</li>
+{% endblock %}    
+    
+{% block content %}
+<div class="row">
+    <section class="col-md-12">
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="alert col-md-12 alert-success">
+                {{ flashMessage }}
+            </div>
+            <br />
+        {% endfor %}
+
+        <div class="row">
+            <div class="col-md-6 col-xs-12">
+                <h2>Items :</h2>
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <th>#</th>
+                        <th>Item</th>
+                        <th>Session</th>
+                        <th>User</th>
+                        <th>Validation</th>
+                    </tr>
+                    {% for entity in entities %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ data_data_entity_service.getType(entity) }}: <a href="{{ path('data_data_entity_view', {'id': entity.id}) }}" target="_blank">{{ data_data_entity_service.getName(entity) }}</a></td>
+                            <td><a>#{{ entity.importSession.id }}</a></td>
+                            <td><a href="{{ path('cas_administration_user_view', {'id': entity.createUser.id}) }}">{{ entity.createUser.username }}</a></td>
+                            <td>
+                                <a href="{{ path('data_import_entity_validation', {'id': entity.id, "bool": "true"}) }}" class="btn btn-success"><span class="glyphicon glyphicon-check"></span></a>
+                                <a href="{{ path('data_import_entity_validation', {'id': entity.id, "bool": "false"}) }}" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></a>
+                                <a href="{{ path('data_data_entity_switch', {'id': entity.id}) }}" class="btn btn-danger"><span class="glyphicon glyphicon-random"></span></a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5">Aucun item en attente</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <h2>Dernières notices importées</h2>
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <th>#</th>
+                        <th>Nom</th>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

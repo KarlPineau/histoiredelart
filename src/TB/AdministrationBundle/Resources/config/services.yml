@@ -1,0 +1,4 @@
+services:
+#    tb_administration.example:
+#        class: TB\AdministrationBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

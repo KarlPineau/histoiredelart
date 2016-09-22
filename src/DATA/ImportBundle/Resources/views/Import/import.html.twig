@@ -1,0 +1,151 @@
+{# src/DATA/ImportBundle/Resources/views/Artwork/register.html.twig #}
+ 
+{% extends "DATAImportBundle::layout.html.twig" %}
+
+{% block title %}
+    Importation - {{ parent() }}
+{% endblock %}
+    
+{% block h1 %}
+    Importation
+{% endblock %}
+
+{% block h1_extend %}
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#helpModal">Besoin d'aide ? <span class="fa fa-smile-o" aria-hidden="true"></span></button>
+    <div style="display: inline-block;">
+        <div class="btn-group btn-group">
+            {% if datasetSize > 0 %}<button type="button" class="btn btn-default" data-toggle="modal" data-target="#contributeModal" >Votre dataset contient {{ datasetSize }} oeuvres</button>{% endif %}
+            <a href="{{ path('data_import_import_end', {'import_session_id': import_session_id}) }}" class="btn btn-danger" ><i class="fa fa-sign-out"></i> Quitter</a>
+            <button type="submit" id="buttonContinueSession" class="btn btn-success"><i class="glyphicon glyphicon-arrow-right"></i> Valider</button>
+        </div>
+    </div>
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li class="active">Insertion</li>
+{% endblock %} 
+
+{% block superformstart %}
+    <form class="form-horizontal" method="post" {{ form_enctype(form) }} role="form">
+{% endblock %}
+
+{% block superformend %}
+    </form>
+{% endblock %}
+
+{% block content %}
+{# -- MODAL HELP -- #}
+<div class="modal fade" tabindex="-1" id="helpModal" role="dialog" aria-labelledby="helpModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h2 class="modal-title" id="myModalLabel">Besoin d'aide ? <span class="fa fa-smile-o" aria-hidden="true"></span></h2>
+            </div>
+            <div class="modal-body">
+                <p>Hey ! Tout d'abord, merci de contribuer à l'enrichissement de DATA. C'est probablement ce que tu peux faire de mieux pour participer à l'amélioration de Clichés.</p>
+                <p>Nous avons essayé de faire l'interface d'importation la plus simple possible. Néanmoins, nous sommes conscients que cette interface peut être difficile à appréhender au premier abord.</p>
+                <hr />
+                <h3>Une page = une oeuvre</h3>
+                <p>Il n'est possible de saisir qu'une seule image sur cette page de saisie. En cliquant sur le bouton "Valider et poursuivre" en bas de la page, le formulaire traitera la première saisie et permettra de saisir une nouvelle oeuvre.</p>
+                <hr />
+                <h3>Comprendre le modèle de DATA</h3>
+                <p>La transcription de la réalité d'une oeuvre d'art en modèle numérique est probablement l'aspect de l'importation le moins évident à appréhender. Il est important d'avoir en vue que :</p>
+                <ul>
+                    <li>La colonne de gauche du formulaire représente l'oeuvre. Ce peut être une sculpture, une peinture, un édifice, etc. Dans tous les cas, cette zone décrit l'oeuvre dans son ensemble. Par exemple :</li>
+                    <ul>
+                        <li>Titre : La Joconde</li>
+                        <li>Auteur : Léonard de Vinci</li>
+                        <li>Datation : 1503-1506</li>
+                        <li>Lieu de Conservation : Musée du Louvre</li>
+                    </ul>
+                    <li>Il y a ensuite la représentation de cette oeuvre. Cette représentation se situe dans la colonne de droite de l'interface d'importation.</li>
+                    <ul>
+                        <li>Cette représentation se matérialise par une photo. Pour cette photo, nous avons notamment besoin d'un copyright. Par exemple :</li>
+                        <ul>
+                            <li>Auteur de la photo de la Joconde : Jean Trucmuche</li>
+                        </ul>
+                        <li>Cette photo est une représentation partielle de l'oeuvre. Cela peut être difficile à percevoir pour une peinture (souvent en 2D comme la photo) mais pour une architecture, on comprend aisément qu'on ne peut pas montrer la façade et l'intérieur d'une église sur la même photo. De même, on ne peut pas montrer toutes les faces d'une sculpture sur une seule photo.<br />
+                        Cette représentation peut donc être décrite. Par exemple :
+                        <ul>
+                            <li>Vue : La photographie montre un détail des yeux de Mona Lisa</li>
+                        </ul>
+                        Cette représentation peut également matérialiser une partie quasi indépendante de l'oeuvre. Par exemple, nous considérons une mosaïque d'abside d'église comme une partie de l'église. Nous la décrivons donc de la manière suivante :
+                        <ul>
+                            <li>Vue : Mosaïque de la Vierge à l'enfant</li>
+                            <li>Iconographie : Vierge à l'enfant</li>
+                            <li>Localisation : Conque de l'abside centrale</li>
+                        </ul>
+                        </li>
+                    </ul>
+                </ul>
+                <hr />
+                <h3>D'autres questions ?</h3>
+                <p class="text-center">N'hésitez pas à nous contacter à <a href="mailto:{{ cliches_mail }}">{{ cliches_mail }}</a> pour toute question ou besoin d'aide ! On sera ravi de vous aider <span class="fa fa-smile-o" aria-hidden="true"></span>.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+        </div>
+    </div>
+</div>
+{# -- END: MODAL HELP -- #}
+
+{# -- MODAL CONTRIBUTION -- #}
+<div class="modal fade" tabindex="-1" id="contributeModal" role="dialog" aria-labelledby="contributeModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h2 class="modal-title" id="contributeModalLabel">Votre dataset contient {{ datasetSize }} oeuvres</h2>
+            </div>
+            <div class="modal-body">
+                <p class="lead text-center">Vous avez contribuer à l'enrichissement de {{ ((datasetSize*100)/totalDatabase)|round(2, 'floor') }}% de DATA !<br />Nous vous en sommes particulièrement reconnaissants <span class="fa fa-smile-o" aria-hidden="true"></span></p>
+
+                {% for entityDS in dataset %}
+                    {% if entityDS.id != entity.id %}
+                        <h3>{{ data_data_entity_service.getName(entityDS) }}</h3>
+                        <div class="row">
+                            <div class="col-md-6">
+                                {% set relatedViews =  data_data_entity_service.getViews(entityDS) %}
+                                {% include 'DATAPublicBundle:Entity:View/view-views.html.twig' %}
+                            </div>
+                            <div class="col-md-6">
+                                {% set entityForInformation = entityDS %}
+                                {% include 'DATAPublicBundle:Entity:View/view-informations.html.twig' %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+        </div>
+    </div>
+</div>
+{# -- END: MODAL HELP -- #}
+
+<div class="row">
+    <section id="content" class="col-lg-12">
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="alert alert-success">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+
+        {% include "DATAImportBundle:Import:import_content.html.twig" %}
+    </section>
+</div>
+{% endblock %}
+
+{% block javascript_sub %}
+    {% javascripts  '@DATAImportBundle/Resources/public/js/import.js'  %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script>
+        $('#helpModal').on('shown.bs.modal', function () {});
+    </script>
+{% endblock %}

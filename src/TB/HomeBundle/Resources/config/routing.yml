@@ -1,0 +1,3 @@
+tb_home_home_index:
+    path:     /
+    defaults: { _controller: TBHomeBundle:Home:index }

@@ -1,0 +1,51 @@
+{# src/DATA/DuplicateBundle/Resources/views/Type/index.html.twig #}
+ 
+{% extends "DATADuplicateBundle::layout.html.twig" %}
+
+{% block title %}
+    Accueil - {{ parent() }}
+{% endblock %} 
+    
+{% block h1 %}
+    Gestion des Types de mots :
+{% endblock %}
+    
+{% block h1_extend %}
+    <a class="btn btn-success btn-lg" href="{{ path('data_duplicate_type_register') }}">Ajouter un Type</a>
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li class="active">Type</li>
+{% endblock %}    
+    
+{% block content %}
+<div class="row">
+    <section class="col-md-12">
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="alert col-md-12 alert-success">
+                {{ flashMessage }}
+            </div>
+            <br />
+        {% endfor %}
+
+        <table class="table table-bordered table-striped">
+            <tr>
+                <th>#</th>
+                <th>Nom</th>
+            </tr>
+            {% for type in types %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td><a href="{{ path('data_duplicate_type_view', {'slug': type.slug}) }}">{{ type.name }}</a></td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td>#</td>
+                    <td>Oups ... rien de connu</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </section>
+</div>
+{% endblock %}

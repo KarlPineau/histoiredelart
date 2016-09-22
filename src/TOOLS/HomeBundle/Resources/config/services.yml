@@ -1,0 +1,4 @@
+services:
+#    tools_home.example:
+#        class: TOOLS\HomeBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

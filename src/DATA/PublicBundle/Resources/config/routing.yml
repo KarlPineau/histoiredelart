@@ -1,0 +1,60 @@
+#Acceuil :
+data_public_home_index:
+    path:     /
+    defaults: { _controller: DATAPublicBundle:Home:index }
+
+data_public_home_index_home:
+    path:     /accueil
+    defaults: { _controller: DATAPublicBundle:Home:index }
+
+#Gestion des entités :
+data_public_entity_index:
+    path:     /oeuvres
+    defaults: { _controller: DATAPublicBundle:Entity:index }
+
+data_public_entity_view:
+    path:     /item/{id}
+    defaults: { _controller: DATAPublicBundle:Entity:view }
+    requirements:
+        id:  \d+
+
+data_public_entity_viewJson:
+    path:     /item/{id}.json
+    defaults: { _controller: DATAPublicBundle:Entity:viewJson}
+    requirements:
+        id:  \d+
+
+data_public_entity_favorite:
+    path:     /oeuvre/favoris/{id}
+    defaults: { _controller: DATAPublicBundle:Entity:favorite }
+    requirements:
+        id:  \d+
+    options:
+        expose: true
+
+# Gestion des Enseignement :
+data_public_teaching_index:
+    path:     /enseignements
+    defaults: { _controller: DATAPublicBundle:Teaching:index }
+
+data_public_teaching_view:
+    path:     /enseignement/voir/{slug}
+    defaults: { _controller: DATAPublicBundle:Teaching:view }
+    requirements:
+        slug:  \S{0,255}
+
+# Gestion des Universités :
+data_public_university_index:
+    path:     /universites
+    defaults: { _controller: DATAPublicBundle:University:index }
+
+data_public_university_view:
+    path:     /universite/voir/{slug}
+    defaults: { _controller: DATAPublicBundle:University:view }
+    requirements:
+        slug:  \S{0,255}
+
+# Sitemap :
+data_public_sitemap_sitemap:
+    path:     /sitemap.xml
+    defaults: { _controller: DATAPublicBundle:Sitemaps:sitemap }

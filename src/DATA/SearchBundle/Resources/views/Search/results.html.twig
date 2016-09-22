@@ -1,0 +1,73 @@
+{# src/DATA/DataBundle/Resources/views/Artwork/index.html.twig #}
+ 
+{% extends "DATASearchBundle::layout.html.twig" %}
+
+{% block title %}
+    Résultats de la recherche - {{ parent() }}
+{% endblock %} 
+    
+{% block h1 %}
+    Résultat de la recherche :
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li class="active">Résultats</li>
+{% endblock %}    
+    
+{% block content %}
+<div class="row">
+    <section class="col-md-12">
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="alert col-md-12 alert-success">
+                {{ flashMessage }}
+            </div>
+            <br />
+        {% endfor %}
+           
+        <div class="well">
+            <div class="row">
+                <div class="col-md-6">
+                    {% if access == 'true' %} {{ render(controller('DATASearchBundle:Search:search', {'access': 'true', 'teaching': teaching, 'query': query})) }}
+                    {% else %} {{ render(controller('DATASearchBundle:Search:search', {'teaching': teaching, 'query': query})) }}
+                    {% endif %}
+                </div>
+                <div class="col-md-6 text-right">
+                    <p class="lead">{{ searchResults.getTotalItemCount }} résultat(s)</p>
+                </div>
+            </div>
+        </div>
+        {% if ppid is defined %}
+            <p><span class="label label-info">Sélectionner une oeuvre pour l'ajouter à votre partie privée</span></p>
+        {% endif %}
+
+        <table class="table table-bordered table-hover"> 
+            <tr>
+                <th>#</th>
+                <th>Nom</th>
+                <th>Auteur</th>
+                <th>Datation</th>
+            </tr>
+            {# -- Cette boucle tient compte des entités pures -- #}
+            {% for result in searchResults %}
+                <tr>
+                    <td>{{ ((searchResults.getPaginationData.current-1)*100)+loop.index }}</td>
+                    <td>
+                        {% set viewArray = {'id': result.id, 'search': searchLog.id} %}
+                        {% if access == 'true' %}{% set viewArray = viewArray|merge({'access': true}) %}{% endif %}
+                        {% if ppid is defined %}{% set viewArray = viewArray|merge({'ppid': ppid}) %}{% endif %}
+                        <a href="{{ path(data_data_entity_routing_service.getRoutingPublicView(), viewArray) }}">{{data_data_entity_service.getName(result)}}</a>
+                    </td>
+                    <td>{% if data_data_entity_service.get('auteur', result) != null %}{{ data_data_entity_service.get('auteur', result) }}{% else %}Auteur inconnu{% endif %}</td>
+                    <td>{% if data_data_entity_service.get('datation', result) != null %}{{ data_data_entity_service.get('datation', result) }}{% else %}Datation inconnue{% endif %}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td class="alert alert-danger text-center" colspan="5">Oups ... Votre requête n'a retourné aucun résultat</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <div class="text-center">{{ knp_pagination_render(searchResults) }}</div>
+    </section>
+</div>
+{% endblock %}

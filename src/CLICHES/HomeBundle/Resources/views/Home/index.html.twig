@@ -1,0 +1,91 @@
+{% extends "CLICHESLayoutBundle::layout.html.twig" %}
+
+{% block brandtitle %}Bienvenue sur Clichés!{% endblock %}
+
+{% block content %}
+    {% if sid is defined %}
+    <div class="alert alert-info">
+        <p>Hey, il semble que tu sois parti.e un peu vite ! <a href="{{ path('cliches_player_end_end', {'playerSession_id': sid}) }}">Clique ici pour retrouver les résultats de ta dernière partie.</a></p>
+    </div>
+    {% endif %}
+    <div class="row">
+        <div class="col-xs-12 col-sm-7">
+            <div class="jumbotron">
+                <div class="row">
+                    <h2 class="text-center">Testez vos connaissances <br />en histoire de l'art grâce à Clichés!</h2>
+                    <br />
+                    {{ render(controller('CLICHESHomeBundle:Home:load')) }}
+                </div>
+            </div>
+
+            <!-- Accueil -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-6910536251617675"
+                 data-ad-slot="9786474741"
+                 data-ad-format="auto"></ins>
+        </div>
+        <div class="col-xs-12 col-sm-5">
+            <h1 class="hidden">Bienvenue sur Clichés!</h1>
+            <div class="panel panel-default">
+                <div class="list-group">
+                    <div class="list-group-item  list-group-item-success text-center jumbotron">
+                        <a href="{{ path('cliches_home_home_discover') }}"><h2>Découvrez l'application !</h2></a>
+                    </div>
+                    <div class="list-group-item text-center jumbotron">
+                        <h2>Partager, c'est nous aider !</h2>
+                        <div class="addthis_sharing_toolbox"></div>
+                    </div>
+                    <div class="list-group-item text-center">
+                        <h2>Notre actualité</h2>
+                        <strong><a class="twitter-timeline"  href="https://twitter.com/clichesart" data-widget-id="729979472137601024">Tweets de @clichesart</a></strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript_sub %}
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    <script>/*
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '970440623073727',
+                xfbml      : true,
+                version    : 'v2.5'
+            });
+        };
+
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        function fb_login() {
+            FB.getLoginStatus(function(response) {
+                if (response.status === 'connected') {
+                    // connected
+                    alert('Already connected, redirect to login page to create token.');
+                    document.location = "{# url("hwi_oauth_service_redirect", {service: "facebook"}) }}";
+                } else {
+                    // not_authorized
+                    FB.login(function(response) {
+                        if (response.authResponse) {
+                            document.location = "{{ url("hwi_oauth_service_redirect", {service: "facebook"}) #}";
+                        } else {
+                            alert('Cancelled.');
+                        }
+                    }, {scope: 'email'});
+                }
+            });
+        }*/
+    </script>
+{% endblock %}

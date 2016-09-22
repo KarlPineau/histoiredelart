@@ -1,0 +1,20 @@
+{# src/DATA/DataBundle/Resources/views/Artwork/register_content.html.twig #}
+
+<form class="form-inline" method="post" {{ form_enctype(form) }} role="form" style="display: inline-block;">
+    {% if not form.vars.valid %}
+    <div class="alert alert-error">
+        <strong>Votre formulaire contient les erreurs suivantes :</strong>
+        {{ form_errors(form) }}
+        {{ form_errors(form.reporting) }}
+    </div>
+    <br />
+    {% endif %}
+    
+    <div class="form-group">
+        {{ form_label(form.reporting, "Sujet :", {'label_attr': {'class': 'sr-only control-label'}}) }}
+        {{ form_widget(form.reporting, {'attr': {'placeholder': 'Votre signalement', 'class': 'form-control'}}) }}
+        {{ form_rest(form) }}
+        <input type="submit" class="btn btn-success" />
+        <a href="{{ path(entityReportingRoute, {'id': entityReporting.id}) }}" class="btn btn-warning">Annuler</a>
+    </div>
+</form>

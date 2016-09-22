@@ -1,0 +1,132 @@
+<div class="row">
+    <div class="col-md-6">
+    {% if not form.vars.valid %}
+        <div class="alert alert-error">
+            <strong>Votre formulaire contient les erreurs suivantes :</strong>
+            {{ form_errors(form) }}
+            {{ form_errors(form.type) }}
+            {{ form_errors(form.fields) }}
+            {{ form_errors(form.teachings) }}
+            {{ form_errors(form.sources) }}
+            {{ form_errors(form.image.copyright) }}
+            {{ form_errors(form.image.view.isPlan) }}
+            {{ form_errors(form.image.view.vue) }}
+            {{ form_errors(form.image.view.title) }}
+            {{ form_errors(form.image.view.iconography) }}
+            {{ form_errors(form.image.view.location) }}
+            {{ form_errors(form.image.fileImage) }}
+        </div>
+    {% endif %}
+    </div>
+</div>
+
+<div class="hidden">{{ form_row(form.type) }}</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="well">
+            <div id="contentEntity_1">
+                <h2 class="text-center">Que souhaitez-vous décrire ?</h2>
+                <br />
+                <div class="text-center">
+                    <div class="btn-group btn-group-lg">
+                        <button class="btn btn-lg btn-primary" id="buttonLoadArtwork" type="button">
+                            <img src="{{ asset('images/painting_icon.png') }}" style="max-height: 200px; display: block; margin-bottom: 20px;" />
+                            &OElig;uvre d'art
+                        </button>
+                        <button class="btn btn-lg btn-primary" id="buttonLoadBuilding" type="button">
+                            <img src="{{ asset('images/landmark_icon.png') }}" style="max-height: 200px; display: block; margin-bottom: 20px;" />
+                            Monument
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="contentEntity_2">
+
+                <div>
+                    <div class="pull-right"><button id="buttonBackTo1" class="btn btn-default" type="button">Retour</button></div>
+                    <legend>Cartel :</legend>
+                </div>
+
+                {{ form_row(form.fields) }}
+                <fieldset>
+                    <div id="divMatièreLegend">
+                        <legend>Matière :</legend>
+                        <div class="form-group">
+                            {{ form_label(form.teachings, "Matière(s) :", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+                            <div class="col-md-9">
+                                {{ form_widget(form.teachings, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <div id="divSourceLegend">
+                        <div class="pull-right">
+                            <button type="button" id="buttonAddSource" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></button>
+                        </div>
+                        <legend>Ajouter des web-ressources sur cette entité :</legend>
+                    </div>
+                    {{ form_row(form.sources) }}
+                    <div id="ajax-loader" class="text-center"><img src="{{ asset('images/ajax-loader.gif') }}" alt="ajax-loader-image" /></div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="well">
+            <div class="form-group">
+                <div class="col-md-12">
+                    {{ form_label(form.image.fileImage, "Sélectionner une photo :", {'label_attr': {'class': 'control-label'}}) }}
+                    {{ form_widget(form.image.fileImage, {'attr': {'placeholder': '', 'class': ''}}) }}
+                </div>
+            </div>
+            <div id="divPictureDescription">
+                <fieldset>
+                    <legend>A propos de cette photo :</legend>
+                    <div class="form-group">
+                        {{ form_label(form.image.copyright, "Droits d'auteur", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+                        <div class="col-md-9">
+                            {{ form_widget(form.image.copyright, {'attr': {'placeholder': '', 'value':'Inconnu', 'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>A propos de ce qui est représenté sur cette photo :</legend>
+                    <div class="form-group">
+                        {{ form_label(form.image.view.isPlan, "Cocher s'il s'agit d'un plan", {'label_attr': {'class': 'col-md-5 control-label'}}) }}
+                        <div class="col-md-7">
+                            {{ form_widget(form.image.view.isPlan, {'attr': {'placeholder': '', 'class': ''}}) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.image.view.vue, "Vue", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+                        <div class="col-md-9">
+                            {{ form_widget(form.image.view.vue, {'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.image.view.title, "Titre", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+                        <div class="col-md-9">
+                            {{ form_widget(form.image.view.title, {'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.image.view.iconography, "Sujet iconographique", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+                        <div class="col-md-9">
+                            {{ form_widget(form.image.view.iconography, {'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.image.view.location, "Localisation", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+                        <div class="col-md-9">
+                            {{ form_widget(form.image.view.location, {'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>
+{{ form_rest(form) }}

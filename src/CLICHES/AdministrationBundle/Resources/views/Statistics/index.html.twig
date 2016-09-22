@@ -1,0 +1,271 @@
+{# src/HDA/AdministrationBundle/Resources/views/Index/index.html.twig #}
+ 
+{% extends "CLICHESAdministrationBundle::layout.html.twig" %}
+ 
+{% block title %}
+    Statistiques - {{ parent() }}
+{% endblock %}
+
+{% block brandtitle %}
+    Statistiques
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li class="active">Statistiques</li>
+{% endblock %}
+
+{% block h1 %}
+    Statistiques
+{% endblock %}
+
+{% block h1_extend %}
+    <a href="{{ path('cliches_administration_votes_statistics') }}" class="btn btn-default" title="Statistiques des votes" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-stats"></span> Votes</a>
+    <a href="{{ path('cliches_administration_statistics_statisticsbyteaching') }}" class="btn btn-default"><span class="glyphicon glyphicon-stats"></span> Enseignements</a>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            {% for flashMessage in app.session.flashbag.get('notice') %}
+                <div class="alert alert-success">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="well">
+                {# -- A FAIRE : Créer une 2ème courbe pour le mois d'avant ? -- #}
+                <canvas id="sessionsInTime" width="400" height="200"></canvas>
+            </div>
+
+            <div class="panel-group" id="sessionsParMois" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="sessionsParMoisHeadingOne">
+                        <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#sessionsParMois" href="#sessionsParMoisCollapseOne" aria-expanded="false" aria-controls="sessionsParMoisCollapseOne">
+                                Nombre de sessions / mois
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="sessionsParMoisCollapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="sessionsParMoisHeadingOne">
+                        <div class="panel-body">
+                            {# -- A FAIRE : Sur les 12 derniers mois - Possibilité de juxtaposer les années -- #}
+                            <canvas id="canvasSessionsParMois" width="400" height="400"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-group" id="clichesParSession" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="clichesParSessionHeadingOne">
+                        <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#clichesParSession" href="#clichesParSessionCollapseOne" aria-expanded="false" aria-controls="clichesParSessionCollapseOne">
+                                Nombre de clichés / session
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="clichesParSessionCollapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="clichesParSessionHeadingOne">
+                        <div class="panel-body">
+                            <canvas id="canvasClichesParSession" width="400" height="400"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel-group" id="globalStatistics" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="globalStatisticsHeadingOne">
+                        <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#globalStatistics" href="#globalStatisticsCollapseOne" aria-expanded="true" aria-controls="globalStatisticsCollapseOne">
+                                Statistiques par sessions
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="globalStatisticsCollapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="globalStatisticsHeadingOne">
+                        {# Panel pour les stats qui concernent toutes les sessions #}
+                        <div class="list-group">
+                            <dl class="list-group-item dl-horizontal">
+                                <dt>Nombre de sessions</dt>
+                                <dd>Total : <a href="{{ path('cliches_administration_playersession_index') }}">{{nbSessions}}</a> - Aujourd'hui : {{ playersToday }} - Hier : {{ playersYesterday }}</dd>
+                            </dl>
+                            <dl class="list-group-item dl-horizontal">
+                                <dt>Utilisateurs connectés</dt>
+                                <dd>{{ (100-(cliches_player_playersession_service.getNumberNonUser()*100/nbSessions))|round(2, 'floor') }}% des sessions sont jouées connecté<br />
+                                    <small>Soit {{ nbSessions-cliches_player_playersession_service.getNumberNonUser() }} sessions</small><br />
+                                    <small>Moyenne : {{ cliches_player_playersession_service.getAverageUser()|round(2, 'floor') }} sessions/user</small><br />
+                                    <small>Médiane : {{ cliches_player_playersession_service.getMedianUser() }} sessions/user</small></dd>
+                            </dl>
+                            <dl class="list-group-item dl-horizontal">
+                                <dt>Temps par Session</dt>
+                                <dd>
+                                    Moyenne : {{ cliches_player_playersession_service.getAverageTime() }}<br />
+                                    Médiane : {{ cliches_player_playersession_service.getMedianTime() }}
+                                </dd>
+                            </dl>
+                            <dl class="list-group-item dl-horizontal">
+                                <dt>Répartition du temps de session</dt>
+                                <dd>X% des sessions < 10 min ; X% sessions < 30 min ...</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-group" id="sessionStatistics" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="sessionStatisticsHeadingOne">
+                        <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#sessionStatistics" href="#sessionStatisticsCollapseOne" aria-expanded="true" aria-controls="sessionStatisticsCollapseOne">
+                                Statistiques par clichés
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="sessionStatisticsCollapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="sessionStatisticsHeadingOne">
+                        {# Panelpour les stats qui concernent les clichés #}
+                        <div class="list-group">
+                            <dl class="list-group-item dl-horizontal">
+                                <dt>Clichés par Session</dt>
+                                <dd>
+                                    Moyenne : {{ cliches_player_playersession_service.getAverageClichesSession()|round(2, 'floor') }} clichés/session<br />
+                                    Médiane : {{ cliches_player_playersession_service.getMedianClichesSession() }} clichés/session
+                                </dd>
+                            </dl>
+                            <dl class="list-group-item dl-horizontal">
+                                <dt>Remplissage des champs</dt>
+                                <dd>
+                                    Global : {{ cliches_player_playerproposalfield_service.getPourcentageFullByField()|round(2, 'floor') }}%<br />
+                                    Nom: {{ cliches_player_playerproposalfield_service.getPourcentageFullByField('name')|round(2, 'floor') }}%<br />
+                                    Sujet: {{ cliches_player_playerproposalfield_service.getPourcentageFullByField('sujet')|round(2, 'floor') }}%<br />
+                                    Auteur: {{ cliches_player_playerproposalfield_service.getPourcentageFullByField('auteur')|round(2, 'floor') }}%<br />
+                                    Date: {{ cliches_player_playerproposalfield_service.getPourcentageFullByField('datation')|round(2, 'floor') }}%<br />
+                                    Provenance: {{ cliches_player_playerproposalfield_service.getPourcentageFullByField('provenance')|round(2, 'floor') }}%<br />
+                                    LieuDeConservation: {{ cliches_player_playerproposalfield_service.getPourcentageFullByField('lieuDeConservation')|round(2, 'floor') }}%<br />
+                                    Mattech: {{ cliches_player_playerproposalfield_service.getPourcentageFullByField('mattech')|round(2, 'floor') }}%
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript_sub %}
+
+    {{ parent() }}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.3/Chart.bundle.js"></script>
+    <script>
+        var sessionInTime = $("#sessionsInTime");
+        var labels = [];
+        function daysInMonth(month, year) {
+            return new Date(year, month, 0).getDate();
+        }
+        var today = new Date();
+        var yyyy = today.getFullYear();
+        var month = today.getMonth()+1;
+        var lastDay = today.getDate()-30;
+
+        for(var i = 0 ; i <= 30 ; i++) {
+            var current = lastDay+i;
+            if(current > 0) {
+                labels.push(current + '/' + month);
+            } else {
+                labels.push(daysInMonth(month-1, yyyy)-i);
+            }
+        }
+
+        $.ajax({
+            dataType: "json",
+            url: Routing.generate('cliches_administration_statistics_getstatistiques_intime'),
+            success: function(data){
+                var sessionInTimeChart = new Chart(sessionInTime, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: "Sessions du jour",
+                                fill: false,
+                                lineTension: 0.1,
+                                backgroundColor: "rgba(75,192,192,0.4)",
+                                borderColor: "rgba(75,192,192,1)",
+                                borderCapStyle: 'butt',
+                                borderDash: [],
+                                borderDashOffset: 0.0,
+                                borderJoinStyle: 'miter',
+                                pointBorderColor: "rgba(75,192,192,1)",
+                                pointBackgroundColor: "#fff",
+                                pointBorderWidth: 1,
+                                pointHoverRadius: 5,
+                                pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                                pointHoverBorderColor: "rgba(220,220,220,1)",
+                                pointHoverBorderWidth: 2,
+                                pointRadius: 1,
+                                pointHitRadius: 10,
+                                data: data,
+                            }
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero:true
+                                }
+                            }]
+                        }
+                    }
+                });
+            },
+            error: function(error){
+                console.log(dump(error));
+            }
+        });
+    </script>
+    <script>
+        var sessionsNbCliches = $("#canvasClichesParSession");
+
+        $.ajax({
+            dataType: "json",
+            url: Routing.generate('cliches_administration_statistics_getstatistiques_nbcliches'),
+            success: function(data){
+                var sessionsNbClichesChart = new Chart(sessionsNbCliches, {
+                    type: 'bar',
+                    data: {
+                        labels: data[0],
+                        datasets: [
+                            {
+                                label: "Nb par quantité de clichés",
+                                backgroundColor: "rgba(255,99,132,0.2)",
+                                borderColor: "rgba(255,99,132,1)",
+                                borderWidth: 1,
+                                hoverBackgroundColor: "rgba(255,99,132,0.4)",
+                                hoverBorderColor: "rgba(255,99,132,1)",
+                                data: data[1],
+                            }
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            xAxes: [{
+                                stacked: true
+                            }],
+                            yAxes: [{
+                                stacked: true
+                            }]
+                        }
+                    }
+                });
+            },
+            error: function(error){
+                console.log(dump(error));
+            }
+        });
+    </script>
+{% endblock %}

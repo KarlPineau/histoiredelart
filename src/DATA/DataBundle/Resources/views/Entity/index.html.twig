@@ -1,0 +1,59 @@
+{# src/DATA/DataBundle/Resources/views/Artwork/index.html.twig #}
+ 
+{% extends "DATADataBundle::layout.html.twig" %}
+
+{% block title %}
+    Accueil - {{ parent() }}
+{% endblock %} 
+    
+{% block h1 %}
+    Accueil des Oeuvres :
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li class="active">Items</li>
+{% endblock %}    
+    
+{% block content %}
+<div class="row">
+    <section class="col-md-12">
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="alert col-md-12 alert-success">
+                {{ flashMessage }}
+            </div>
+            <br />
+        {% endfor %}
+           
+        <div class="well">
+            {{ render(controller('DATASearchBundle:Search:search', {'access': 'true', 'type': ''})) }}
+        </div>
+
+        <h2>Items : {{ listEntities.getTotalItemCount }}</h2>
+
+        <table class="table table-striped table-bordered">
+            <tr>
+                <th>#</th>
+                <th>Nom</th>
+                <th>Auteur</th>
+                <th>Date</th>
+            </tr>
+            {# -- Cette boucle prend en compte des entités pures -- #}
+            {% for entityId in listEntities %}
+                {% set entity = data_data_entity_service.getById(entityId) %}
+                <tr>
+                    <td>{{ ((listEntities.getPaginationData.current-1)*100)+loop.index }}</td>
+                    <td><a href="{{ path(data_data_entity_routing_service.getRoutingView(), {'id': entity.id}) }}">{{data_data_entity_service.getName(entity)}}</a></td>
+                    <td>{% if data_data_entity_service.get('auteur', entity) != "" %}{{ data_data_entity_service.get('auteur', entity) }}{% else %}Auteur inconnu{% endif %}</td>
+                    <td>{% if data_data_entity_service.get('datation', entity) != "" %}{{ data_data_entity_service.get('datation', entity) }}{% else %}Datation inconnue{% endif %}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">Aucune oeuvre.</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <div class="text-center">{{ knp_pagination_render(listEntities) }}</div>
+    </section>
+</div>
+{% endblock %}

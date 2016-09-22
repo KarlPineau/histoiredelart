@@ -1,0 +1,15 @@
+{% extends "TBAdministrationBundle::layout.html.twig" %}
+
+{% block h1 %}Accueil - Administration{% endblock %}
+
+{% block content %}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    <div class="row">
+        <a href="{{ path('tb_administration_generate_generate') }}">Générer un Test</a>
+    </div>
+{% endblock %}

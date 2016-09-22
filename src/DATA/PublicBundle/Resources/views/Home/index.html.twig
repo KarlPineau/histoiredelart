@@ -1,0 +1,53 @@
+{% extends "DATAPublicBundle::layout.html.twig" %}
+
+{% block title %}
+    Accueil - {{ parent() }}
+{% endblock %}
+
+{% block h1 %}
+    Bienvenue sur DATA
+{% endblock %}
+
+{% block h1_extend %}
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li class="active">Accueil</li>
+{% endblock %}
+
+{% block content %}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    <div class="jumbotron text-center">
+        <div>
+            <h2>Bienvenue sur DATA</h2>
+        </div>
+        <p>Base de données d'histoire de l'art et d'archéologie</p>
+        <hr />
+        {% if ppid is defined %}
+            <p><span class="label label-info">Commencez une recherche pour sélectionner les oeuvres de votre partie privée</span></p>
+            {{ render(controller('DATASearchBundle:Search:search', {'access': 'false', 'type': '', 'ppid': ppid})) }}
+        {% else %}
+            {{ render(controller('DATASearchBundle:Search:search', {'access': 'false', 'type': ''})) }}
+        {% endif %}
+    </div>
+
+    <div class="jumbotron">
+        <h2>Rechercher par matière :</h2>
+        <ul class="list-inline">
+            {% for teaching in teachings %}
+                {% if loop.index > 1 %}-{% endif %}
+                <li>
+                    <a href="{{ path('data_public_teaching_view', { 'slug' : teaching.slug} ) }}">{{ teaching.name }}</a>
+                </li>
+            {% else %}
+                <li>Aucune matière.</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

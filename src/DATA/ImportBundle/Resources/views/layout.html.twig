@@ -1,0 +1,33 @@
+{# src/DATA/DataBundle/Resources/views/layout.html.twig #}
+ 
+{% extends "DATALayoutBundle::layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }}
+{% endblock %}
+    
+{% block follow %}
+    <meta name="robots" content="noindex,nofollow" />
+{% endblock %} 
+
+{% block h1 %}{% endblock %}
+
+{% block h1_extend %}{% endblock %}
+
+{% block breadcrumb %}
+    {% if is_granted("ROLE_ADMIN") %}{{parent()}}{% endif %}
+    {% if app.request.get('_route') == 'data_import_import_index' %}<li class="active">Importer</li>
+    {% else %}<li><a href="{{path('data_import_import_index')}}">Importer</a></li>
+    {% endif %}
+{% endblock %}
+
+{% block superformstart %}{# Block servant dans la page d'importation #}{% endblock %}
+{% block superformend %}{# Block servant dans la page d'importation #}{% endblock %}
+
+{% block content %}{% endblock %}
+
+{% block javascript %}
+    {{parent()}}
+    {% block javascript_sub %}
+    {% endblock %}
+{% endblock %}

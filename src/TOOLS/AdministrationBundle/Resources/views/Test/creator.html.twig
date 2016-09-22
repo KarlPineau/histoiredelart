@@ -1,0 +1,22 @@
+{% extends "TOOLSAdministrationBundle::layout.html.twig" %}
+
+{% block h1 %}Createurs{% endblock %}
+
+{% block content %}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <strong>{{ creators|length }} résultats</strong>
+            <ul>
+                {% for creator, count in creators %}
+                    <li>{{ creator }} <span class="glyphicon glyphicon-arrow-right"></span> {{ count }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

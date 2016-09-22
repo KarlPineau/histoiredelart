@@ -1,0 +1,56 @@
+# Home :
+data_administration_home_index:
+    path:     /accueil
+    defaults: { _controller: DATAAdministrationBundle:Home:index }
+
+# Visualization :
+data_administration_visualization_index:
+    path:     /visualisation
+    defaults: { _controller: DATAAdministrationBundle:Visualization:index }
+
+data_administration_visualization_get:
+    path:     /visualisation/get
+    defaults: { _controller: DATAAdministrationBundle:Visualization:get }
+    options:
+        expose: true
+
+# Entity Managment
+data_administration_entity_generate:
+    path:     /entity/generate
+    defaults: { _controller: DATAAdministrationBundle:Entity:generate }
+
+# Semantic Enrichment Managment
+data_administration_semanticEnrichment_generate:
+    path:     /semantic-enrichment/generate
+    defaults: { _controller: DATAAdministrationBundle:SemanticEnrichment:generate }
+
+#Public :
+data_administration_public_index:
+    path:     /gestion-public
+    defaults: { _controller: DATAAdministrationBundle:Public:index }
+
+#Reporting :
+data_administration_reporting_index:
+    path:     /signalements
+    defaults: { _controller: DATAAdministrationBundle:Reporting:index }
+
+data_administration_reporting_validate:
+    path:     /signalements/validation/{reporting_id}
+    defaults: { _controller: DATAAdministrationBundle:Reporting:validate }
+    requirements:
+        reporting_id:  \d+
+
+data_administration_reporting_refuse:
+    path:     /signalements/refus/{reporting_id}
+    defaults: { _controller: DATAAdministrationBundle:Reporting:refuse }
+    requirements:
+        reporting_id:  \d+
+
+#TeachingTest :
+data_administration_teachingtest_index:
+    path:     /teaching-test
+    defaults: { _controller: DATAAdministrationBundle:TeachingTest:index }
+
+data_administration_teachingtest_lastvotes:
+    path:     /teaching-test/derniers-votes
+    defaults: { _controller: DATAAdministrationBundle:TeachingTest:lastVotes }

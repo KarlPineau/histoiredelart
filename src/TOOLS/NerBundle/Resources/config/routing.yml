@@ -1,0 +1,49 @@
+tools_ner_index_index:
+    path:     /
+    defaults: { _controller: TOOLSNerBundle:Index:index }
+
+tools_ner_index_generateNameEntityRecognition:
+    path:     /ner/{field}
+    defaults: { _controller: TOOLSNerBundle:Index:generateNameEntityRecognition }
+    requirements:
+        field:  \S{0,255}
+
+tools_ner_index_synsets:
+    path:     /with-synsets
+    defaults: { _controller: TOOLSNerBundle:Index:synsets }
+
+tools_ner_index_noSynsets:
+    path:     /no-synsets
+    defaults: { _controller: TOOLSNerBundle:Index:noSynsets }
+
+tools_ner_index_noSynset:
+    path:     /no-synset
+    defaults: { _controller: TOOLSNerBundle:Index:noSynset }
+
+tools_ner_index_noSynsetHarvest:
+    path:     /no-synset-harvest
+    defaults: { _controller: TOOLSNerBundle:Index:noSynsetHarvest }
+
+#Author :
+tools_ner_creator_index:
+    path:     /createur/index
+    defaults: { _controller: TOOLSNerBundle:Creator:index }
+
+tools_ner_creator_generateCreator:
+    path:     /ner-createur/{id}
+    defaults: { _controller: TOOLSNerBundle:Creator:generateCreator }
+    requirements:
+        id:  \d+
+
+#Location :
+tools_ner_location_index:
+    path:     /location/index
+    defaults: { _controller: TOOLSNerBundle:Location:index }
+
+tools_ner_location_generateLocation:
+    path:     /ner-location/{id}
+    defaults: { _controller: TOOLSNerBundle:Location:generateLocation }
+    requirements:
+        id:  \d+
+
+

@@ -1,0 +1,4 @@
+services:
+    tools_administration.test_datation:
+        class: TOOLS\AdministrationBundle\Service\datation
+        arguments: [ "@doctrine.orm.entity_manager", "@security.context"]

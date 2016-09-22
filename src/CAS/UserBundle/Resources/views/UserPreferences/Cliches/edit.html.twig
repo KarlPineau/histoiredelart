@@ -1,0 +1,31 @@
+{% extends "CASLayoutBundle::layout.html.twig" %}
+
+{% block title %}
+    Préférences Clichés - {{ parent() }}
+{% endblock %}
+
+{% block h1 %}
+    Préférences Clichés :
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li><a href="{{ path('fos_user_profile_show') }}">Profil</a></li>
+    <li class="active">Préférences Clichés</li>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <section id="content" class="col-lg-12">
+            {% for flashMessage in app.session.flashbag.get('notice') %}
+                <div class="alert alert-success">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+
+            <div class="well">
+                {% include "CASUserBundle:UserPreferences:Cliches/edit_content.html.twig" %}
+            </div>
+        </section>
+    </div>
+{% endblock %}

@@ -1,0 +1,4 @@
+services:
+#    data_personal_place.example:
+#        class: DATA\PersonalPlaceBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

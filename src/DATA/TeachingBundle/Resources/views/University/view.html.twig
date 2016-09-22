@@ -1,0 +1,47 @@
+{# src/DATA/TeachingBundle/Resources/views/University/view.html.twig #}
+ 
+{% extends "DATATeachingBundle::layout.html.twig" %}
+
+{% block title %}
+    {{ university.name }} - {{ parent() }}
+{% endblock %}
+    
+{% block h1 %}
+    {{ university.name }} :
+{% endblock %}
+    
+{% block h1_extend %}
+    <a class="btn btn-default" href="{{ path('data_public_university_view', {'slug': university.slug}) }}" >Public</a>
+    <a class="btn btn-primary" href="{{ path('data_teaching_university_edit', {'slug': university.slug}) }}" ><span class="glyphicon glyphicon-edit"></span></a>
+    <a class="btn btn-danger main-JS-delete" href="{{ path('data_teaching_university_delete', {'slug': university.slug}) }}" ><span class="glyphicon glyphicon-remove"></span></a>
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li class="active">{{university.name}}</li>
+{% endblock %} 
+
+{% block content %}
+<div class="row">
+    <section id="content" class="col-lg-12">
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="alert alert-success">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+        
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Liste des enseignements :</h2>
+                <ul>
+                    {% for teaching in teachings %}
+                        <li><a href="{{ path('data_teaching_teaching_view', {'slug': teaching.slug}) }}">{{ teaching.name }}</a></li>
+                    {% else %}
+                        <li>Aucun enseignement pour cette université</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

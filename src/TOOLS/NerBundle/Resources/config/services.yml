@@ -1,0 +1,4 @@
+services:
+    tools_ner.ner:
+        class: TOOLS\NerBundle\Service\nameEntityRecognition
+        arguments: [ "@doctrine.orm.entity_manager", "@security.context", "@data_data.entity", "@buzz"]

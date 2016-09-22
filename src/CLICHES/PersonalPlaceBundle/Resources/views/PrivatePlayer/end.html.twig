@@ -1,0 +1,45 @@
+{% extends "CLICHESLayoutBundle::layout.html.twig" %}
+
+{% block title %}
+    {{ privatePlayer.title }} - Mes parties - {{ parent() }}
+{% endblock %}
+
+{% block brandtitle %}
+    Ma partie {{ privatePlayer.title }}
+{% endblock %}
+
+{% block h1 %}
+    Nouvelle partie {{ privatePlayer.title }}
+{% endblock %}
+
+{% block h1_extend %}
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li><a href="{{ path('fos_user_profile_show') }}">Mon compte</a></li>
+    <li><a href="{{ path('cliches_personalplace_privateplayer_index') }}">Parties privées</a></li>
+    <li class="active">Ma partie {{ privatePlayer.title }}</li>
+{% endblock %}
+
+{% block content %}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    <section class="row">
+        <div class="col-md-12">
+            <div class="jumbotron">
+                <h2>Félicitations, votre partie est désormais créée !</h2>
+
+                <strong>Plus que deux petites étapes pour finir</strong>
+                <ul>
+                    <li>Rendez-vous à présent sur <a href="{{ path('data_public_home_index', {'ppid': privatePlayer.id}) }}">data.histoiredelart.fr</a> pour sélectionner les clichés qui vous intéressent dans notre base de données ;</li>
+                    <li>Puis partagez cette partie avec l'url http://////// par mail, réseaux sociaux ou tout autre moyen à votre convenance :)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+{% endblock %}

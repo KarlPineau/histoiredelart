@@ -1,0 +1,36 @@
+{# src/DATA/PublicBundle/Resources/views/Artwork/view.html.twig #}
+
+{% if data_data_entity_service.valueByField('provenance', entity) != 'noproperty' and
+      data_data_entity_service.valueByField('provenance', entity) != 'empty' and
+      data_data_entity_service.valueByField('provenance', entity) != 'unrelevant' %}
+      <hr />
+      <div class="panel panel-default">
+            <div class="panel-heading"><h2 class="little-h2">{{ data_data_entity_service.valueByField('provenance', entity) }} :</h2></div>
+            <div class="panel-body" style="height: 200px; padding:0px;">
+                  <iframe width="100%" height="200" frameborder="0" style="border:0"
+                          src="https://www.google.com/maps/embed/v1/place?q={{ data_data_entity_service.valueByField('provenance', entity) }}&key=AIzaSyBpdwIxcv5c3lpy5_BcG7-Y5s5rMGhV0_Y" allowfullscreen></iframe>
+            </div>
+      </div>
+{% elseif data_data_entity_service.valueByField('lieuDeConservation', entity) != 'noproperty' and
+            data_data_entity_service.valueByField('lieuDeConservation', entity) != 'empty' and
+            data_data_entity_service.valueByField('lieuDeConservation', entity) != 'unrelevant' %}
+<hr />
+<div class="panel panel-default">
+      <div class="panel-heading"><h2 class="little-h2">{{ data_data_entity_service.valueByField('lieuDeConservation', entity) }} :</h2></div>
+      <div class="panel-body" style="height: 200px; padding:0px;">
+            <iframe width="100%" height="200" frameborder="0" style="border:0"
+                    src="https://www.google.com/maps/embed/v1/place?q={{ data_data_entity_service.valueByField('lieuDeConservation', entity) }}&key=AIzaSyBpdwIxcv5c3lpy5_BcG7-Y5s5rMGhV0_Y" allowfullscreen></iframe>
+      </div>
+</div>
+{% elseif data_data_entity_service.valueByField('name', entity) != 'noproperty' and
+      data_data_entity_service.valueByField('name', entity) != 'empty' and
+      data_data_entity_service.valueByField('name', entity) != 'unrelevant' %}
+      <hr />
+      <div class="panel panel-default">
+            <div class="panel-heading"><h2 class="little-h2">{{ data_data_entity_service.valueByField('name', entity) }} :</h2></div>
+            <div class="panel-body" style="height: 200px; padding:0px;">
+                  <iframe width="100%" height="200" frameborder="0" style="border:0"
+                          src="https://www.google.com/maps/embed/v1/place?q={{ data_data_entity_service.valueByField('name', entity) }}&key=AIzaSyBpdwIxcv5c3lpy5_BcG7-Y5s5rMGhV0_Y" allowfullscreen></iframe>
+            </div>
+      </div>
+{% endif %}

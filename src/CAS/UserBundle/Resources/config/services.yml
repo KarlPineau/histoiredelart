@@ -1,0 +1,22 @@
+services:
+    cas_user.remove:
+        class: CAS\UserBundle\Service\remove
+        arguments: [ "@doctrine.orm.entity_manager", "@fos_user.user_manager"]
+
+    cas_user.registration_listener:
+        class: CAS\UserBundle\EventListener\RegistrationListener
+        arguments: [ "@doctrine.orm.entity_manager"]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    cas_user.login_listener:
+        class: CAS\UserBundle\EventListener\LoginListener
+        arguments: [ "@doctrine.orm.entity_manager", "@security.context"]
+        tags:
+            - { name: 'kernel.event_listener', event: 'security.interactive_login'}
+
+    cas_user.password_changing:
+            class: CAS\UserBundle\EventListener\ChangePasswordListener
+            arguments: [ "@doctrine.orm.entity_manager" ]
+            tags:
+                - { name: kernel.event_subscriber }

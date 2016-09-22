@@ -1,0 +1,41 @@
+{% set playerOeuvre = playerOeuvreCollection['playerOeuvre'] %}
+{% set playerProposal = playerOeuvreCollection['playerProposal'] %}
+{% set entity = data_data_entity_service.getByView(playerOeuvre.view) %}
+<div class="col-md-6 col-xs-12">
+    <div class="well">
+        <div class="">
+            <div class="thumbnail">
+                {% set image = data_image_image_service.getImageForView(playerOeuvre.view) %}
+                {{ render(controller('DATAImageBundle:Image:renderImage', {'view_id': playerOeuvre.view.id, 'class': 'image-cliches-list'})) }}
+                <div class="caption">
+                    <p>&copy; {{image.copyright}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="">
+            {% if playerProposal is not null %}
+                {% for playerProposalField in playerProposal %}
+                    <dl class="dl-horizontal">
+                        <dt>{{ playerProposalField['label'] }}</dt>
+                        <dd>
+                            {% if playerProposalField['suggestResult'] is not empty %}<p>{{ playerProposalField['suggestResult'] }}</p>
+                            {% else %}<p class="text-warning">Vous n'avez rien proposé</p>
+                            {% endif %}
+                            <p class="text-success">{{ playerProposalField['trueResult'] }}</p>
+                        </dd>
+                    </dl>
+                {% endfor %}
+            {% else %}
+                {% if playerOeuvre.playerSession.simpleSession != true %}<p class="alert alert-warning text-center">Vous n'avez rien répondu pour cette oeuvre.</p>{% endif %}
+                {% for field in data_data_entity_service.getListFieldsForEntity(entity) %}
+                    {% if data_data_entity_service.valueByField(field['field'], entity) != 'unrelevant' and data_data_entity_service.valueByField(field['field'], entity) != 'empty' %}
+                        <dl class="dl-horizontal">
+                            <dt>{{ field['label'] }}</dt>
+                            <dd><span class="text-success">{{ data_data_entity_service.valueByField(field['field'], entity) }}</span></dd>
+                        </dl>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>

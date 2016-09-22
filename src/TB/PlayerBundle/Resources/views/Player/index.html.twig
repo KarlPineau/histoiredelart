@@ -1,0 +1,61 @@
+{% extends "TBPlayerBundle::layout.html.twig" %}
+
+{% block h1 %}{{ testedGame.title }}{% endblock %}
+
+{% block content %}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+    <input type="hidden" id="testedItemsNumber" value="{{ testedGame.testedItems|length }}" />
+
+    <div class="row">
+        {% for testedItem in testedGame.testedItems %}
+            <div class="col-md-3">
+                {{ render(controller('DATAImageBundle:Image:renderImage', {'view_id': 0, 'image_id': testedItem.dataImage.id, 'class': 'image-cliche-tb fancybox'})) }}
+                <div>Réponse:</div>
+                <div id="item-{{ loop.index }}" itemId="{{ loop.index }}" class="droppable ui-widget-header" style="height: 100px; width: 100px;"></div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <hr />
+    <div class="row">
+        {% for testedItem in testedGame.testedItems %}
+            <div class="btn btn-default draggable" style="cursor:grab!important;" id="itemLabel-{{ loop.index }}" itemId="{{ loop.index }}">{{ testedItem.itemLabel }}</div>
+        {% endfor %}
+    </div>
+    {% endblock %}
+
+{% block javascript_sub %}
+    <script>
+        //https://jqueryui.com/droppable/#photo-manager
+        $( function() {
+            var testedItemsNumber = $('#testedItemsNumber').val();
+
+            var draggableString;
+            for(i = 0; i <= testedItemsNumber; i++) {
+                if(i > 0) {draggableString += ',';}
+                draggableString += '#itemLabel-'+testedItemsNumber[i];
+            }
+
+            $(draggableString).draggable();
+            for(i = 0; i <= testedItemsNumber; i++) {
+                $('#item-2'+testedItemsNumber[i]).droppable({
+                    accept: '#itemLabel-'+testedItemsNumber[i],
+                    classes: {
+                        "ui-droppable-active": "ui-state-active",
+                        "ui-droppable-hover": "ui-state-hover"
+                    },
+                    drop: function( event, ui ) {
+                        $( this )
+                                .addClass( "ui-state-highlight" )
+                                .find( "p" )
+                                .html( "Dropped!" );
+                    }
+                });
+            }
+        } );
+    </script>
+{% endblock %}

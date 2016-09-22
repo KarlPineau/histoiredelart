@@ -1,0 +1,107 @@
+#Gestion de l'accueil de l'administration
+cliches_administration_home_homepage:
+    path:     /accueil
+    defaults: { _controller: CLICHESAdministrationBundle:Homepage:index }
+
+#PlayerSuggests :
+cliches_administration_playersuggest_transition:
+    path:     /suggestions/transition
+    defaults: { _controller: CLICHESAdministrationBundle:PlayerSuggest:transition }
+
+cliches_administration_playersuggest_archives:
+    path:     /suggestions/archives
+    defaults: { _controller: CLICHESAdministrationBundle:PlayerSuggest:archives }
+
+cliches_administration_playersuggest_index:
+    path:     /suggestions
+    defaults: { _controller: CLICHESAdministrationBundle:PlayerSuggest:index }
+    
+cliches_administration_playersuggest_traitement:
+    path:     /suggestions/traitement/{playerSuggest_id}
+    defaults: { _controller: CLICHESAdministrationBundle:PlayerSuggest:playerSuggestTraitement }
+    requirements:
+        playerSuggest_id:  \d+
+
+cliches_administration_playersuggest_validate:
+    path:     /suggestions/valide/{playerSuggest_id}
+    defaults: { _controller: CLICHESAdministrationBundle:PlayerSuggest:playerSuggestValidate }
+    requirements:
+        playerSuggest_id:  \d+
+
+cliches_administration_playersuggest_refuse:
+    path:     /suggestions/refuse/{playerSuggest_id}
+    defaults: { _controller: CLICHESAdministrationBundle:PlayerSuggest:playerSuggestRefuse }
+    requirements:
+        playerSuggest_id:  \d+
+
+#Unrelevant
+cliches_administration_unrelevantfield_validate:
+    path:     /champ-non-pertinent/valide/{unrelevantField_id}
+    defaults: { _controller: CLICHESAdministrationBundle:UnrelevantField:unrelevantFieldValidate }
+    requirements:
+        unrelevantField_id:  \d+
+
+cliches_administration_unrelevantfield_unvalidate:
+    path:     /champ-non-pertinent/invalide/{unrelevantField_id}
+    defaults: { _controller: CLICHESAdministrationBundle:UnrelevantField:unrelevantFieldUnValidate }
+    requirements:
+        unrelevantField_id:  \d+
+
+cliches_administration_unrelevantfield_refuse:
+    path:     /champ-non-pertinent/refuse/{unrelevantField_id}
+    defaults: { _controller: CLICHESAdministrationBundle:UnrelevantField:unrelevantFieldRefuse }
+    requirements:
+        unrelevantField_id:  \d+
+
+cliches_administration_unrelevantfield_traitement:
+    path:     /champ-non-pertinent/traitement/{unrelevantField_id}
+    defaults: { _controller: CLICHESAdministrationBundle:UnrelevantField:unrelevantFieldTraitement }
+    requirements:
+        unrelevantField_id:  \d+
+
+#PlayerSessionView
+cliches_administration_playersession_index:
+    path:     /playersession/vue-globale
+    defaults: { _controller: CLICHESAdministrationBundle:PlayerSessionView:index }
+
+cliches_administration_playersession_view:
+    path:     /playersession/vue/{session_id}
+    defaults: { _controller: CLICHESAdministrationBundle:PlayerSessionView:view }
+    requirements:
+        session_id:  \d+
+
+#Votes
+cliches_administration_votes_statistics:
+    path:     /votes/statistiques
+    defaults: { _controller: CLICHESAdministrationBundle:Votes:statistics }
+
+cliches_administration_votes_statistics_intime:
+    path:     /votes/stats-xml-intime
+    defaults: { _controller: CLICHESAdministrationBundle:Votes:getStatistiquesInTime }
+    options:
+        expose: true
+
+cliches_administration_votes_normalizeVotes:
+    path:     /votes/normalisation
+    defaults: { _controller: CLICHESAdministrationBundle:Votes:normalizeVotes }
+
+#Statistics
+cliches_administration_statistics_index:
+    path:     /statistiques
+    defaults: { _controller: CLICHESAdministrationBundle:Statistics:index }
+
+cliches_administration_statistics_getstatistiques_intime:
+    path:     /statistiques/stats-xml-intime
+    defaults: { _controller: CLICHESAdministrationBundle:Statistics:getStatistiquesInTime }
+    options:
+        expose: true
+
+cliches_administration_statistics_getstatistiques_nbcliches:
+    path:     /statistiques/stats-xml-nbcliches
+    defaults: { _controller: CLICHESAdministrationBundle:Statistics:getStatistiquesNbCliches }
+    options:
+        expose: true
+
+cliches_administration_statistics_statisticsbyteaching:
+    path:     /statistiques/enseignement
+    defaults: { _controller: CLICHESAdministrationBundle:Statistics:statisticsByTeaching }

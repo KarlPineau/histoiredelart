@@ -1,0 +1,18 @@
+{% extends "TOOLSNerBundle::layout.html.twig" %}
+
+{% block h1 %}Field assessment{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li class="active">Name Entity Recognition</li>
+{% endblock %}
+
+{% block content %}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    {{ dump(entity) }}
+{% endblock %}

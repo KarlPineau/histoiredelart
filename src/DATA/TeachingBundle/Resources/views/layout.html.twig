@@ -1,0 +1,30 @@
+{# src/DATA/TeachingBundle/Resources/views/layout.html.twig #}
+ 
+{% extends "DATAAdministrationBundle::layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }}
+{% endblock %}
+    
+{% block follow %}
+    <meta name="robots" content="noindex,nofollow" />
+{% endblock %} 
+
+{% block h1 %}{% endblock %}
+
+{% block h1_extend %}{% endblock %}
+
+{% block breadcrumb %}
+    {{parent()}}
+    {% if app.request.get('_route') != 'data_teaching_teaching_index' %}<li><a href="{{ path('data_teaching_teaching_index') }}">Enseignements</a></li>
+    {% else %}<li class="active">Enseignement</li>
+    {% endif %}
+{% endblock %}
+
+{% block content %}{% endblock %}
+
+{% block javascript %}
+    {{parent()}}
+    {% block javascript_sub %}
+    {% endblock %}
+{% endblock %}

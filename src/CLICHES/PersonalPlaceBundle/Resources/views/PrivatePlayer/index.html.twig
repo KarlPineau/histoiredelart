@@ -1,0 +1,34 @@
+{% extends "CLICHESLayoutBundle::layout.html.twig" %}
+
+{% block title %}
+    Parties privées - {{ parent() }}
+{% endblock %}
+
+{% block brandtitle %}
+    Parties privées
+{% endblock %}
+
+{% block h1 %}
+    Mes parties privées :
+{% endblock %}
+
+{% block h1_extend %}
+    <a href="{{ path('cliches_personalplace_privateplayer_register') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Nouvelle</a>
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li><a href="{{ path('fos_user_profile_show') }}">Mon compte</a></li>
+    <li class="active">Parties privées</li>
+{% endblock %}
+
+{% block content %}
+    <section class="jumbotron">
+        <h2>Ci-dessous, vos parties privées.</h2>
+    </section>
+    {% for privatePlayer in privatePlayers %}
+        {{ privatePlayer.title }}<br />
+    {% else %}
+        <p class="alert alert-info">Pas de partie pour le moment</p>
+    {% endfor %}
+{% endblock %}

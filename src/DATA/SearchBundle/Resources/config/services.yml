@@ -1,0 +1,4 @@
+services:
+    data_search.search:
+        class: DATA\SearchBundle\Service\search
+        arguments: [ "@doctrine.orm.entity_manager", "@security.context", "@data_teaching.teaching", "@data_data.entity"]

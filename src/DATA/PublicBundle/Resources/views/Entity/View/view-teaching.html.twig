@@ -1,0 +1,12 @@
+{# src/DATA/PublicBundle/Resources/views/Artwork/view.html.twig #}
+<div class="panel panel-default">
+    <div class="panel-heading"><h2 class="little-h2">Enseignement :</h2></div>
+    <ul class="list-group">
+        {% for teaching in teachings %}
+            <li class="list-group-item"><a href="{{path('data_public_teaching_view', {'slug': teaching.slug})}}"><span class="glyphicon glyphicon-teaching"></span> {{teaching.name}}</a></li>
+        {% else %}
+            <li class="list-group-item alert alert-warning"><span class="glyphicon glyphicon-teaching"></span> Pas d'enseignement ...</li>
+        {% endfor %}
+    </ul>
+</div>
+

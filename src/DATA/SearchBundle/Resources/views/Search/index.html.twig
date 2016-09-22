@@ -1,0 +1,22 @@
+{% extends "DATASearchBundle::layout.html.twig" %}
+
+{% block title %}
+    Accueil - {{ parent() }}
+{% endblock %}
+
+{% block h1 %}
+    Rechercher
+{% endblock %}
+
+{% block h1_extend %}
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <div class="jumbotron text-center">
+        {{  render(controller('DATASearchBundle:Search:search', {'access': 'false', 'type': ''})) }}
+    </div>
+{% endblock %}

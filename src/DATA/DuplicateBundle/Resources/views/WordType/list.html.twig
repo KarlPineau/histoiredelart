@@ -1,0 +1,51 @@
+{# src/DATA/DuplicateBundle/Resources/views/WordType/index.html.twig #}
+ 
+{% extends "DATADuplicateBundle::layout.html.twig" %}
+
+{% block title %}
+    Accueil - {{ parent() }}
+{% endblock %} 
+    
+{% block h1 %}
+    Liste des Expressions :
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li><a href="{{ path('data_duplicate_wordtype_index') }}">Expressions</a></li>
+    <li class="active">List</li>
+{% endblock %}    
+    
+{% block content %}
+<div class="row">
+    <section class="col-md-12">
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="alert col-md-12 alert-success">
+                {{ flashMessage }}
+            </div>
+            <br />
+        {% endfor %}
+
+        <table class="table table-bordered table-striped">
+            <tr>
+                <th>#</th>
+                <th>Word</th>
+                <th>Type</th>
+                <th>Context</th>
+            </tr>
+            {% for word in words %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ word.word }}</td>
+                <td>{{ word.type.name }}</td>
+                <td>{{ word.context }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4">Aucun mot répertorié</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </section>
+</div>
+{% endblock %}

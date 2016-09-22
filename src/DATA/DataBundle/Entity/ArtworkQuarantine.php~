@@ -1,0 +1,45 @@
+<?php
+
+namespace DATA\DataBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * ArtworkQuarantine
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="DATA\DataBundle\Entity\ArtworkQuarantineRepository")
+ */
+class ArtworkQuarantine extends Artwork
+{
+    /**
+    * @ORM\ManyToOne(targetEntity="DATA\DataBundle\Entity\Artwork")
+    * @ORM\JoinColumn(nullable=false)
+    */
+    private $artwork;
+
+    /**
+     * Set artwork
+     *
+     * @param \DATA\DataBundle\Entity\Artwork $artwork
+     * @return ArtworkQuarantine
+     */
+    public function setArtwork(\DATA\DataBundle\Entity\Artwork $artwork)
+    {
+        $this->artwork = $artwork;
+
+        return $this;
+    }
+
+    /**
+     * Get artwork
+     *
+     * @return \DATA\DataBundle\Entity\Artwork 
+     */
+    public function getArtwork()
+    {
+        return $this->artwork;
+    }
+}

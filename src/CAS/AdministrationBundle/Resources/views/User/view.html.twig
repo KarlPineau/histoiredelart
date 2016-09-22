@@ -1,0 +1,158 @@
+{# src/HDA/AdministrationBundle/Resources/views/Index/index.html.twig #}
+
+{% extends "CASAdministrationBundle::layout.html.twig" %}
+
+{% block title %}
+    {{ user.email }} - {{ parent() }}
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li class="active">{{ user.email }}</li>
+{% endblock %}
+
+{% block brandtitle %}
+    {{ user.email }}
+{% endblock %}
+
+{% block h1 %}
+    {{ user.email }}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <section id="content" class="col-lg-12">
+            {% for flashMessage in app.session.flashbag.get('notice') %}
+                <div class="alert alert-success">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+
+            <div class="jumbotron">
+                <div class="row">
+                    <div class="col-md-6">
+                        <dl class="dl-horizontal">
+                            <dt>Email</dt><dd>{{ user.email }}</dd>
+                        </dl>
+                        <dl class="dl-horizontal">
+                            <dt>Rôles</dt>
+                            <dd>
+                                {% for role in user.roles %}
+                                    {% if loop.index > 1 %}, {% endif %}
+                                    {{ role }}
+                                {% endfor %}
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="col-md-6">
+                        <dl class="dl-horizontal">
+                            <dt>Date d'enregistrement</dt><dd>{% if user.createDate != null %}{{ user.createDate|date('d-m-Y') }}{% else %}Inconnue{% endif %}</dd>
+                        </dl>
+                        <dl class="dl-horizontal">
+                            <dt>Dernière modif. du profil</dt><dd>{% if user.updateDate != null %}{{ user.updateDate|date('d-m-Y') }}{% else %}Inconnue{% endif %}</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Sur Data</h2>
+
+                    <table class="table table-bordered table-striped">
+                        <caption>Dernières notices consultées</caption>
+                        <tr>
+                            <th>#</th>
+                            <th>Entité</th>
+                            <th>Date</th>
+                        </tr>
+                        {# -- Cette boucle tient compte des entités pures -- #}
+                        {% for visit in lastVisitsEntity %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>
+                                {% if visit.entity != null %}<a href="{{ path('data_data_entity_view', {'id': visit.entity.id}) }}" target="_blank">{{ data_data_entity_service.getName(visit.entity) }}</a>
+                                {% elseif visit.university != null %}<a href="{{ path('data_teaching_university_view', {'slug': visit.university.slug}) }}" target="_blank">{{ visit.university.name }}</a>
+                                {% elseif visit.teaching != null %}<a href="{{ path('data_teaching_teaching_view', {'slug': visit.teaching.slug}) }}" target="_blank">{{ visit.teaching.name }}</a>
+                                {% endif %}
+                            </td>
+                            <td>{{ visit.createDate|date('d-m-Y') }}</td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="3" class="text-center">Aucune consultation</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    <hr/>
+                    <table class="table table-bordered table-striped">
+                        <caption>Dernières sessions d'importations</caption>
+                        <tr>
+                            <th>#</th>
+                            <th>Date</th>
+                        </tr>
+                        {% for session in lastEntityImportSessions %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ session.createDate|date('d-m-Y') }}</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="2" class="text-center">Aucune importation</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                    <hr/>
+                    <table class="table table-bordered table-striped">
+                        <caption>Derniers signalements</caption>
+                        <tr>
+                            <th>#</th>
+                            <th>Date</th>
+                        </tr>
+                        {% for reporting in lastDataReportings %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ reporting.createDate|date('d-m-Y') }}</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="2" class="text-center">Aucune Signalement</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <h2>Sur Clichés</h2>
+                    <table class="table table-bordered table-striped">
+                        <caption>Dernières sessions</caption>
+                        <tr>
+                            <th>#</th>
+                            <th>Teaching</th>
+                            <th>Type</th>
+                            <th>Date</th>
+                        </tr>
+                        {% for session in lastPlayerSessions %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ session.teaching.name }}</td>
+                                <td>
+                                    {% if session.simpleSession == true %}Examen
+                                    {% else %}Normal
+                                    {% endif %}
+                                </td>
+                                <td>{{ session.createDate|date('d-m-Y') }}</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="4" class="text-center">Aucune Session</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                    <ul>
+                        <li>Les préférences (stats dans le détail) : nb de clichés / session, etc</li>
+                        <li>Les contributions : votes, suggest, error</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

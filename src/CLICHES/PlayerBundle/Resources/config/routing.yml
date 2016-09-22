@@ -1,0 +1,76 @@
+# Gestion de la Session :
+cliches_player_session_load:
+    path:     /chargement/partie/{teaching_id}/{mode}
+    defaults: { _controller: CLICHESPlayerBundle:Session:load }
+    requirements:
+        teaching_id:  \d+
+        mode: \S{0,255}
+
+cliches_player_session_forcedEnd:
+    path:     /partie/force/fin/{session_id}
+    defaults: { _controller: CLICHESPlayerBundle:Session:forcedEnd }
+    requirements:
+        session_id:  \d+
+    options:
+        expose: true
+
+# Gestion de la sélection :
+cliches_player_selection_selection:
+    path:     /partie/{playerSession_id}
+    defaults: { _controller: CLICHESPlayerBundle:Selection:selection }
+    requirements:
+        playerSession_id:  \d+
+    options:
+        expose: true
+
+# Gestion de l'affichage du questionnaire :
+cliches_player_proposal_proposal:
+    path:     /partie/proposal/{playerOeuvre_id}
+    defaults: { _controller: CLICHESPlayerBundle:Proposal:proposal }
+    requirements:
+        playerOeuvre_id:  \d+
+
+cliches_player_proposalfield_proposalfield:
+    path:     /partie/proposalfield/{idImg}
+    defaults: { _controller: CLICHESPlayerBundle:ProposalField:proposalField }
+    options:
+        expose: true
+
+# Gestion de l'affichage des résultats :
+cliches_player_result_result:
+    path:     /partie/resultat/{playerProposal_id}/{validation}
+    defaults:
+        _controller: CLICHESPlayerBundle:Result:result
+        validation: null
+    requirements:
+        playerProposal_id:  \d+
+        validation: \S{0,255}
+        
+cliches_player_result_results:
+    path:     /partie/resultats/{playerProposal_id}
+    defaults: { _controller: CLICHESPlayerBundle:Result:results }
+    options:
+        expose: true
+
+# Gestion de la fin de la partie :
+cliches_player_end_end:
+    path:     /partie/terminee/{playerSession_id}
+    defaults: { _controller: CLICHESPlayerBundle:End:end }
+    requirements:
+        playerSession_id:  \d+
+
+# Gestion des pages d'erreur :
+cliches_player_playersuggest_suggest:
+    path:     /partie/suggestion/{playerProposal_id}
+    defaults: { _controller: CLICHESPlayerBundle:PlayerSuggest:suggest }
+    requirements:
+        playerProposal_id:  \d+
+
+# Gestion des logs zoom :
+cliches_player_zoom_log:
+    path:     /partie/log-zoom/{playerOeuvre_id}
+    defaults: { _controller: CLICHESPlayerBundle:PlayerZoomView:logZoomView }
+    requirements:
+        playerOeuvre_id:  \d+
+    options:
+        expose: true

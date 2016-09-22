@@ -1,0 +1,42 @@
+{# src/HOME/LayoutBundle/Resources/views/layout.html.twig #}
+ 
+{% extends "::layout.html.twig" %}
+
+{% block title %}
+    histoiredelart.fr
+{% endblock %}
+
+{% block follow %}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-officiel.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('css/main-kp.css') }}" type="text/css" />
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="{{ asset('images/logo.png') }}">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ asset('images/logo.png') }}">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset('images/logo.png') }}">
+    <link rel="apple-touch-icon-precomposed" href="{{ asset('images/logo.png') }}">
+
+{% endblock %}
+
+{% block header %}{% endblock %}  
+
+{% block container %}
+<div class="container">
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}{% endif %}
+
+    {% block content %}{% endblock %}
+</div>
+{% endblock %} 
+
+{% block javascript %}
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        
+<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+
+<script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
+{% endblock %}

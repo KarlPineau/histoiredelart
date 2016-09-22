@@ -1,0 +1,106 @@
+{# src/HDA/AdministrationBundle/Resources/views/Index/index.html.twig #}
+ 
+{% extends "CLICHESAdministrationBundle::layout.html.twig" %}
+ 
+{% block title %}
+    Session #{{ session.id }} - {{ parent() }}
+{% endblock %}
+
+{% block brandtitle %}
+    Session #{{ session.id }}
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li><a href="{{ path('cliches_administration_playersession_index') }}">Liste des dernières sessions</a></li>
+    <li class="active">Session #{{ session.id }}</li>
+{% endblock %}
+
+{% block h1 %}
+    Session #{{ session.id }}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <section id="content" class="col-lg-12">
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="alert alert-success">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+        
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-md-3">
+                    <dl class="">
+                        <dt>Matière :</dt>
+                        <dd>{{ session.teaching.name }}</dd>
+                    </dl>
+                </div>
+                <div class="col-md-3">
+                    <dl class="">
+                        <dt>Heure :</dt>
+                        <dd>
+                            {% if session.dateBegin is null and session.dateEnd is null %}Aucune donnée{% endif %}
+                            {% if session.dateBegin is not empty %}{{ session.dateBegin|date('d-m-Y H:i:s') }}{% endif %}
+                            {% if session.dateEnd is not empty %} - {{ session.dateEnd|date('H:i:s') }}{% endif %}
+                        </dd>
+                    </dl>
+                </div>
+                <div class="col-md-3">
+                    <dl class="">
+                        <dt>Type :</dt>
+                        <dd>
+                            {% if session.simpleSession == true %}<span class="text-info">Examen</span>
+                            {% elseif session.simpleSession == false %}Normal
+                            {% endif %}
+                        </dd>
+                    </dl> <br />
+                    <dl class="">
+                        <dt>Nombre de clichés :</dt>
+                        <dd>{{ cliches_player_playersession_service.getNumberCliches(session) }}</dd>
+                    </dl>
+                </div>
+                <div class="col-md-3">
+                    <dl class="">
+                        <dt>Joueur :</dt>
+                        <dd>{{ session.ipPlayerUser }}{% if session.createUser is not empty %} <span class="glyphicon glyphicon-arrow-right"></span> <a href="{{ path('cas_administration_user_view', {'id': session.createUser.id}) }}">{{ session.createUser.email }}</a>{% endif %}</dd>
+                    </dl>
+                    <br />
+                    <dl class="">
+                        <dt>HTTP_USER_AGENT :</dt>
+                        <dd>{% if session.HTTPUSERAGENT is not empty %}{{ session.HTTPUSERAGENT }}{% else %}no data{% endif %}</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                {% for playerOeuvreCollection in playerOeuvres %}
+                    {% if loop.index is not even %}
+                        {% set playerOeuvre = playerOeuvreCollection['playerOeuvre'] %}
+                        {% set playerProposal = playerOeuvreCollection['playerProposal'] %}
+                        {% set entity = data_data_entity_service.getByView(playerOeuvre.view) %}
+                        {% set detailedProfile = true %}
+
+                        {% include 'CLICHESPlayerBundle:End:endGame-templateEntity.html.twig' %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="col-md-6">
+                {% for playerOeuvreCollection in playerOeuvres %}
+                    {% if loop.index is even %}
+                        {% set playerOeuvre = playerOeuvreCollection['playerOeuvre'] %}
+                        {% set playerProposal = playerOeuvreCollection['playerProposal'] %}
+                        {% set entity = data_data_entity_service.getByView(playerOeuvre.view) %}
+                        {% set detailedProfile = true %}
+
+                        {% include 'CLICHESPlayerBundle:End:endGame-templateEntity.html.twig' %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

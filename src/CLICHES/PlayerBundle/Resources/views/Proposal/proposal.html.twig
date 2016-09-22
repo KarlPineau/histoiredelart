@@ -1,0 +1,67 @@
+{# src/HDA/PlayerBundle/Resources/views/Player/game.html.twig #}
+ 
+{% extends "CLICHESLayoutBundle::layout.html.twig" %}
+
+{% block title %}
+    Jeu - {{ parent() }}
+{% endblock %}
+
+{% block brandtitle %}
+    Clichés!
+{% endblock %}
+
+{% block brandhomelink %}{{ path('cliches_home_home_index', {'sid': playerProposal.playerOeuvre.playerSession.id}) }}{% endblock %}
+
+{% block content %}
+<input type="hidden" value="{{playerProposal.playerOeuvre.playerSession.id}}" id="session-id" />
+<input type="hidden" value="{{playerProposal.playerOeuvre.id}}" id="oeuvre-id" />
+<div class="row">
+    <section id="content" class="col-lg-12">
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="alert alert-success">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="thumbnail">
+                            <!-- Erreur sur le fileName ici (qui n'existe plus) -->
+                            {% set image = data_image_image_service.getImageForView(playerProposal.playerOeuvre.view) %}
+                            {{ render(controller('DATAImageBundle:Image:renderImage', {'view_id': playerProposal.playerOeuvre.view.id, 'class': 'image-cliches fancybox', 'id': 'imgEntity', 'clichesnumber': image.id})) }}
+                            <div class="caption text-muted text-right">
+                                <small><span class="glyphicon glyphicon-zoom-in"></span> Cliquer pour zoomer</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="well">
+                    {% if proposalType == 'choice' %}
+                        {% include "CLICHESPlayerBundle:Proposal:proposal_choice_content.html.twig" %}
+                    {% elseif proposalType == 'field' %}
+                        {% include "CLICHESPlayerBundle:Proposal:proposal_field_content.html.twig" %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+    
+{% block javascript_sub %}
+    {% javascripts  '@CLICHESPlayerBundle/Resources/public/js/proposal.js'  %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    {% if proposalType == 'choice' %}
+        {% javascripts  '@CLICHESPlayerBundle/Resources/public/js/proposalChoice.js'  %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% elseif proposalType == 'field' %}
+        {% javascripts  '@CLICHESPlayerBundle/Resources/public/js/proposalField.js'  %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% endif %}
+{% endblock %}

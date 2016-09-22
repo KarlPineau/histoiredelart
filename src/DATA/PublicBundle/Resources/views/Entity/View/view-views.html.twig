@@ -1,0 +1,26 @@
+{# src/DATA/PublicBundle/Resources/views/Entity/View/view-views.html.twig #}
+{% for view in relatedViews %}
+    <div class="panel panel-default">
+        <div class="panel-heading text-center">
+            <div class="">
+                {{ render(controller('DATAImageBundle:Image:renderImage', {'view_id': view.id, 'class': 'image-cliches-list fancybox'})) }}
+                <div class="caption"><small>&copy; {{ data_image_image_service.getImageForView(view).copyright }}</small></div>
+            </div>
+        </div>
+        <div class="list-group">
+            {% for field in data_image_view_service.getListFieldsForView() %}
+                <dl class="dl-horizontal list-group-item">
+                    <dt>{{ field['label'] }} :</dt>
+                    <dd>
+                        {% if data_image_view_service.valueByField(field['field'], view) == 'unrelevant' %}<span class="text-danger">Champ non pertinent</span>
+                        {% elseif data_image_view_service.valueByField(field['field'], view) == 'empty' %}<span class="text-warning">Champ vide</span>
+                        {% else %}<span class="text-success">{{ data_image_view_service.valueByField(field['field'], view) }}</span>
+                        {% endif %}
+                    </dd>
+                </dl>
+            {% endfor %}
+        </div>
+    </div>
+{% else %}
+    <div class="alert alert-danger">Pas de vues relatives</div>
+{% endfor %}

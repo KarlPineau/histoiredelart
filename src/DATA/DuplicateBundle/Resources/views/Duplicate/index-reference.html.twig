@@ -1,0 +1,4 @@
+{% set relatedViews = data_data_entity_service.getViews(entity) %}
+{% include 'DATAPublicBundle:Entity:View/view-views.html.twig' %}
+{% set entityForInformation = entity %}
+{% include 'DATAPublicBundle:Entity:View/view-informations.html.twig' %}

@@ -1,0 +1,114 @@
+<?php
+
+namespace DATA\ImageBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * Image
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="DATA\ImageBundle\Entity\ImageRepository")
+ */
+class Image
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      max = "255",
+     *      maxMessage = "Le champ 'Titre' ne peut pas dépasser {{ limit }} caractères"
+     * )
+     *
+     * @ORM\Column(name="titre", type="string", length=255, nullable=false)
+     */
+    private $titre;
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Slug(fields={"titre"})
+     * @ORM\Column(name="slug", type="string", length=255, nullable=false, unique=true)
+     */
+    private $slug;
+
+    /**
+     * @var string
+     * @Assert\Length(
+     *      max = "255",
+     *      maxMessage = "Le champ 'Copyright' ne peut pas dépasser {{ limit }} caractères"
+     * )
+     *
+     * @ORM\Column(name="copyright", type="string", length=255, nullable=false)
+     */
+    private $copyright;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="DATA\ImageBundle\Entity\View")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $view;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="DATA\ImportBundle\Entity\View")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $viewImport;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="DATA\ImageBundle\Entity\FileImage")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $fileImage;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="KP\UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $createUser;
+
+    /**
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="createDate", type="datetime", nullable=false)
+     */
+    protected $createDate;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="KP\UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $updateUser;
+
+    /**
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="updateDate", type="datetime", nullable=true)
+     */
+    protected $updateDate;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="updateComment", type="string", length=255, nullable=true)
+     * @Assert\Length(
+     *      max = "255",
+     *      maxMessage = "Le commentaire ne doit pas dépasser {{ limit }} caractères."
+     * )
+     */
+    protected $updateComment;
+}

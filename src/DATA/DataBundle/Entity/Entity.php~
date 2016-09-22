@@ -1,0 +1,252 @@
+<?php
+
+namespace DATA\DataBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * Entity
+ *
+ * @ORM\Table()
+ * @ORM\Entity()
+ */
+class Entity
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="DATA\DataBundle\Entity\Building")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $building;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="DATA\DataBundle\Entity\Artwork")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $artwork;
+
+    /**
+     * @var \stdClass
+     *
+     * @ORM\ManyToOne(targetEntity="DATA\ImportBundle\Entity\EntityImportSession", inversedBy="importSession")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $importSession;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="importValidation", type="boolean", nullable=true)
+     */
+    private $importValidation;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="KP\UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $createUser;
+
+    /**
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="createDate", type="datetime", nullable=false)
+     */
+    protected $createDate;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="KP\UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $updateUser;
+
+    /**
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="updateDate", type="datetime", nullable=true)
+     */
+    protected $updateDate;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set building
+     *
+     * @param \DATA\DataBundle\Entity\Building $building
+     * @return Entity
+     */
+    public function setBuilding(\DATA\DataBundle\Entity\Building $building = null)
+    {
+        $this->building = $building;
+
+        return $this;
+    }
+
+    /**
+     * Get building
+     *
+     * @return \DATA\DataBundle\Entity\Building 
+     */
+    public function getBuilding()
+    {
+        return $this->building;
+    }
+
+    /**
+     * Set artwork
+     *
+     * @param \DATA\DataBundle\Entity\Artwork $artwork
+     * @return Entity
+     */
+    public function setArtwork(\DATA\DataBundle\Entity\Artwork $artwork = null)
+    {
+        $this->artwork = $artwork;
+
+        return $this;
+    }
+
+    /**
+     * Get artwork
+     *
+     * @return \DATA\DataBundle\Entity\Artwork 
+     */
+    public function getArtwork()
+    {
+        return $this->artwork;
+    }
+
+    /**
+     * Set createDate
+     *
+     * @param \DateTime $createDate
+     * @return Entity
+     */
+    public function setCreateDate($createDate)
+    {
+        $this->createDate = $createDate;
+
+        return $this;
+    }
+
+    /**
+     * Get createDate
+     *
+     * @return \DateTime 
+     */
+    public function getCreateDate()
+    {
+        return $this->createDate;
+    }
+
+    /**
+     * Set updateDate
+     *
+     * @param \DateTime $updateDate
+     * @return Entity
+     */
+    public function setUpdateDate($updateDate)
+    {
+        $this->updateDate = $updateDate;
+
+        return $this;
+    }
+
+    /**
+     * Get updateDate
+     *
+     * @return \DateTime 
+     */
+    public function getUpdateDate()
+    {
+        return $this->updateDate;
+    }
+
+    /**
+     * Set importSession
+     *
+     * @param \DATA\ImportBundle\Entity\EntityImportSession $importSession
+     * @return Entity
+     */
+    public function setImportSession(\DATA\ImportBundle\Entity\EntityImportSession $importSession = null)
+    {
+        $this->importSession = $importSession;
+
+        return $this;
+    }
+
+    /**
+     * Get importSession
+     *
+     * @return \DATA\ImportBundle\Entity\EntityImportSession 
+     */
+    public function getImportSession()
+    {
+        return $this->importSession;
+    }
+
+    /**
+     * Set createUser
+     *
+     * @param \KP\UserBundle\Entity\User $createUser
+     * @return Entity
+     */
+    public function setCreateUser(\KP\UserBundle\Entity\User $createUser = null)
+    {
+        $this->createUser = $createUser;
+
+        return $this;
+    }
+
+    /**
+     * Get createUser
+     *
+     * @return \KP\UserBundle\Entity\User 
+     */
+    public function getCreateUser()
+    {
+        return $this->createUser;
+    }
+
+    /**
+     * Set updateUser
+     *
+     * @param \KP\UserBundle\Entity\User $updateUser
+     * @return Entity
+     */
+    public function setUpdateUser(\KP\UserBundle\Entity\User $updateUser = null)
+    {
+        $this->updateUser = $updateUser;
+
+        return $this;
+    }
+
+    /**
+     * Get updateUser
+     *
+     * @return \KP\UserBundle\Entity\User 
+     */
+    public function getUpdateUser()
+    {
+        return $this->updateUser;
+    }
+}

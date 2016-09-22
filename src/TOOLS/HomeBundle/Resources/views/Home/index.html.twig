@@ -1,0 +1,30 @@
+{% extends "TOOLSHomeBundle::layout.html.twig" %}
+
+{% block title %}
+    Accueil - {{ parent() }}
+{% endblock %}
+
+{% block h1 %}
+    Bienvenue sur TOOLS
+{% endblock %}
+
+{% block h1_extend %}
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    <div class="jumbotron text-center">
+        <h2>Bienvenue sur TOOLS</h2>
+        <p>Outils pour la recherche en histoire de l'art et archéologie</p>
+        <p class="text-center"><a href="{{ path('tools_europeana_home_index') }}">Europeana Player</a></p>
+    </div>
+{% endblock %}

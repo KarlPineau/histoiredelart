@@ -1,0 +1,89 @@
+{# src/DATA/DataBundle/Resources/views/Artwork/register_content.html.twig #}
+
+<form class="form-horizontal" method="post" action="{{ path('data_data_artwork_edit', {'slug': entity.slug}) }}" {{ form_enctype(form) }} role="form">
+    {% if not form.vars.valid %}
+    <div class="alert alert-error">
+        <strong>Votre formulaire contient les erreurs suivantes :</strong>
+        {{ form_errors(form) }}
+        {{ form_errors(form.sujet) }}
+        {{ form_errors(form.sujetIcono) }}
+        {{ form_errors(form.auteur) }}
+        {{ form_errors(form.commanditaire) }}
+        {{ form_errors(form.provenance) }}
+        {{ form_errors(form.datation) }}
+        {{ form_errors(form.mattech) }}
+        {{ form_errors(form.dimensions) }}
+        {{ form_errors(form.style) }}
+        {{ form_errors(form.lieuDeConservation) }}
+    </div>
+    <br />
+    {% endif %}
+    
+    <fieldset>
+        <legend>Oeuvre :</legend>
+
+        <div class="form-group">
+            {{ form_label(form.sujet, "Sujet :", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+            <div class="col-md-9">
+                {{ form_widget(form.sujet, {'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.sujetIcono, "Sujet iconographique :", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+            <div class="col-md-9">
+                {{ form_widget(form.sujetIcono, {'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.auteur, "Auteur :", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+            <div class="col-md-9">
+                {{ form_widget(form.auteur, {'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.commanditaire, "Commanditaire :", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+            <div class="col-md-9">
+                {{ form_widget(form.commanditaire, {'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.provenance, "Provenance :", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+            <div class="col-md-9">
+                {{ form_widget(form.provenance, {'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.datation, "Datation :", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+            <div class="col-md-9">
+                {{ form_widget(form.datation, {'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.mattech, "Matières et Techniques :", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+            <div class="col-md-9">
+                {{ form_widget(form.mattech, {'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.dimensions, "Dimensions :", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+            <div class="col-md-9">
+                {{ form_widget(form.dimensions, {'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.style, "Style :", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+            <div class="col-md-9">
+                {{ form_widget(form.style, {'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.lieuDeConservation, "Lieu de Conservation :", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+            <div class="col-md-9">
+                {{ form_widget(form.lieuDeConservation, {'attr': {'placeholder': '', 'class': 'form-control'}}) }}
+            </div>
+        </div>
+    </fieldset>
+        <br />
+    {{ form_rest(form) }}
+    <div class="text-center"><input type="submit" class="btn btn-default" /></div>
+</form>

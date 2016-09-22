@@ -1,0 +1,24 @@
+{# src/DATA/DataBundle/Resources/views/Artwork/index.html.twig #}
+ 
+{% extends "DATASearchBundle::layout.html.twig" %}
+
+{% block title %}
+    Résultats de la recherche - {{ parent() }}
+{% endblock %} 
+    
+{% block h1 %}
+    Résultat de la recherche :
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li class="active">Résultats</li>
+{% endblock %}    
+    
+{% block content %}
+<div class="row">
+    <section class="col-md-12">
+        {{ dump(item) }}
+    </section>
+</div>
+{% endblock %}

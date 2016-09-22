@@ -1,0 +1,66 @@
+{% extends "DATAAdministrationBundle::layout.html.twig" %}
+
+{% block title %}Signalements - {{ parent() }}{% endblock %}
+
+{% block h1 %}Signalements{% endblock %}
+
+{% block h1_extend %}
+    <a href="#" class="btn btn-lg btn-default">Archives</a>
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li class="active">Signalements</li>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <section class="col-md-12">
+
+            {% for flashMessage in app.session.flashbag.get('notice') %}
+                <div class="alert alert-success">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th>#</th>
+                    <th>Oeuvre</th>
+                    <th>Signalement</th>
+                    <th>Validation</th>
+                </tr>
+                {% for reporting in reportings %}
+                    {% set entity = reporting.entity %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>
+                            <strong>Par {% if reporting.createUser is not empty %}{{ reporting.createUser.email }}{% else %}Inconnu{% endif %}</strong><hr />
+                            <strong>
+                                <a href="{{ path(data_data_entity_routing_service.getRoutingView(), { 'id' : entity.id} ) }}" target="_blank">{{ data_data_entity_service.getName(entity) }}</a>
+                            </strong>
+                            <div class="thumbnail">
+                                {% for view in data_data_entity_service.getViews(entity) %}
+                                    {% if loop.index < 2 %}
+                                        {{ render(controller('DATAImageBundle:Image:renderImage', {'view_id': view.id, 'class': 'image-cliches-list thumbnail'})) }}
+                                    {% endif %}
+                                {% else %}
+                                    <p class="alert alert-danger">Pas de vue</p>
+                                {% endfor %}
+                            </div>
+                        </td>
+                        <td>{{ reporting.reporting }}</td>
+                        <td>
+                            <a class="btn btn-success" href="{{ path('data_administration_reporting_validate', {'reporting_id': reporting.id}) }}"><span class="glyphicon glyphicon-check"></span></a>
+                            <a class="btn btn-danger" href="{{ path('data_administration_reporting_refuse', {'reporting_id': reporting.id}) }}"><span class="glyphicon glyphicon-remove"></span></a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4"><p class="text-center">Aucun signalement</p></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </section>
+    </div>
+{% endblock %}

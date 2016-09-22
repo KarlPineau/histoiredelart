@@ -1,0 +1,48 @@
+{% extends "CLICHESLayoutBundle::layout.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/full-height-block.css') }}" type="text/css" />
+{% endblock %}
+
+{% block brandtitle %}
+    Découvrir Clichés!
+{% endblock %}
+
+{% block content %}
+    <div class="jumbotron">
+        <div>
+            <h1>Bienvenue sur Clichés!</h1>
+            <div class="text-center"><img src="{{ asset('images/logo.png') }}" alt="Logo Clichés!" style="max-width: 100px;"/></div>
+            <br />
+            <p class="text-center"><strong>Clichés! est l’application web qui vous permet de tester simplement vos connaissances en histoire de l’art et en archéologie.</strong></p>
+        </div>
+        <div>
+            <h2>Quel est le principe ?</h2>
+            <p>Le principe du jeu est très simple : sélectionner une discipline d’histoire de l’art ou d’archéologie et laissez vous guider. Clichés! vous présentera au hasard des oeuvres d’art en rapport avec la discipline choisie et vous demandera de renseigner les cartels de ces oeuvres.</p>
+        </div>
+        <div>
+            <h2>Découvrez le mode Examens.</h2>
+            <p>Si vous souhaitez vous entrainer aux examens, sélectionnez le mode prévu à cet effet au lancement de la partie. Clichés! tire une oeuvre au hasard et vous la projette pendant 10 minutes. A vous de prendre une feuille de papier et de faire votre commentaire d’oeuvre. A vous également de vous auto-corriger à la fin de la session de clichés.<br />
+                Il s’agit d’un mode idéal pour s’entrainer à la gestion du temps de l’épreuve de clichés de l’Ecole du Louvre.</p>
+        </div>
+        <div>
+            <h2>Comment fonctionne Clichés! ?</h2>
+            <p>Clichés! est un site bénévole créé par un ancien élève de l’Ecole du Louvre. Nous pensons que le savoir doit être partagé et diffusé au plus grand nombre. C’est pourquoi les contenus de Clichés sont proposés gratuitement et dans une démarche d’open data. Retrouvez l’intégralité de la base de données de Clichés sur <a href="{{ path('data_public_home_index') }}">data.histoiredelart.fr</a>.<br />
+                L’enrichissement des données (oeuvres, informations sur les oeuvres) se base essentiellement sur la contribution des utilisateurs du site.</p>
+        </div>
+        <div>
+            <h2>Comment contribuer à Clichés! ?</h2>
+            <p>La contribution des utilisateurs à Clichés! est la première source d’enrichissement de nos données. Clichés! propose d’enrichir le contenu à chaque résultat d’oeuvre. Il est alors possible de proposer des améliorations du contenu ou signaler des erreurs. Votre participation - même ponctuellement - à cet enrichissement est crucial pour permettre à Clichés! de vous proposer des résultats toujours plus satisfaisants.<br />
+                Vous pouvez également proposer l’ajout d’oeuvres en vous rendant <a href="{{ path('data_import_import_index') }}">sur l’interface d’importation</a> des oeuvres sur data.histoiredelart.fr. </p>
+        </div>
+        <div>
+            <h2>Partager Clichés!</h2>
+            <p>Clichés! se base sur la contribution des utilisateurs. Diffuser le site est ainsi le meilleur moyen de nous aider à attirer de nouveaux utilisateurs et autant de sources de connaissance. N’hésitez pas à diffuser le site sur vos réseaux sociaux !</p>
+            <div class="text-center"><div class="addthis_sharing_toolbox"></div></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

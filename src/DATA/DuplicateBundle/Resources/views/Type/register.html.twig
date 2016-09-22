@@ -1,0 +1,32 @@
+{# src/DATA/DuplicateBundle/Resources/views/Type/register.html.twig #}
+ 
+{% extends "DATADuplicateBundle::layout.html.twig" %}
+
+{% block title %}
+    Insertion - {{ parent() }}
+{% endblock %}
+    
+{% block h1 %}
+    Nouveau Type :
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li class="active">Insertion</li>
+{% endblock %} 
+
+{% block content %}
+<div class="row">
+    <section id="content" class="col-lg-12">
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="alert alert-success">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+        
+        <div class="well">
+            {% include "DATADuplicateBundle:Type:register_content.html.twig" %}
+        </div>
+    </section>
+</div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{# src/CLICHES/HomeBundle/Resources/views/Session/load_content.html.twig #}
+
+<form class="form-horizontal text-center" action="{{ path('cliches_home_home_load') }}"  method="post" {{ form_enctype(form) }} role="form">
+    {% if not form.vars.valid %}
+    <div class="alert alert-error">
+        <strong>Votre formulaire contient les erreurs suivantes :</strong>
+        {{ form_errors(form) }}
+        {{ form_errors(form.teaching) }}
+        {{ form_errors(form.mode) }}
+    </div>
+    <br />
+    {% endif %}
+
+    <div class="form-group">
+        {{ form_label(form.teaching, "Matière :", {'label_attr': {'class': 'sr-only control-label'}}) }}
+        <div class="col-xs-10 col-xs-offset-1">
+            {{ form_widget(form.teaching, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+    <br />
+    <div class="row">
+
+        {#<div class="form-group">
+            {{ form_label(form.mode, "Difficulté :", {'label_attr': {'class': 'sr-only control-label'}}) }}
+            <div class="col-xs-8 col-xs-offset-2">
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-default active">
+                        <input type="radio" name="options" id="option1" autocomplete="off" checked> Moyenne
+                    </label>
+                    <label class="btn btn-default">
+                        <input type="radio" name="options" id="option2" autocomplete="off"> Élevée
+                    </label>
+                    <label class="btn btn-default">
+                        <input type="radio" name="options" id="option3" autocomplete="off"> Examen
+                    </label>
+
+                    {{ form_widget(form.mode) }}
+                </div>
+            </div>
+        </div>#}
+
+        <div class="form-group">
+            {{ form_label(form.mode, "Difficulté :", {'label_attr': {'class': 'sr-only control-label'}}) }}
+            <div class="col-sm-9 btn-group" data-toggle="buttons">
+                {% for key,choice in form.mode.vars.choices %}
+                    <label class="btn btn-default {% if choice.value == form.mode.vars.value %}active{% endif %}">
+                        <input type="radio" id="{{ form.mode.vars.id }}_{{ key }}" {% if choice.value == form.mode.vars.value %}checked{% endif %}
+                               autocomplete="off" name="{{ form.mode.vars.full_name }}" value="{{ choice.value }}" />
+                        {{ choice.label }}
+                    </label>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <span class="glyphicon glyphicon-question-sign" style="cursor: pointer;" data-content="Prenez une feuille de papier. 10 minutes par cliché. Rédigez votre commentaire. Clichés! ne vous indiquera les cartels qu'à la fin de la session. A vous de vous corriger seul." data-toggle="popover" data-container="body" data-original-title="Mode Examen" ></span>
+    <br />
+    {{ form_rest(form) }}
+    <div class="text-center"><input type="submit" class="btn btn-lg btn-success" value="Et c'est parti !" /></div>
+</form>

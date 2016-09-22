@@ -1,0 +1,40 @@
+{# src/DATA/DataBundle/Resources/views/Artwork/register.html.twig #}
+ 
+{% extends "DATADataBundle::layout.html.twig" %}
+
+{% block title %}
+    Edition des Sources - {{ parent() }}
+{% endblock %}
+    
+{% block h1 %}
+    Edition des Sources :
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li><a href="{{ path('data_data_entity_index') }}">Items</a></li>
+    <li><a href="{{ path('data_data_entity_view', {'id': entity.id}) }}">{{ data_data_entity_service.getName(entity) }}</a></li>
+    <li class="active">Edition des sources</li>
+{% endblock %} 
+
+{% block content %}
+<div class="row">
+    <section id="content" class="col-lg-12">
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="alert alert-success">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+        
+        <div class="well">
+            {% include "DATADataBundle:Entity:Sources/editSources_content.html.twig" %}
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block javascript_sub %}
+    {% javascripts  '@DATADataBundle/Resources/public/js/editEntitySources.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

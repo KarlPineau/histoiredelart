@@ -1,0 +1,31 @@
+{% extends "CLICHESLayoutBundle::layout.html.twig" %}
+
+{% block title %}
+    Nouvelle - Parties privées - {{ parent() }}
+{% endblock %}
+
+{% block brandtitle %}
+    Nouvelle partie privée
+{% endblock %}
+
+{% block h1 %}
+    Nouvelle partie privée :
+{% endblock %}
+
+{% block h1_extend %}
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li><a href="{{ path('fos_user_profile_show') }}">Mon compte</a></li>
+    <li><a href="{{ path('cliches_personalplace_privateplayer_index') }}">Parties privées</a></li>
+    <li class="active">Nouvelle</li>
+{% endblock %}
+
+{% block content %}
+    <section class="row">
+        <div class="col-md-12">
+            {% include "CLICHESPersonalPlaceBundle:PrivatePlayer:Register/register_content.html.twig" %}
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,20 @@
+<form class="form-inline" method="post" action="{{ path('data_data_entity_view_mergeViews', {'view_id': view.id}) }}" {{ form_enctype(form) }} role="form">
+    {% if not form.vars.valid %}
+        <div class="alert alert-error">
+            <strong>Votre formulaire contient les erreurs suivantes :</strong>
+            {{ form_errors(form) }}
+            {{ form_errors(form.view) }}
+        </div>
+        <br />
+    {% endif %}
+
+        <div class="form-group">
+            <div class="input-group">
+                {{ form_widget(form.view, {'attr': {'class': 'form-control input-sm'}}) }}
+                <div class="input-group-btn">
+                    <button class="btn btn-default main-JS-delete btn-sm btn-warning" type="submit"><i class="glyphicon glyphicon-ok"></i></button>
+                </div>
+            </div>
+        </div>
+    {{ form_rest(form) }}
+</form>

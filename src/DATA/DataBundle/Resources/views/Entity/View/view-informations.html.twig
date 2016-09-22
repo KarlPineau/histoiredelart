@@ -1,0 +1,28 @@
+{# src/DATA/PublicBundle/Resources/views/Artwork/view.html.twig #}
+<div class="panel panel-default">
+    <div class="panel-heading"><h2 class="little-h2">Informations :</h2></div>
+    <div class="list-group">
+        {% for field in data_data_entity_service.getListFieldsForEntity(entity) %}
+            <dl class="list-group-item dl-horizontal">
+                <dt>{{ field['label'] }} :</dt>
+                <dd>
+                    {% if field['field'] == 'sujetIcono' %}
+                        <div class="pull-right"><input id="checkBoxSujetIcono" type="checkbox" aria-label="SujetAsIconography" title="SujetAsIconography" data-toggle="tooltip" data-placement="left" {% if data_data_entity_service.isSujetAsIconography(entity) == true %}checked{% endif %} /></div>
+                    {% endif %}
+
+                    {% if field['field'] == 'sujetIcono' and data_data_entity_service.isSujetAsIconography(entity) == true %}<span class="text-danger">Iconographie similaire au sujet</span>
+                    {% elseif data_data_entity_service.valueByField(field['field'], entity) == 'unrelevant' %}
+                        <span class="text-danger">Champ non pertinent <a href="{{path('data_data_unrelevant_setrelevant', {'unrelevantField_id': data_data_unrelevant_service.getByField(entity, field['field']).id, 'id': entity.id})}}" class="main-JS-delete"><span class="glyphicon glyphicon-remove"></span></a></span>
+                    {% elseif data_data_entity_service.valueByField(field['field'], entity) == 'empty' %}
+                        <span class="text-warning">Champ vide <a href="{{ path('data_data_unrelevant_setunrelevant', {'field': field['field'],'id': entity.id}) }}" title="Qualifier comme non pertinent"><span class="glyphicon glyphicon-remove"></span></a></span>
+                    {% elseif data_data_entity_service.valueByField(field['field'], entity) == 'noproperty' %}
+                        <span class="text-danger">Error: unexpected property</span>
+                    {% else %}
+                        <span class="text-success">{{ data_data_entity_service.valueByField(field['field'], entity) }}</span>
+                        {% if data_data_entity_service.getSemanticEnrichment(field['field'], entity) is not null %}<a href="{{ data_data_entity_service.getSemanticEnrichment(field['field'], entity) }}" target="_blank">+ infos</a>{% endif %}
+                    {% endif %}
+                </dd>
+            </dl>
+        {% endfor %}
+    </div>
+</div>

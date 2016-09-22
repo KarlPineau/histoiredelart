@@ -1,0 +1,16 @@
+services:
+    data_data.artworkaction:
+        class: DATA\DataBundle\Service\artworkAction
+        arguments: [ "@doctrine.orm.entity_manager", "@security.context", "@data_image.viewaction", "@data_teaching.teaching"]
+    data_data.buildingaction:
+        class: DATA\DataBundle\Service\buildingAction
+        arguments: [ "@doctrine.orm.entity_manager", "@security.context", "@data_image.viewaction", "@data_teaching.teaching"]
+    data_data.entity:
+        class: DATA\DataBundle\Service\entity
+        arguments: [ "@doctrine.orm.entity_manager", "@security.context", "@data_data.artworkaction", "@data_data.buildingaction", "@data_image.viewaction"]
+    data_data.entity_routing:
+            class: DATA\DataBundle\Service\entityRouting
+            arguments: [ "@doctrine.orm.entity_manager", "@security.context"]
+    data_data.unrelevantfield:
+        class: DATA\DataBundle\Service\unrelevant
+        arguments: [ "@doctrine.orm.entity_manager", "@security.context", "@data_data.entity"]

@@ -1,0 +1,28 @@
+{# src/DATA/PublicBundle/Resources/views/Artwork/view.html.twig #}
+{% for teaching in relatedView['teachings'] %}
+    {% set nodata = true %}
+    {% for teachingTest in teaching['teachingTests'] if teachingTest['teachingTestVotes']|length > 0 %}
+        {% set nodata = false %}
+    {% endfor %}
+
+    <div class="panel panel-default" style="margin: 0px;">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                {% if nodata == true %}<div class="pull-right"><span class="label label-info">No Data</span></div>{% endif %}
+                <a href="{{path('data_teaching_teaching_view', {'slug': teaching['teaching'].slug})}}">{{teaching['teaching'].name}}</a>
+            </h3>
+        </div>
+        {% if nodata == false %}
+            <div class="panel-body" style="margin:0px;">
+            {% for teachingTest in teaching['teachingTests'] if teachingTest['teachingTestVotes']|length > 0 %}
+                <dl class="dl-horizontal" style="margin-bottom:0px;">
+                    <dt>{{ teachingTest['teachingTestVotesOui']|length }} oui | {{ teachingTest['teachingTestVotesNon']|length }} non <span class="glyphicon glyphicon-chevron-right"></span></dt>
+                    <dd>{{ (teachingTest['teachingTestVotesOui']|length*100)/teachingTest['teachingTestVotes']|length }}% de chance</dd>
+                </dl>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+{% else %}
+    <p class="text-center">Pas d'enseignement ...</p>
+{% endfor %}

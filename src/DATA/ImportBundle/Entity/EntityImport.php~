@@ -1,0 +1,654 @@
+<?php
+
+namespace DATA\ImportBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * EntityImport
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="DATA\ImportBundle\Entity\EntityImportRepository")
+ */
+class EntityImport
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="isBuilding", type="boolean", nullable=true)
+     */
+    private $isBuilding;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="isPlan", type="boolean", nullable=true)
+     */
+    private $isPlan;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="datation", type="string", length=255, nullable=true)
+     */
+    private $datation;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="auteur", type="string", length=255, nullable=true)
+     */
+    private $auteur;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="commanditaire", type="string", length=255, nullable=true)
+     */
+    private $commanditaire;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="style", type="string", length=255, nullable=true)
+     */
+    private $style;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="mattech", type="string", length=255, nullable=true)
+     */
+    private $mattech;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="dimensions", type="string", length=255, nullable=true)
+     */
+    private $dimensions;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lieuDeConservation", type="string", length=255, nullable=true)
+     */
+    private $lieuDeConservation;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="provenance", type="string", length=255, nullable=true)
+     */
+    private $provenance;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="sujetIcono", type="string", length=255, nullable=true)
+     */
+    private $sujetIcono;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="vue", type="string", length=255, nullable=true)
+     */
+    private $vue;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="DATA\EDLBundle\Entity\Enseignement")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    protected $enseignement;
+
+
+    /**
+     * @var \stdClass
+     *
+     * @ORM\ManyToOne(targetEntity="DATA\ImageBundle\Entity\FileImage", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $image;
+
+    /**
+     * @var \stdClass
+     *
+     * @ORM\ManyToOne(targetEntity="DATA\ImportBundle\Entity\EntityImportSession", inversedBy="entitiesImport")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $entityImportSession;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="KP\UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $createUser;
+
+    /**
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="createDate", type="datetime", nullable=false)
+     */
+    protected $createDate;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="KP\UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $updateUser;
+
+    /**
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="updateDate", type="datetime", nullable=true)
+     */
+    protected $updateDate;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="updateComment", type="string", length=255, nullable=true)
+     * @Assert\Length(
+     *      max = "255",
+     *      maxMessage = "Le commentaire ne doit pas dépasser {{ limit }} caractères."
+     * )
+     */
+    protected $updateComment;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function get($attribute)
+    {
+        return $this->{$attribute};
+    }
+
+    /**
+     * Set isBuilding
+     *
+     * @param boolean $isBuilding
+     * @return EntityImport
+     */
+    public function setIsBuilding($isBuilding)
+    {
+        $this->isBuilding = $isBuilding;
+
+        return $this;
+    }
+
+    /**
+     * Get isBuilding
+     *
+     * @return boolean 
+     */
+    public function getIsBuilding()
+    {
+        return $this->isBuilding;
+    }
+
+    /**
+     * Set isPlan
+     *
+     * @param boolean $isPlan
+     * @return EntityImport
+     */
+    public function setIsPlan($isPlan)
+    {
+        $this->isPlan = $isPlan;
+
+        return $this;
+    }
+
+    /**
+     * Get isPlan
+     *
+     * @return boolean 
+     */
+    public function getIsPlan()
+    {
+        return $this->isPlan;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return EntityImport
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set datation
+     *
+     * @param string $datation
+     * @return EntityImport
+     */
+    public function setDatation($datation)
+    {
+        $this->datation = $datation;
+
+        return $this;
+    }
+
+    /**
+     * Get datation
+     *
+     * @return string 
+     */
+    public function getDatation()
+    {
+        return $this->datation;
+    }
+
+    /**
+     * Set auteur
+     *
+     * @param string $auteur
+     * @return EntityImport
+     */
+    public function setAuteur($auteur)
+    {
+        $this->auteur = $auteur;
+
+        return $this;
+    }
+
+    /**
+     * Get auteur
+     *
+     * @return string 
+     */
+    public function getAuteur()
+    {
+        return $this->auteur;
+    }
+
+    /**
+     * Set commanditaire
+     *
+     * @param string $commanditaire
+     * @return EntityImport
+     */
+    public function setCommanditaire($commanditaire)
+    {
+        $this->commanditaire = $commanditaire;
+
+        return $this;
+    }
+
+    /**
+     * Get commanditaire
+     *
+     * @return string 
+     */
+    public function getCommanditaire()
+    {
+        return $this->commanditaire;
+    }
+
+    /**
+     * Set style
+     *
+     * @param string $style
+     * @return EntityImport
+     */
+    public function setStyle($style)
+    {
+        $this->style = $style;
+
+        return $this;
+    }
+
+    /**
+     * Get style
+     *
+     * @return string 
+     */
+    public function getStyle()
+    {
+        return $this->style;
+    }
+
+    /**
+     * Set mattech
+     *
+     * @param string $mattech
+     * @return EntityImport
+     */
+    public function setMattech($mattech)
+    {
+        $this->mattech = $mattech;
+
+        return $this;
+    }
+
+    /**
+     * Get mattech
+     *
+     * @return string 
+     */
+    public function getMattech()
+    {
+        return $this->mattech;
+    }
+
+    /**
+     * Set dimensions
+     *
+     * @param string $dimensions
+     * @return EntityImport
+     */
+    public function setDimensions($dimensions)
+    {
+        $this->dimensions = $dimensions;
+
+        return $this;
+    }
+
+    /**
+     * Get dimensions
+     *
+     * @return string 
+     */
+    public function getDimensions()
+    {
+        return $this->dimensions;
+    }
+
+    /**
+     * Set lieuDeConservation
+     *
+     * @param string $lieuDeConservation
+     * @return EntityImport
+     */
+    public function setLieuDeConservation($lieuDeConservation)
+    {
+        $this->lieuDeConservation = $lieuDeConservation;
+
+        return $this;
+    }
+
+    /**
+     * Get lieuDeConservation
+     *
+     * @return string 
+     */
+    public function getLieuDeConservation()
+    {
+        return $this->lieuDeConservation;
+    }
+
+    /**
+     * Set provenance
+     *
+     * @param string $provenance
+     * @return EntityImport
+     */
+    public function setProvenance($provenance)
+    {
+        $this->provenance = $provenance;
+
+        return $this;
+    }
+
+    /**
+     * Get provenance
+     *
+     * @return string 
+     */
+    public function getProvenance()
+    {
+        return $this->provenance;
+    }
+
+    /**
+     * Set sujetIcono
+     *
+     * @param string $sujetIcono
+     * @return EntityImport
+     */
+    public function setSujetIcono($sujetIcono)
+    {
+        $this->sujetIcono = $sujetIcono;
+
+        return $this;
+    }
+
+    /**
+     * Get sujetIcono
+     *
+     * @return string 
+     */
+    public function getSujetIcono()
+    {
+        return $this->sujetIcono;
+    }
+
+    /**
+     * Set vue
+     *
+     * @param string $vue
+     * @return EntityImport
+     */
+    public function setVue($vue)
+    {
+        $this->vue = $vue;
+
+        return $this;
+    }
+
+    /**
+     * Get vue
+     *
+     * @return string 
+     */
+    public function getVue()
+    {
+        return $this->vue;
+    }
+
+    /**
+     * Set image
+     *
+     * @param \stdClass $image
+     * @return EntityImport
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return \stdClass 
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Set createDate
+     *
+     * @param \DateTime $createDate
+     * @return EntityImport
+     */
+    public function setCreateDate($createDate)
+    {
+        $this->createDate = $createDate;
+
+        return $this;
+    }
+
+    /**
+     * Get createDate
+     *
+     * @return \DateTime 
+     */
+    public function getCreateDate()
+    {
+        return $this->createDate;
+    }
+
+    /**
+     * Set updateDate
+     *
+     * @param \DateTime $updateDate
+     * @return EntityImport
+     */
+    public function setUpdateDate($updateDate)
+    {
+        $this->updateDate = $updateDate;
+
+        return $this;
+    }
+
+    /**
+     * Get updateDate
+     *
+     * @return \DateTime 
+     */
+    public function getUpdateDate()
+    {
+        return $this->updateDate;
+    }
+
+    /**
+     * Set updateComment
+     *
+     * @param string $updateComment
+     * @return EntityImport
+     */
+    public function setUpdateComment($updateComment)
+    {
+        $this->updateComment = $updateComment;
+
+        return $this;
+    }
+
+    /**
+     * Get updateComment
+     *
+     * @return string 
+     */
+    public function getUpdateComment()
+    {
+        return $this->updateComment;
+    }
+
+    /**
+     * Set createUser
+     *
+     * @param \KP\UserBundle\Entity\User $createUser
+     * @return EntityImport
+     */
+    public function setCreateUser(\KP\UserBundle\Entity\User $createUser = null)
+    {
+        $this->createUser = $createUser;
+
+        return $this;
+    }
+
+    /**
+     * Get createUser
+     *
+     * @return \KP\UserBundle\Entity\User 
+     */
+    public function getCreateUser()
+    {
+        return $this->createUser;
+    }
+
+    /**
+     * Set updateUser
+     *
+     * @param \KP\UserBundle\Entity\User $updateUser
+     * @return EntityImport
+     */
+    public function setUpdateUser(\KP\UserBundle\Entity\User $updateUser = null)
+    {
+        $this->updateUser = $updateUser;
+
+        return $this;
+    }
+
+    /**
+     * Get updateUser
+     *
+     * @return \KP\UserBundle\Entity\User 
+     */
+    public function getUpdateUser()
+    {
+        return $this->updateUser;
+    }
+
+    /**
+     * Set entityImportSession
+     *
+     * @param \DATA\ImportBundle\Entity\EntityImportSession $entityImportSession
+     * @return EntityImport
+     */
+    public function setEntityImportSession(\DATA\ImportBundle\Entity\EntityImportSession $entityImportSession)
+    {
+        $this->entityImportSession = $entityImportSession;
+
+        return $this;
+    }
+
+    /**
+     * Get entityImportSession
+     *
+     * @return \DATA\ImportBundle\Entity\EntityImportSession 
+     */
+    public function getEntityImportSession()
+    {
+        return $this->entityImportSession;
+    }
+}

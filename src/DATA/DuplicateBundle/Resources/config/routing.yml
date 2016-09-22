@@ -1,0 +1,54 @@
+data_duplicate_duplicate_index:
+    path:     /review
+    defaults:
+        _controller: DATADuplicateBundle:Duplicate:index
+
+data_duplicate_duplicate_unmatch:
+    path:     /unmatch/{entityLeft_id}/{entityRight_id}
+    defaults: { _controller: DATADuplicateBundle:Duplicate:unmatch }
+    requirements:
+        entityLeft_id:  \d+
+        entityRight_id:  \d+
+
+data_duplicate_duplicate_merge:
+    path:     /merge/{entityLeft_id}/{entityRight_id}
+    defaults: { _controller: DATADuplicateBundle:Duplicate:mergeDuplicates }
+    requirements:
+        entityLeft_slug:  \d+
+        entityRight_slug:  \d+
+
+#Gestion des types :
+data_duplicate_type_index:
+    path:     /type-mot
+    defaults: { _controller: DATADuplicateBundle:Type:index }
+    
+data_duplicate_type_register:
+    path:     /type-mot/ajouter
+    defaults: { _controller: DATADuplicateBundle:Type:register }
+    
+data_duplicate_type_view:
+    path:     /type-mot/voir/{slug}
+    defaults: { _controller: DATADuplicateBundle:Type:view }
+    requirements:
+        slug:  \S{0,255}
+    
+data_duplicate_type_edit:
+    path:     /type-mot/modifier/{slug}
+    defaults: { _controller: DATADuplicateBundle:Type:edit }
+    requirements:
+        slug:  \S{0,255}
+    
+data_duplicate_type_delete:
+    path:     /type-mot/supprimer/{slug}
+    defaults: { _controller: DATADuplicateBundle:Type:delete }
+    requirements:
+        slug:  \S{0,255}
+
+#Gestion des mots :
+data_duplicate_wordtype_index:
+    path:     /mot
+    defaults: { _controller: DATADuplicateBundle:WordType:index }
+
+data_duplicate_wordtype_list:
+    path:     /liste-mots
+    defaults: { _controller: DATADuplicateBundle:WordType:list }

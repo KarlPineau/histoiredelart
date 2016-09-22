@@ -1,0 +1,33 @@
+{% extends "DATAAdministrationBundle::layout.html.twig" %}
+
+{% block title %}Public - {{ parent() }}{% endblock %}
+
+{% block h1 %}Public{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li class="active">Public</li>
+{% endblock %}
+
+{% block content %}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="well">
+                <h2>Accès à data</h2>
+
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="well">
+                <h2>Vues des pages</h2>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

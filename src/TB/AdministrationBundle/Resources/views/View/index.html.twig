@@ -1,0 +1,24 @@
+{% extends "TBAdministrationBundle::layout.html.twig" %}
+
+{% block h1 %}View - Administration{% endblock %}
+
+{% block content %}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    <div class="row">
+        {{ testedGame.title }}
+
+        <table class="table table-striped">
+            {% for testedItem in tb_model_testeditem.getByTestedGame(testedGame) %}
+                <tr>
+                    <td>{{ testedItem.itemLabel }}</td>
+                    <td>{{ render(controller('DATAImageBundle:Image:renderImage', {'view_id': 0, 'image_id': testedItem.dataImage.id, 'class': 'image-cliches-list fancybox'})) }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

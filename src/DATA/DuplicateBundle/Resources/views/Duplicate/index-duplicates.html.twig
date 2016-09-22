@@ -1,0 +1,21 @@
+{% for duplicateSup in duplicates['entityRequestGlobalWordArray'] %}
+    {% set duplicate =  duplicateSup['entity'] %}
+    {% set occurrence = duplicateSup['occurrence'] %}
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="pull-right">
+                <a href="{{ path('data_duplicate_duplicate_merge', {'entityLeft_id': entity.id, 'entityRight_id': duplicate.id}) }}" class="btn btn-sm btn-danger main-JS-delete" title="B est un doublon de A"><span class="glyphicon glyphicon-arrow-left"></span></a>
+                <a href="{{ path('data_duplicate_duplicate_merge', {'entityLeft_id': duplicate.id, 'entityRight_id': entity.id}) }}" class="btn btn-sm btn-danger main-JS-delete" title="A est un doublon de B"><span class="glyphicon glyphicon-arrow-right"></span></a>
+                <a href="{{ path('data_duplicate_duplicate_unmatch', {'entityLeft_id': entity.id, 'entityRight_id': duplicate.id}) }}" class="btn btn-sm btn-primary" title="Ceci n'est pas un doublon"><span class="glyphicon glyphicon-remove"></span></a>
+            </div>
+            <strong>{{ occurrence }}</strong> : <a href="{{ path(data_data_entity_routing_service.getRoutingView(), {'id': duplicate.id}) }}">{{ data_data_entity_service.getName(duplicate) }}</a>
+        </div>
+        <div class="panel-body">
+            {% set relatedViews = data_data_entity_service.getViews(duplicate) %}
+            {% include 'DATAPublicBundle:Entity:View/view-views.html.twig' %}
+            {% set entityForInformation = duplicate %}
+            {% include 'DATAPublicBundle:Entity:View/view-informations.html.twig' %}
+        </div>
+    </div>
+{% endfor %}

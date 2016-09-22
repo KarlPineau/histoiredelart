@@ -1,0 +1,395 @@
+<?php
+
+namespace TOOLS\NerBundle\Entity;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * NameEntityRecognition
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="TOOLS\NerBundle\Entity\NameEntityRecognitionRepository")
+ */
+class NameEntityRecognition
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="literal", type="string", length=255)
+     */
+    private $literal;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="field", type="string", length=255)
+     */
+    private $field;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="DATA\DataBundle\Entity\Entity")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $usedIn;
+
+    /**
+     * @var string
+     * @Assert\Url()
+     * @ORM\Column(name="uri", type="string", length=255, nullable=true)
+     */
+    private $uri;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="synsets", type="array", nullable=true)
+     */
+    private $synsets;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="synset", type="string", length=255, nullable=true)
+     */
+    private $synset;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="errorStatement", type="string", length=255, nullable=true)
+     */
+    private $errorStatement;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="isVerified", type="boolean")
+     */
+    private $isVerified;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="CAS\UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $createUser;
+
+    /**
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="createDate", type="datetime", nullable=false)
+     */
+    protected $createDate;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="CAS\UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $updateUser;
+
+    /**
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="updateDate", type="datetime", nullable=true)
+     */
+    protected $updateDate;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set literal
+     *
+     * @param string $literal
+     * @return NameEntityRecognition
+     */
+    public function setLiteral($literal)
+    {
+        $this->literal = $literal;
+
+        return $this;
+    }
+
+    /**
+     * Get literal
+     *
+     * @return string 
+     */
+    public function getLiteral()
+    {
+        return $this->literal;
+    }
+
+    /**
+     * Set field
+     *
+     * @param string $field
+     * @return NameEntityRecognition
+     */
+    public function setField($field)
+    {
+        $this->field = $field;
+
+        return $this;
+    }
+
+    /**
+     * Get field
+     *
+     * @return string 
+     */
+    public function getField()
+    {
+        return $this->field;
+    }
+
+    /**
+     * Set uri
+     *
+     * @param string $uri
+     * @return NameEntityRecognition
+     */
+    public function setUri($uri)
+    {
+        $this->uri = $uri;
+
+        return $this;
+    }
+
+    /**
+     * Get uri
+     *
+     * @return string 
+     */
+    public function getUri()
+    {
+        return $this->uri;
+    }
+
+    /**
+     * Set synsets
+     *
+     * @param array $synsets
+     * @return NameEntityRecognition
+     */
+    public function setSynsets($synsets)
+    {
+        $this->synsets = $synsets;
+
+        return $this;
+    }
+
+    /**
+     * Get synsets
+     *
+     * @return array 
+     */
+    public function getSynsets()
+    {
+        return $this->synsets;
+    }
+
+    /**
+     * Set synset
+     *
+     * @param string $synset
+     * @return NameEntityRecognition
+     */
+    public function setSynset($synset)
+    {
+        $this->synset = $synset;
+
+        return $this;
+    }
+
+    /**
+     * Get synset
+     *
+     * @return string 
+     */
+    public function getSynset()
+    {
+        return $this->synset;
+    }
+
+    /**
+     * Set isVerified
+     *
+     * @param boolean $isVerified
+     * @return NameEntityRecognition
+     */
+    public function setIsVerified($isVerified)
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    /**
+     * Get isVerified
+     *
+     * @return boolean 
+     */
+    public function getIsVerified()
+    {
+        return $this->isVerified;
+    }
+
+    /**
+     * Set createDate
+     *
+     * @param \DateTime $createDate
+     * @return NameEntityRecognition
+     */
+    public function setCreateDate($createDate)
+    {
+        $this->createDate = $createDate;
+
+        return $this;
+    }
+
+    /**
+     * Get createDate
+     *
+     * @return \DateTime 
+     */
+    public function getCreateDate()
+    {
+        return $this->createDate;
+    }
+
+    /**
+     * Set updateDate
+     *
+     * @param \DateTime $updateDate
+     * @return NameEntityRecognition
+     */
+    public function setUpdateDate($updateDate)
+    {
+        $this->updateDate = $updateDate;
+
+        return $this;
+    }
+
+    /**
+     * Get updateDate
+     *
+     * @return \DateTime 
+     */
+    public function getUpdateDate()
+    {
+        return $this->updateDate;
+    }
+
+    /**
+     * Set usedIn
+     *
+     * @param \DATA\DataBundle\Entity\Entity $usedIn
+     * @return NameEntityRecognition
+     */
+    public function setUsedIn(\DATA\DataBundle\Entity\Entity $usedIn)
+    {
+        $this->usedIn = $usedIn;
+
+        return $this;
+    }
+
+    /**
+     * Get usedIn
+     *
+     * @return \DATA\DataBundle\Entity\Entity 
+     */
+    public function getUsedIn()
+    {
+        return $this->usedIn;
+    }
+
+    /**
+     * Set createUser
+     *
+     * @param \CAS\UserBundle\Entity\User $createUser
+     * @return NameEntityRecognition
+     */
+    public function setCreateUser(\CAS\UserBundle\Entity\User $createUser = null)
+    {
+        $this->createUser = $createUser;
+
+        return $this;
+    }
+
+    /**
+     * Get createUser
+     *
+     * @return \CAS\UserBundle\Entity\User
+     */
+    public function getCreateUser()
+    {
+        return $this->createUser;
+    }
+
+    /**
+     * Set updateUser
+     *
+     * @param \CAS\UserBundle\Entity\User $updateUser
+     * @return NameEntityRecognition
+     */
+    public function setUpdateUser(\CAS\UserBundle\Entity\User $updateUser = null)
+    {
+        $this->updateUser = $updateUser;
+
+        return $this;
+    }
+
+    /**
+     * Get updateUser
+     *
+     * @return \CAS\UserBundle\Entity\User
+     */
+    public function getUpdateUser()
+    {
+        return $this->updateUser;
+    }
+
+    /**
+     * Set errorStatement
+     *
+     * @param string $errorStatement
+     * @return NameEntityRecognition
+     */
+    public function setErrorStatement($errorStatement)
+    {
+        $this->errorStatement = $errorStatement;
+
+        return $this;
+    }
+
+    /**
+     * Get errorStatement
+     *
+     * @return string 
+     */
+    public function getErrorStatement()
+    {
+        return $this->errorStatement;
+    }
+}

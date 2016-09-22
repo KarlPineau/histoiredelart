@@ -1,0 +1,11 @@
+tools_administration_home_index:
+    path:     /accueil
+    defaults: { _controller: TOOLSAdministrationBundle:Home:index }
+
+tools_administration_test_index:
+    path:     /test/datation
+    defaults: { _controller: TOOLSAdministrationBundle:Test:index }
+
+tools_administration_test_creator:
+    path:     /test/createurs
+    defaults: { _controller: TOOLSAdministrationBundle:Test:creator }

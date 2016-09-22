@@ -1,0 +1,11 @@
+{% for field in data_image_view_service.getListFieldsForView() %}
+    <dl class="dl-horizontal list-group-item">
+        <dt>{{ field['label'] }} :</dt>
+        <dd>
+            {% if data_image_view_service.valueByField(field['field'], view) == 'unrelevant' %}<span class="text-danger">Champ non pertinent <a href="{{ path('cliches_administration_unrelevantfield_unvalidate', {'unrelevantField_id': data_data_unrelevant_service.getByField(entity, field['field']).id})}}" class="main-JS-delete"><span class="glyphicon glyphicon-remove"></span></a></span>
+            {% elseif data_image_view_service.valueByField(field['field'], view) == 'empty' %}<span class="text-warning">Champ vide</span>
+            {% else %}<span class="text-success">{{ data_image_view_service.valueByField(field['field'], view) }}</span>
+            {% endif %}
+        </dd>
+    </dl>
+{% endfor %}

@@ -1,0 +1,391 @@
+<?php
+
+namespace DATA\TeachingBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * Teaching
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="DATA\TeachingBundle\Entity\TeachingRepository")
+ */
+class Teaching
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      max = "255",
+     *      maxMessage = "Le champ 'Nom' ne peut pas dépasser {{ limit }} caractères"
+     * )
+     *
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="onLine", type="boolean", nullable=true, options="default: true;")
+     */
+    private $onLine;
+
+    /**
+     * @var string
+     *
+     * @Gedmo\Slug(fields={"name"})
+     * @ORM\Column(name="slug", type="string", length=255, nullable=false, unique=true)
+     */
+    private $slug;
+
+    /**
+     * @var string
+     * @Assert\Length(
+     *      max = "255",
+     *      maxMessage = "Le champ 'Sous-Matière' ne peut pas dépasser {{ limit }} caractères"
+     * )
+     *
+     * @ORM\Column(name="sous_matiere", type="string", length=255, nullable=true)
+     */
+    private $subTeaching;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="year", type="integer", nullable=true)
+     */
+    private $year;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="DATA\TeachingBundle\Entity\University")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $university;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="DATA\DataBundle\Entity\Entity")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $entities;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="CAS\UserBundle\Entity\User")
+    * @ORM\JoinColumn(nullable=true)
+    */
+    protected $createUser;
+
+    /**
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="createDate", type="datetime", nullable=false)
+     */
+    protected $createDate;
+
+    /**
+    * @ORM\ManyToOne(targetEntity="CAS\UserBundle\Entity\User")
+    * @ORM\JoinColumn(nullable=true)
+    */
+    protected $updateUser;
+
+    /**
+     * @var \DateTime
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="updateDate", type="datetime", nullable=true)
+     */
+    protected $updateDate;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->entities = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Teaching
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set onLine
+     *
+     * @param boolean $onLine
+     * @return Teaching
+     */
+    public function setOnLine($onLine)
+    {
+        $this->onLine = $onLine;
+
+        return $this;
+    }
+
+    /**
+     * Get onLine
+     *
+     * @return boolean 
+     */
+    public function getOnLine()
+    {
+        return $this->onLine;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Teaching
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Set subTeaching
+     *
+     * @param string $subTeaching
+     * @return Teaching
+     */
+    public function setSubTeaching($subTeaching)
+    {
+        $this->subTeaching = $subTeaching;
+
+        return $this;
+    }
+
+    /**
+     * Get subTeaching
+     *
+     * @return string 
+     */
+    public function getSubTeaching()
+    {
+        return $this->subTeaching;
+    }
+
+    /**
+     * Set year
+     *
+     * @param integer $year
+     * @return Teaching
+     */
+    public function setYear($year)
+    {
+        $this->year = $year;
+
+        return $this;
+    }
+
+    /**
+     * Get year
+     *
+     * @return integer 
+     */
+    public function getYear()
+    {
+        return $this->year;
+    }
+
+    /**
+     * Set createDate
+     *
+     * @param \DateTime $createDate
+     * @return Teaching
+     */
+    public function setCreateDate($createDate)
+    {
+        $this->createDate = $createDate;
+
+        return $this;
+    }
+
+    /**
+     * Get createDate
+     *
+     * @return \DateTime 
+     */
+    public function getCreateDate()
+    {
+        return $this->createDate;
+    }
+
+    /**
+     * Set updateDate
+     *
+     * @param \DateTime $updateDate
+     * @return Teaching
+     */
+    public function setUpdateDate($updateDate)
+    {
+        $this->updateDate = $updateDate;
+
+        return $this;
+    }
+
+    /**
+     * Get updateDate
+     *
+     * @return \DateTime 
+     */
+    public function getUpdateDate()
+    {
+        return $this->updateDate;
+    }
+
+    /**
+     * Set university
+     *
+     * @param \DATA\TeachingBundle\Entity\University $university
+     * @return Teaching
+     */
+    public function setUniversity(\DATA\TeachingBundle\Entity\University $university = null)
+    {
+        $this->university = $university;
+
+        return $this;
+    }
+
+    /**
+     * Get university
+     *
+     * @return \DATA\TeachingBundle\Entity\University 
+     */
+    public function getUniversity()
+    {
+        return $this->university;
+    }
+
+    /**
+     * Add entities
+     *
+     * @param \DATA\DataBundle\Entity\Entity $entities
+     * @return Teaching
+     */
+    public function addEntity(\DATA\DataBundle\Entity\Entity $entities)
+    {
+        $this->entities[] = $entities;
+
+        return $this;
+    }
+
+    /**
+     * Remove entities
+     *
+     * @param \DATA\DataBundle\Entity\Entity $entities
+     */
+    public function removeEntity(\DATA\DataBundle\Entity\Entity $entities)
+    {
+        $this->entities->removeElement($entities);
+    }
+
+    /**
+     * Get entities
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEntities()
+    {
+        return $this->entities;
+    }
+
+    /**
+     * Set createUser
+     *
+     * @param \CAS\UserBundle\Entity\User $createUser
+     * @return Teaching
+     */
+    public function setCreateUser(\CAS\UserBundle\Entity\User $createUser = null)
+    {
+        $this->createUser = $createUser;
+
+        return $this;
+    }
+
+    /**
+     * Get createUser
+     *
+     * @return \CAS\UserBundle\Entity\User
+     */
+    public function getCreateUser()
+    {
+        return $this->createUser;
+    }
+
+    /**
+     * Set updateUser
+     *
+     * @param \CAS\UserBundle\Entity\User $updateUser
+     * @return Teaching
+     */
+    public function setUpdateUser(\CAS\UserBundle\Entity\User $updateUser = null)
+    {
+        $this->updateUser = $updateUser;
+
+        return $this;
+    }
+
+    /**
+     * Get updateUser
+     *
+     * @return \CAS\UserBundle\Entity\User
+     */
+    public function getUpdateUser()
+    {
+        return $this->updateUser;
+    }
+}

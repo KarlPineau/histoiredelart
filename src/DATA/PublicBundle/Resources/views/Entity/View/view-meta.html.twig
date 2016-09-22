@@ -1,0 +1,20 @@
+{# src/DATA/PublicBundle/Resources/views/Artwork/view.html.twig #}
+
+<link rel="schema.DC" />
+<meta name="DC.title" content="{{ data_data_entity_service.getName(entity) }}" />
+
+{% if data_data_entity_service.get('datation', entity) is not empty %}<meta name="DC.date" content="{{ data_data_entity_service.get('datation', entity) }}" />{% endif %}
+
+{% if data_data_entity_service.get('dimensions', entity) is not empty %}<meta name="DC.format" content="{{ data_data_entity_service.get('dimensions', entity) }}" />{% endif %}
+
+{% if data_data_entity_service.get('auteur', entity) is not empty %}<meta name="DC.creator" content="{{ data_data_entity_service.get('auteur', entity) }}" />{% endif %}
+
+{% if teachings|length > 0 %}<meta name="DC.subject" content="{% for teaching in teachings  %}{% if loop.index > 1 %}, {% endif %}{{ teaching.name }}{% endfor %}" />{% endif %}
+
+<meta name="DC.publisher" content="Clichés! - data.histoiredelart.fr" />
+
+<meta name="DC.language" content="fr" scheme="ISO639-1" />
+
+<meta name="DC.identifier" content="http://data.histoiredelart.fr/item/{{ entity.id }}" />
+
+<meta name="generator" content="Symfony2" />

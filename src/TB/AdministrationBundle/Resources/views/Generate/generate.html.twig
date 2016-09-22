@@ -1,0 +1,25 @@
+{% extends "TBAdministrationBundle::layout.html.twig" %}
+
+{% block h1 %}Accueil - Administration{% endblock %}
+
+{% block content %}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="well">
+                {% include "TBAdministrationBundle:Generate:generate_content.html.twig" %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript_sub %}
+    {% javascripts  '@TBAdministrationBundle/Resources/public/js/generate.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

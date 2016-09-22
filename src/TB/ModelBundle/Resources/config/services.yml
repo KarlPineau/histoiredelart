@@ -1,0 +1,4 @@
+services:
+    tb_model.testeditem:
+        class: TB\ModelBundle\Service\testedItem
+        arguments: [ "@doctrine.orm.entity_manager", "@security.context"]

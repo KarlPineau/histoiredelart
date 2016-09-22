@@ -1,0 +1,10 @@
+{% extends "CASLayoutBundle::signin.html.twig" %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block title %}Réinitialisation - {{ parent() }}{% endblock %}
+
+{% block content %}
+    {% block fos_user_content %}
+        {% include "FOSUserBundle:Resetting:reset_content.html.twig" %}
+    {% endblock fos_user_content %}
+{% endblock %}

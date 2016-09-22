@@ -1,0 +1,35 @@
+{# src/DATA/DataBundle/Resources/views/Artwork/index.html.twig #}
+ 
+{% extends "DATAImportBundle::layout.html.twig" %}
+
+{% block title %}
+    Importation - {{ parent() }}
+{% endblock %} 
+    
+{% block h1 %}
+    Importation
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+{% endblock %}    
+    
+{% block content %}
+<div class="row">
+    <section class="col-md-12">
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="alert col-md-12 alert-success">
+                {{ flashMessage }}
+            </div>
+            <br />
+        {% endfor %}
+        
+        <div class="jumbotron text-center">
+            <h2>Bienvenue sur l'interface d'importation de DATA</h2>
+            <p>Participez à l'amélioration de Clichés! en contribuant à DATA.</p>
+            <br />
+            <a href="{{path('data_import_import_import', {'import_session_id': entityImportSession.id, 'entity_id': entity.id})}}" class="btn btn-lg btn-primary">Let's go !</a>
+        </div>
+    </section>
+</div>
+{% endblock %}

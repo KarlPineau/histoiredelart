@@ -1,0 +1,31 @@
+{% extends "CASLayoutBundle::layout.html.twig" %}
+
+{% block title %}
+    Edition - Profil - {{ parent() }}
+{% endblock %}
+
+{% block brandtitle %}
+    Edition - Profil
+{% endblock %}
+
+{% block h1 %}
+    Edition - Profil
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li><a href="{{ path('fos_user_profile_show') }}">Profil</a></li>
+    <li class="active">Edition</li>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="jumbotron">
+                {% block fos_user_content %}
+                    {% include "FOSUserBundle:Profile:edit_content.html.twig" %}
+                {% endblock fos_user_content %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

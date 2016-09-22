@@ -1,0 +1,8 @@
+{# src/DATA/PublicBundle/Resources/views/Artwork/view.html.twig #}
+<div class="btn-group" role="group" >
+    <a href="{{ path('data_image_view_edit', {'view_id': view.id}) }}" class="btn btn-primary">Éditer <span class="glyphicon glyphicon-edit"></span></a>
+    <a href="{{ path('data_image_image_edit', {'view_id': view.id}) }}" class="btn btn-primary">Image <span class="glyphicon glyphicon-picture"></span></a>
+    <a href="{{ path('data_image_fileimage_edit', {'view_id': view.id}) }}" class="btn btn-primary">FileImage <span class="glyphicon glyphicon-picture"></span></a>
+    <a href="{{ path('data_data_entity_view_unrelated', {'id': view.id}) }}" class="btn btn-warning">Délier</a>
+    <a href="{{ path('data_image_view_delete', {'view_id': view.id}) }}" class="btn btn-danger main-JS-delete" title="Supprimer"><span class="glyphicon glyphicon-remove"></span></a>
+</div>

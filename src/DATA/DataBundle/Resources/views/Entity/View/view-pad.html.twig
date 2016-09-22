@@ -1,0 +1,18 @@
+{% if pad != null %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="pull-right"><a class="btn btn-primary" href="{{ path('data_data_entity_edit_pad', {'id': entity.id}) }}" title="Editer le bloc-note" ><span class="glyphicon glyphicon-edit"></span></a></div>
+            <h2 class="little-h2">Bloc-notes :</h2>
+
+        </div>
+        <div class="panel-body">
+            {% if pad.content != "" %}
+                {{ pad.content|nl2br }}
+            {% else %}
+                <p class="alert alert-info">Bloc-note vide.</p>
+            {% endif %}
+        </div>
+    </div>
+{% else %}
+    <a class="btn btn-lg btn-block btn-primary" href="{{ path('data_data_entity_edit_pad', {'id': entity.id}) }}" >Ajouter un bloc-note</a>
+{% endif %}

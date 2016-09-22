@@ -1,0 +1,14 @@
+{# src/CLICHES/LayoutBundle/Resources/views/layout.html.twig #}
+ 
+{% extends "CLICHESLayoutBundle::layout.html.twig" %}
+
+{% block title %}
+    Administration - {{ parent() }}
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    {% if app.request.get('_route') == 'cliches_administration_home_homepage' %}<li class="active">Administration</li>
+    {% else %}<li><a href="{{ path('cliches_administration_home_homepage') }}">Administration</a></li>
+    {% endif %}
+{% endblock %}

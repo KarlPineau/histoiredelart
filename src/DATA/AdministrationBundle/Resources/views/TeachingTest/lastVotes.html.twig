@@ -1,0 +1,48 @@
+{% extends "DATAAdministrationBundle::layout.html.twig" %}
+
+{% block title %}TeachingTest - {{ parent() }}{% endblock %}
+
+{% block h1 %}TeachingTest{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li><a href="{{ path('data_administration_teachingtest_index') }}">TeachingTest</a></li>
+    <li class="active">Derniers votes</li>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <section class="col-md-12">
+
+            {% for flashMessage in app.session.flashbag.get('notice') %}
+                <div class="alert alert-success">
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
+
+            <table class="table table-bordered table-striped">
+                <caption>{{ lastVotes.getTotalItemCount }} votes</caption>
+                <tr>
+                    <th>#</th>
+                    <th>Enseignement</th>
+                    <th>Oeuvre</th>
+                    <th>Votes</th>
+                </tr>
+                {% for teachingTestVote in lastVotes %}
+                    {% set entity = data_data_entity_service.getByView(teachingTestVote.teachingTest.view) %}
+                <tr>
+                    <td>{{ ((lastVotes.getPaginationData.current-1)*100)+loop.index }}</td>
+                    <td><a href="{{ path('data_teaching_teaching_view', {'slug': teachingTestVote.teachingTest.teaching.slug}) }}">{{ teachingTestVote.teachingTest.teaching.name }}</a></td>
+                    <td><a href="{{ path(data_data_entity_routing_service.getRoutingView(), {'id': entity.id}) }}">{{ data_data_entity_service.getName(entity) }}</a></td>
+                    <td>{% if teachingTestVote.vote == true %}Oui{% else %}<span class="text-warning">Non</span>{% endif %}</td>
+                </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4"><p class="text-center">Aucun TeachingTest connu</p></td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <div class="text-center">{{ knp_pagination_render(lastVotes) }}</div>
+        </section>
+    </div>
+{% endblock %}

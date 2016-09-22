@@ -1,0 +1,4 @@
+services:
+#    cliches_personal_place.example:
+#        class: CLICHES\PersonalPlaceBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

@@ -1,0 +1,39 @@
+#Inteface d'importation :
+data_import_import_index:
+    path:     /accueil
+    defaults: { _controller: DATAImportBundle:Import:index }
+
+data_import_import_import:
+    path:     /{import_session_id}/{entity_id}
+    defaults: { _controller: DATAImportBundle:Import:import }
+    requirements:
+        import_session_id: \d+
+        entity_id: \d+
+
+data_import_import_end:
+    path:     /fin/{import_session_id}
+    defaults: { _controller: DATAImportBundle:Import:end }
+    requirements:
+        import_session_id: \d+
+
+data_import_import_entityField:
+    path:     /field/{type}
+    defaults: { _controller: DATAImportBundle:Import:entityField }
+    options:
+        expose: true
+
+#Interface d'administration des imports :
+data_import_administrationimport_index:
+    path:     /administration/accueil
+    defaults: { _controller: DATAImportBundle:AdministrationImport:index }
+
+data_import_administrationimport_archives:
+    path:     /administration/archives
+    defaults: { _controller: DATAImportBundle:AdministrationImport:archives }
+
+data_import_entity_validation:
+    path:     /administration/valider/{id}/{bool}
+    defaults: { _controller: DATAImportBundle:AdministrationImport:validation }
+    requirements:
+        id: \d+
+        bool: true|false

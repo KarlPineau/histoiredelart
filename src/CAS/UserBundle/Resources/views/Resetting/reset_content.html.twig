@@ -1,0 +1,27 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{{ form_start(form, { 'action': path('fos_user_resetting_reset', {'token': token}), 'attr': { 'class': 'fos_user_resetting_reset form-signin' } }) }}
+    <div>
+        <div class="pull-right"><img src="{{ asset('images/logo.png') }}" style="max-height: 40px;"/></div>
+        <h2 class="form-signin-heading">Réinitialisation</h2>
+    </div>
+    <br />
+    {% if not form.vars.valid %}
+        <p class="alert alert-danger">
+            <strong>Votre formulaire contient les erreurs suivantes :</strong>
+            {{ form_errors(form) }}
+            {{ form_errors(form.plainPassword.first) }}
+            {{ form_errors(form.plainPassword.second) }}
+        </p>
+        <br />
+    {% endif %}
+
+    {{ form_label(form.plainPassword.first, "Mot de passe :", {'label_attr': {'class': 'sr-only'}}) }}
+    {{ form_widget(form.plainPassword.first, {'attr': {'placeholder': 'Nouveau mot de passe', 'class': 'form-control in', 'autofocus':'autofocus', 'required':'required'}}) }}
+    {{ form_label(form.plainPassword.second, "Vérification :", {'label_attr': {'class': 'sr-only'}}) }}
+    {{ form_widget(form.plainPassword.second, {'attr': {'placeholder': 'Vérification', 'class': 'form-control out', 'required':'required'}}) }}
+
+    {{ form_rest(form) }}
+    <br />
+    <input class="btn btn-lg btn-warning btn-block" type="submit" value="{{ 'change_password.submit'|trans }}" />
+{{ form_end(form) }}

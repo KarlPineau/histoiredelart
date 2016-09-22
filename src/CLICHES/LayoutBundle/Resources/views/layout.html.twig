@@ -1,0 +1,153 @@
+{# src/CLICHES/LayoutBundle/Resources/views/layout.html.twig #}
+ 
+{% extends "::layout.html.twig" %}
+
+{% block title %}Clichés!{% endblock %}
+
+{% block follow %}
+    <meta name="robots" content="index,follow" />
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('css/sticky-footer.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('font-awesome/css/font-awesome.min.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('countdown/jquery.countdown.css') }}" type="text/css" />
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="{{ asset('images/logo.png') }}">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ asset('images/logo.png') }}">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ asset('images/logo.png') }}">
+    <link rel="apple-touch-icon-precomposed" href="{{ asset('images/logo.png') }}">
+
+    {# Fancybox gestion #}
+    <link rel="stylesheet" href="{{ asset('fancybox/jquery.fancybox.css?v=2.1.5') }}" type="text/css" media="screen" />
+    <link rel="stylesheet" href="{{ asset('fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5') }}" type="text/css" media="screen" />
+    <link rel="stylesheet" href="{{ asset('fancybox/helpers/jquery.fancybox-thumbs.css?v=1.0.7') }}" type="text/css" media="screen" />
+{% endblock %}
+
+{% block header %}
+<header class="navbar navbar-inverse" role="navigation">
+    <nav class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% block brandhomelink %}{{ path('cliches_home_home_index') }}{% endblock %}" id="home-logo">
+                <img src="{{ asset('images/logo.png') }}" alt="Clichés! logo" style="max-height: 39px; max-width:100px; margin-top: -9px; display: inline;" />
+            </a> <span class="navbar-brand" style="margin-left: 0px;"><h1>{% block brandtitle %}{% endblock %}</h1></span>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}<li class="bg-primary"><a href="{{ path('data_import_import_index') }}" style="color: #FFF;">Contribuer</a></li>{% endif %}
+                <li><a href="{{ path('data_public_home_index') }}">DATA</a></li>
+                {% if is_granted("ROLE_MODO") %}
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ path('cliches_administration_home_homepage') }}">Administration</a></li>
+                            <li><a href="{{ path('data_administration_home_index') }}">DATA</a></li>
+                            {#<li><a href="{{ path('tools_administration_home_index') }}">TOOLS</a></li>#}
+                            {% if is_granted("ROLE_ADMIN") %}<li><a href="{{ path('cas_administration_user_index') }}">Users</a></li>{% endif %}
+                        </ul>
+                    </li>
+                {% endif %}
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ app.user.email }} <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ path('fos_user_profile_show') }}">Mon profil</a></li>
+                        {% if is_granted("ROLE_ADMIN") %}<li><a href="{{ path('cliches_personalplace_privateplayer_index') }}">Mes parties privées</a></li>{% endif %}
+                        <li><a href="{{ path('cliches_personalplace_stats_stats') }}">Mes statistiques</a></li>
+                        <li><a href="{{ path('cliches_personalplace_suggest_index') }}">Mes suggestions</a></li>
+                        <li><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
+                    </ul>
+                </li>
+                {% else %}
+                <li class="bg-warning"><a class="" href="{{ path('fos_user_registration_register') }}" style="color: #FFF;">Inscription</a></li>
+                <li><a href="{{ path('fos_user_security_login') }}">Connexion</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+</header>
+{% endblock %}  
+
+{% block container %}
+<div class="container{% if 'player' in app.request.get('_route')%}-fluid{% endif %}" id="cliches-container">
+    {% if 'administration' in app.request.get('_route') or
+        'profile' in app.request.get('_route') or
+        'personalplace' in app.request.get('_route') or
+        'fos_user_registration_register' in app.request.get('_route') or
+        'fos_user_change_password' in app.request.get('_route') %}
+        <div>
+            <div class="pull-right">{% block h1_extend %}{% endblock %}</div>
+            <ol class="breadcrumb">
+                {% block breadcrumb %}
+                    <li><a href="{{ path('cliches_home_home_index') }}">Clichés!</a></li>
+                {% endblock %}
+            </ol>
+        </div>
+    {% endif%}
+    {% block content %}{% endblock %}
+</div>
+{% endblock %}
+
+{% block footer %}
+<footer class="footer">
+    <div class="container">
+        <p class="text-center alert-link"><small>Questions / Suggestions / Remarques / Aide : <a href="mailto:{{ cliches_mail }}" class="text-muted">{{ cliches_mail }}</a> - <a href="{{ path('cliches_home_home_version') }}" class="text-muted">Versions</a> - <a href="{{ path('cliches_home_home_cgu') }}" class="text-muted">CGU</a></small></p>
+        {% block footer_content %}{% endblock %}
+    </div>
+</footer>
+{% endblock %}
+
+{% block javascript %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56a802c313ab49f1" async="async"></script>
+
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+    <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('countdown/jquery.plugin.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('countdown/jquery.countdown.js') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('fancybox/lib/jquery.mousewheel-3.0.6.pack.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('fancybox/jquery.fancybox.pack.js?v=2.1.5') }}"></script>
+    <script type="text/javascript" src="{{ asset('fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5') }}"></script>
+    <script type="text/javascript" src="{{ asset('fancybox/helpers/jquery.fancybox-media.js?v=1.0.6') }}"></script>
+    <script type="text/javascript" src="{{ asset('fancybox/helpers/jquery.fancybox-thumbs.js?v=1.0.7') }}"></script>
+
+    <script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
+    {% block javascript_sub %}{% endblock %}
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-55269429-2', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+    <!-- Hotjar Tracking Code for http://karl-pineau.fr/cliches -->
+    <script>
+        (function(h,o,t,j,a,r){
+            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+            h._hjSettings={hjid:191598,hjsv:5};
+            a=o.getElementsByTagName('head')[0];
+            r=o.createElement('script');r.async=1;
+            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".fancybox").fancybox();
+        });
+    </script>
+{% endblock %}

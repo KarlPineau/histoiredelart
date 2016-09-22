@@ -1,0 +1,16 @@
+services:
+  data_duplicate.duplicate:
+        class: DATA\DuplicateBundle\Service\duplicate
+        arguments: [ "@doctrine.orm.entity_manager", "@security.context", "@data_duplicate.analysis"]
+
+  data_duplicate.analysis:
+        class: DATA\DuplicateBundle\Service\analysis
+        arguments: [ "@doctrine.orm.entity_manager", "@security.context", "@data_data.entity"]
+
+  data_duplicate.typeaction:
+        class: DATA\DuplicateBundle\Service\typeAction
+        arguments: [ "@doctrine.orm.entity_manager", "@security.context"]
+
+  data_duplicate.mergeduplicates:
+        class: DATA\DuplicateBundle\Service\mergeDuplicates
+        arguments: [ "@doctrine.orm.entity_manager", "@security.context", "@data_teaching.teaching", "@data_data.entity"]

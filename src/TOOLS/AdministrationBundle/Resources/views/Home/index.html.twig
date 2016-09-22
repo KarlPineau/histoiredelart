@@ -1,0 +1,21 @@
+{% extends "TOOLSAdministrationBundle::layout.html.twig" %}
+
+{% block h1 %}Accueil - Administration{% endblock %}
+
+{% block content %}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    <div class="row">
+        <a href="{{ path('tools_administration_test_index') }}">Test date</a><br />
+        <a href="{{ path('tools_administration_test_creator') }}">Test Auteurs</a><br />
+
+        <a href="{{ path('tools_ner_index_index') }}">Index NER Auteurs</a><br />
+        <a href="{{ path('tools_ner_index_generateNameEntityRecognition', {'field': 'auteur'}) }}">Generate NER Auteurs</a><br />
+        <a href="{{ path('tools_ner_index_generateNameEntityRecognition', {'field': 'lieuDeConservation'}) }}">Generate NER Lieu</a><br />
+        <a href="{{ path('tools_ner_index_noSynsetHarvest') }}">NoSynsetHarvest</a>
+    </div>
+{% endblock %}

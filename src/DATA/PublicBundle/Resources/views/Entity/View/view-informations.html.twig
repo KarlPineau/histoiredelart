@@ -1,0 +1,21 @@
+{# src/DATA/PublicBundle/Resources/views/Artwork/view.html.twig #}
+<div class="panel panel-default">
+    <div class="panel-heading"><h2 class="little-h2">Informations :</h2></div>
+    <div class="list-group">
+        {% for field in data_data_entity_service.getListFieldsForEntity(entityForInformation) %}
+            <dl class="list-group-item dl-horizontal">
+                <dt>{{ field['label'] }} :</dt>
+                <dd>
+                    {% if field['field'] == 'sujetIcono' and data_data_entity_service.isSujetAsIconography(entityForInformation) == true %}<span class="text-danger">Iconographie similaire au sujet</span>
+                    {% elseif data_data_entity_service.valueByField(field['field'], entityForInformation) == 'unrelevant' %}<span class="text-danger">Champ non pertinent</span>
+                    {% elseif data_data_entity_service.valueByField(field['field'], entityForInformation) == 'empty' %}<span class="text-warning">Champ vide</span>
+                    {% else %}
+                        {% set itemProp = data_data_entity_service.getItemPropForField(entityForInformation, field['field']) %}
+                        <span {% if itemProp is not empty %}itemprop="{{ itemProp }}"{% endif %} class="text-success">{{ data_data_entity_service.valueByField(field['field'], entityForInformation) }}</span>
+                        {% if data_data_entity_service.getSemanticEnrichment(field['field'], entityForInformation) is not null %}<a href="{{ data_data_entity_service.getSemanticEnrichment(field['field'], entityForInformation) }}" target="_blank">+ infos</a>{% endif %}
+                    {% endif %}
+                </dd>
+            </dl>
+        {% endfor %}
+    </div>
+</div>

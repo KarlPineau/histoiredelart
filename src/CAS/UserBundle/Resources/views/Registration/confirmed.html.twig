@@ -1,0 +1,26 @@
+{% extends "CASLayoutBundle::signin.html.twig" %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block title %}
+    Confirmation d'inscription - {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-offset-3 col-sm-6 col-xs-offset-2 col-xs-8">
+            <div>
+                <div class="pull-right"><img src="{{ asset('images/logo.png') }}" style="max-height: 40px;"/></div>
+                <h2 class="form-signin-heading">Confirmation</h2>
+            </div>
+            <br />
+            {% block fos_user_content %}
+                <p class="lead">{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
+                {% if targetUrl %}
+                    <p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>
+                {% endif %}
+                <br />
+                <div class="text-center"><a href="{{ path('cliches_home_home_index') }}" class="btn btn-success btn-lg">Continuer</a></div>
+            {% endblock fos_user_content %}
+        </div>
+    </div>
+{% endblock %}

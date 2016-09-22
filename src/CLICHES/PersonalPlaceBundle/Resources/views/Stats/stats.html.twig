@@ -1,0 +1,35 @@
+{% extends "CLICHESLayoutBundle::layout.html.twig" %}
+
+{% block title %}
+    Statistiques - {{ parent() }}
+{% endblock %}
+
+{% block brandtitle %}
+    Mes statistiques
+{% endblock %}
+
+{% block h1 %}
+    Mes statistiques :
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li><a href="{{ path('fos_user_profile_show') }}">Profil</a></li>
+    <li class="active">Statistiques</li>
+{% endblock %}
+
+{% block content %}
+    <section class="alert alert-info text-center">
+        <strong>Ci-dessous, l'historique de vos {{ playerSessions.getTotalItemCount }} parties jouées.</strong>
+    </section>
+    <section class="row">
+        {% for playerSessionCollection in playerSessions %}
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                {% include "CLICHESPersonalPlaceBundle:Stats:stats-playerSessions.html.twig" %}
+            </div>
+        {% else %}
+            {% include "CLICHESPersonalPlaceBundle:Stats:stats-noResults.html.twig" %}
+        {% endfor %}
+        {% if playerSessions.getTotalItemCount > 0 %}<div class="text-center">{{ knp_pagination_render(playerSessions) }}{% endif %}</div>
+    </section>
+{% endblock %}

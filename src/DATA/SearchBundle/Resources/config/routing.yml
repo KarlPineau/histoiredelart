@@ -1,0 +1,22 @@
+data_search_search_index:
+    path:     /
+    defaults: { _controller: DATASearchBundle:Search:index }
+
+data_search_search_search:
+    path:     /requete
+    defaults: { _controller: DATASearchBundle:Search:search }
+
+data_search_search_result:
+    path:     /resultats
+    defaults: { _controller: DATASearchBundle:Search:result }
+
+data_search_search_autocomplete:
+    path:     /recherche/autocomplete
+    defaults: { _controller: DATASearchBundle:Search:autocomplete }
+    options:
+        expose: true
+
+#Index de recherche :
+data_search_searchindex_buildindex:
+    path:     /super-administration/indexation/construction
+    defaults: { _controller: DATASearchBundle:SearchIndex:buildIndex }

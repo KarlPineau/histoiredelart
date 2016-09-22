@@ -1,0 +1,12 @@
+{# src/DATA/PublicBundle/Resources/views/Artwork/view.html.twig #}
+{% if data_data_entity_service.getSources(entity) != null %}
+    <hr />
+    <div class="panel panel-default">
+        <div class="panel-heading"><h2 class="little-h2">Sources :</h2></div>
+        <ul class="list-group">
+            {% for source in data_data_entity_service.getSources(entity) %}
+                <li class="list-group-item">{% if source.authorityControl == true %}<span class="glyphicon glyphicon-thumbs-up" title="Ceci est une notice d'autorité"></span> {% endif %}<a href="{{ source.url }}" target="_blank">{{ source.title }} <span class="glyphicon glyphicon-new-window"></span></a></li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}

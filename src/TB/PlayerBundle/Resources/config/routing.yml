@@ -1,0 +1,5 @@
+tb_player_player_index:
+    path:     /partie/{testedGame_id}
+    defaults: { _controller: TBPlayerBundle:Player:index }
+    requirements:
+        testedGame_id: \d+
