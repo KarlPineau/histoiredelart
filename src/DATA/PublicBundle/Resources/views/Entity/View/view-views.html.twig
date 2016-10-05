@@ -8,6 +8,9 @@
             </div>
         </div>
         <div class="list-group">
+            <div class="list-group-item">
+                {{ render(controller('DATAPublicBundle:Entity:addViewToPrivateSession', {'view_id': view.id})) }}
+            </div>
             {% for field in data_image_view_service.getListFieldsForView() %}
                 <dl class="dl-horizontal list-group-item">
                     <dt>{{ field['label'] }} :</dt>

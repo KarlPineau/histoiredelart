@@ -16,8 +16,8 @@ class TestedItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('itemLabel',      'text',     array('required' => true))
-            ->add('itemOrder',      'integer',  array('required' => true))
+            ->add('itemLabel',      'text',     array('required' => true, 'label' => 'Étiquette'))
+            ->add('itemOrder',      'integer',  array('required' => true, 'label' => 'Ordre d\'affichage'))
             ->add('dataImage',      ImageWithoutViewRegisterType::class)
         ;
     }

@@ -24,6 +24,12 @@ class TestedItemResult
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="TB\ModelBundle\Entity\TestedSession")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $testedSession;
+
+    /**
      * @ORM\ManyToOne(targetEntity="TB\ModelBundle\Entity\TestedItem")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -37,7 +43,7 @@ class TestedItemResult
     private $proposedLabel;
 
     /**
-     * @ORM\ManyToOne(targetEntity="KP\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="CAS\UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
      */
     protected $createUser;
@@ -51,7 +57,7 @@ class TestedItemResult
     protected $createDate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="KP\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="CAS\UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
      */
     protected $updateUser;
@@ -170,10 +176,10 @@ class TestedItemResult
     /**
      * Set createUser
      *
-     * @param \KP\UserBundle\Entity\User $createUser
+     * @param \CAS\UserBundle\Entity\User $createUser
      * @return TestedItemResult
      */
-    public function setCreateUser(\KP\UserBundle\Entity\User $createUser = null)
+    public function setCreateUser(\CAS\UserBundle\Entity\User $createUser = null)
     {
         $this->createUser = $createUser;
 
@@ -183,7 +189,7 @@ class TestedItemResult
     /**
      * Get createUser
      *
-     * @return \KP\UserBundle\Entity\User 
+     * @return \CAS\UserBundle\Entity\User
      */
     public function getCreateUser()
     {
@@ -193,10 +199,10 @@ class TestedItemResult
     /**
      * Set updateUser
      *
-     * @param \KP\UserBundle\Entity\User $updateUser
+     * @param \CAS\UserBundle\Entity\User $updateUser
      * @return TestedItemResult
      */
-    public function setUpdateUser(\KP\UserBundle\Entity\User $updateUser = null)
+    public function setUpdateUser(\CAS\UserBundle\Entity\User $updateUser = null)
     {
         $this->updateUser = $updateUser;
 
@@ -206,7 +212,7 @@ class TestedItemResult
     /**
      * Get updateUser
      *
-     * @return \KP\UserBundle\Entity\User 
+     * @return \CAS\UserBundle\Entity\User
      */
     public function getUpdateUser()
     {

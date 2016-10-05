@@ -1,0 +1,13 @@
+<div class="list-group-item container-testedGame-list" {% if testedGame.icon != null %}style="background-image: url({{ asset('uploads/gallery/' ~ testedGame.icon.fileImage.imageName) }});"{% endif %}>
+    <div class="row">
+        <div class="col-sm-8 col-xs-12">
+            <h3 class="h3-testedGame-list">{{ testedGame.title }}</h3>
+            {% if testedGame.isOfficial != true %}<strong class="strong-testedGame-list">Par <a href="#">{{ testedGame.createUser.username }}</a></strong>
+            {% else %}<strong class="strong-testedGame-list vertical-align"><img src="{{ asset('images/logo.png') }}" class="logo-icon-xs logo-icon-margin-right" /> Clichés!</strong>
+            {% endif %}
+        </div>
+        <div class="col-sm-4 col-xs-12">
+            <a href="{{ path('tb_player_player_index', {'testedGame_id': testedGame.id}) }}" class="btn btn-lg btn-block btn-primary btn-play">Jouer !</a>
+        </div>
+    </div>
+</div>

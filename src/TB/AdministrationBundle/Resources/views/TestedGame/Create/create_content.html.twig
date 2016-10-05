@@ -1,0 +1,65 @@
+<form class="form-horizontal" method="post" {{ form_enctype(form) }} role="form">
+    {% if not form.vars.valid %}
+    <div class="alert alert-error">
+        <strong>Votre formulaire contient les erreurs suivantes :</strong>
+        {{ form_errors(form) }}
+        {{ form_errors(form.title) }}
+        {{ form_errors(form.isRandomized) }}
+        {{ form_errors(form.isPrivate) }}
+        {{ form_errors(form.testedItems) }}
+        {{ form_errors(form.icon) }}
+    </div>
+    <br />
+    {% endif %}
+
+    <div class="row">
+        <div class="col-sm-6 col-xs-12">
+            <div class="well">
+                <fieldset>
+                    <legend>Partie :</legend>
+
+                    <div class="form-group">
+                        {{ form_label(form.title, "Titre :", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+                        <div class="col-md-9">
+                            {{ form_widget(form.title, {'attr': {'placeholder': 'Typologie de céramique chinoise', 'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-3 col-md-9">
+                            {{ form_widget(form.isRandomized) }}
+                            {{ form_label(form.isRandomized) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-3 col-md-9">
+                            {{ form_widget(form.isPrivate) }}
+                            {{ form_label(form.isPrivate) }}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            {{ form_label(form.icon, "Sélectionner une photo d'illustration :", {'label_attr': {'class': 'control-label'}}) }}
+                            {{ form_widget(form.icon, {'attr': {'placeholder': '', 'class': ''}}) }}
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xs-12">
+            <div class="well">
+                <fieldset>
+                    <div>
+                        <div class="pull-right">
+                            <button type="button" id="buttonAddTestedItem" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></button>
+                        </div>
+                        <legend>Items :</legend>
+                    </div>
+
+                    {{ form_widget(form.testedItems) }}
+                </fieldset>
+            </div>
+        </div>
+    </div>
+    {{ form_rest(form) }}
+    <div class="text-center"><input type="submit" class="btn btn-primary btn-lg" /></div>
+</form>

@@ -38,11 +38,38 @@ class TestedGame
     private $title;
 
     /**
+     * @ORM\ManyToOne(targetEntity="DATA\ImageBundle\Entity\Image", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $icon;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="isPrivate", type="boolean")
+     */
+    private $isPrivate;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="isOfficial", type="boolean")
+     */
+    private $isOfficial;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="isRandomized", type="boolean")
      */
     private $isRandomized;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="isOnline", type="boolean")
+     */
+    private $isOnline;
 
     /**
      * @ORM\ManyToOne(targetEntity="CAS\UserBundle\Entity\User")
@@ -259,5 +286,97 @@ class TestedGame
     public function getTestedItems()
     {
         return $this->testedItems;
+    }
+
+    /**
+     * Set isOnline
+     *
+     * @param boolean $isOnline
+     * @return TestedGame
+     */
+    public function setIsOnline($isOnline)
+    {
+        $this->isOnline = $isOnline;
+
+        return $this;
+    }
+
+    /**
+     * Get isOnline
+     *
+     * @return boolean 
+     */
+    public function getIsOnline()
+    {
+        return $this->isOnline;
+    }
+
+    /**
+     * Set icon
+     *
+     * @param \DATA\ImageBundle\Entity\Image $icon
+     * @return TestedGame
+     */
+    public function setIcon(\DATA\ImageBundle\Entity\Image $icon = null)
+    {
+        $this->icon = $icon;
+
+        return $this;
+    }
+
+    /**
+     * Get icon
+     *
+     * @return \DATA\ImageBundle\Entity\Image 
+     */
+    public function getIcon()
+    {
+        return $this->icon;
+    }
+
+    /**
+     * Set isOfficial
+     *
+     * @param boolean $isOfficial
+     * @return TestedGame
+     */
+    public function setIsOfficial($isOfficial)
+    {
+        $this->isOfficial = $isOfficial;
+
+        return $this;
+    }
+
+    /**
+     * Get isOfficial
+     *
+     * @return boolean 
+     */
+    public function getIsOfficial()
+    {
+        return $this->isOfficial;
+    }
+
+    /**
+     * Set isPrivate
+     *
+     * @param boolean $isPrivate
+     * @return TestedGame
+     */
+    public function setIsPrivate($isPrivate)
+    {
+        $this->isPrivate = $isPrivate;
+
+        return $this;
+    }
+
+    /**
+     * Get isPrivate
+     *
+     * @return boolean 
+     */
+    public function getIsPrivate()
+    {
+        return $this->isPrivate;
     }
 }

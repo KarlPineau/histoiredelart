@@ -37,21 +37,21 @@
     {# -- END : Gestion du bouton Signalement -- #}
 
     {% if is_granted("ROLE_MODO") %}
-        <a class="btn btn-default" href="{{ path('data_data_entity_view', {'id': entity.id}) }}">Admin</a>
+        <a class="btn btn-default" href="{{ path('data_data_entity_view', {'id': entity.id}) }}"><i class="fa fa-cog" aria-hidden="true"></i></a>
     {% endif %}
-
-    {% if search_id is defined %}
-        <a class="btn btn-primary" href="{{ path('data_search_search_result', {'id': search_id}) }}">Retour à la recherche</a>
-    {% endif %}
-
-    {% include 'DATAPublicBundle:Entity:View/view-privatePlayer.html.twig' %}
 {% endblock %}
 
 {% block breadcrumb %}
     {{ parent() }}
-    {% set entityIndexAttr = {} %}
-    {% if ppid is defined %}{% set entityIndexAttr = entityIndexAttr|merge({'ppid': ppid}) %}{% endif %}
-    <li><a href="{{path('data_public_entity_index', entityIndexAttr)}}">Oeuvres</a></li>
+    {% if search_id is defined %}
+        {% set searchIndexAttr = {'id': search_id} %}
+        {% if ppid is defined %}{% set searchIndexAttr = searchIndexAttr|merge({'ppid': ppid}) %}{% endif %}
+        <li><a href="{{ path('data_search_search_result', searchIndexAttr) }}">Retour à la recherche</a></li>
+    {% else %}
+        {% set entityIndexAttr = {} %}
+        {% if ppid is defined %}{% set entityIndexAttr = entityIndexAttr|merge({'ppid': ppid}) %}{% endif %}
+        <li><a href="{{path('data_public_entity_index', entityIndexAttr)}}">Oeuvres</a></li>
+    {% endif %}
     <li class="active">{{ data_data_entity_service.getName(entity)|slice(0, 60) }}{% if data_data_entity_service.getName(entity)|length > 60 %}...{% endif %}</li>
 {% endblock %} 
 

@@ -2,6 +2,10 @@
 
 namespace TB\ModelBundle\Form;
 
+use DATA\ImageBundle\Form\FileImageType;
+use DATA\ImageBundle\Form\ImageRegisterType;
+use DATA\ImageBundle\Form\ImageType;
+use DATA\ImageBundle\Form\ImageWithoutViewRegisterType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -18,13 +22,14 @@ class TestedGameType extends AbstractType
     {
         $builder
             ->add('title',          'text',                 array('required' => true))
-            ->add('isRandomized',   CheckboxType::class,    array(
-                                                                    'label'    => 'Ordre aléatoire autorisé',
-                                                                    'required' => false,
-            ))
+            ->add('isRandomized',   CheckboxType::class,    array('label'    => 'Ordre aléatoire autorisé',
+                                                                  'required' => false))
+            ->add('isPrivate',      CheckboxType::class,    array('label'    => 'Partie privée (non référencée sur le site)',
+                                                                  'required' => false))
             ->add('testedItems',    CollectionType::class,  array('entry_type' => TestedItemType::class,
                                                                   'allow_add' => true,
                                                                   'allow_delete' => true))
+            ->add('icon',           ImageWithoutViewRegisterType::class,  array('required' => true))
         ;
     }
     

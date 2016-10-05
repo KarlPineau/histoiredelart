@@ -38,6 +38,26 @@ class TestedGame
     private $title;
 
     /**
+     * @ORM\ManyToOne(targetEntity="DATA\ImageBundle\Entity\Image", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $icon;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="isPrivate", type="boolean")
+     */
+    private $isPrivate;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="isOfficial", type="boolean")
+     */
+    private $isOfficial;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="isRandomized", type="boolean")
@@ -45,7 +65,14 @@ class TestedGame
     private $isRandomized;
 
     /**
-     * @ORM\ManyToOne(targetEntity="KP\UserBundle\Entity\User")
+     * @var boolean
+     *
+     * @ORM\Column(name="isOnline", type="boolean")
+     */
+    private $isOnline;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="CAS\UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
      */
     protected $createUser;
@@ -59,7 +86,7 @@ class TestedGame
     protected $createDate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="KP\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="CAS\UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
      */
     protected $updateUser;
@@ -178,10 +205,10 @@ class TestedGame
     /**
      * Set createUser
      *
-     * @param \KP\UserBundle\Entity\User $createUser
+     * @param \CAS\UserBundle\Entity\User $createUser
      * @return TestedGame
      */
-    public function setCreateUser(\KP\UserBundle\Entity\User $createUser = null)
+    public function setCreateUser(\CAS\UserBundle\Entity\User $createUser = null)
     {
         $this->createUser = $createUser;
 
@@ -191,7 +218,7 @@ class TestedGame
     /**
      * Get createUser
      *
-     * @return \KP\UserBundle\Entity\User 
+     * @return \CAS\UserBundle\Entity\User
      */
     public function getCreateUser()
     {
@@ -201,10 +228,10 @@ class TestedGame
     /**
      * Set updateUser
      *
-     * @param \KP\UserBundle\Entity\User $updateUser
+     * @param \CAS\UserBundle\Entity\User $updateUser
      * @return TestedGame
      */
-    public function setUpdateUser(\KP\UserBundle\Entity\User $updateUser = null)
+    public function setUpdateUser(\CAS\UserBundle\Entity\User $updateUser = null)
     {
         $this->updateUser = $updateUser;
 
@@ -214,10 +241,119 @@ class TestedGame
     /**
      * Get updateUser
      *
-     * @return \KP\UserBundle\Entity\User 
+     * @return \CAS\UserBundle\Entity\User
      */
     public function getUpdateUser()
     {
         return $this->updateUser;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->testedItems = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add testedItems
+     *
+     * @param \TB\ModelBundle\Entity\TestedItem $testedItems
+     * @return TestedGame
+     */
+    public function addTestedItem(\TB\ModelBundle\Entity\TestedItem $testedItems)
+    {
+        $this->testedItems[] = $testedItems;
+
+        return $this;
+    }
+
+    /**
+     * Remove testedItems
+     *
+     * @param \TB\ModelBundle\Entity\TestedItem $testedItems
+     */
+    public function removeTestedItem(\TB\ModelBundle\Entity\TestedItem $testedItems)
+    {
+        $this->testedItems->removeElement($testedItems);
+    }
+
+    /**
+     * Get testedItems
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTestedItems()
+    {
+        return $this->testedItems;
+    }
+
+    /**
+     * Set isOnline
+     *
+     * @param boolean $isOnline
+     * @return TestedGame
+     */
+    public function setIsOnline($isOnline)
+    {
+        $this->isOnline = $isOnline;
+
+        return $this;
+    }
+
+    /**
+     * Get isOnline
+     *
+     * @return boolean 
+     */
+    public function getIsOnline()
+    {
+        return $this->isOnline;
+    }
+
+    /**
+     * Set icon
+     *
+     * @param \DATA\ImageBundle\Entity\Image $icon
+     * @return TestedGame
+     */
+    public function setIcon(\DATA\ImageBundle\Entity\Image $icon = null)
+    {
+        $this->icon = $icon;
+
+        return $this;
+    }
+
+    /**
+     * Get icon
+     *
+     * @return \DATA\ImageBundle\Entity\Image 
+     */
+    public function getIcon()
+    {
+        return $this->icon;
+    }
+
+    /**
+     * Set isOfficial
+     *
+     * @param boolean $isOfficial
+     * @return TestedGame
+     */
+    public function setIsOfficial($isOfficial)
+    {
+        $this->isOfficial = $isOfficial;
+
+        return $this;
+    }
+
+    /**
+     * Get isOfficial
+     *
+     * @return boolean 
+     */
+    public function getIsOfficial()
+    {
+        return $this->isOfficial;
     }
 }

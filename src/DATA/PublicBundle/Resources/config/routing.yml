@@ -32,6 +32,12 @@ data_public_entity_favorite:
     options:
         expose: true
 
+data_public_entity_addViewToPrivateSession:
+    path:     /item/addViewToPrivateSession/{view_id}
+    defaults: { _controller: DATAPublicBundle:Entity:addViewToPrivateSession}
+    requirements:
+        view_id:  \d+
+
 # Gestion des Enseignement :
 data_public_teaching_index:
     path:     /enseignements

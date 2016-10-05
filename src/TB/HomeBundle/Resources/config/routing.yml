@@ -1,3 +1,11 @@
 tb_home_home_index:
     path:     /
     defaults: { _controller: TBHomeBundle:Home:index }
+
+tb_home_home_registrationArg:
+    path:     /pourquoi-s'inscrire
+    defaults: { _controller: TBHomeBundle:Home:registrationArg }
+
+tb_home_home_getAllTestedGames:
+    path:     /parties
+    defaults: { _controller: TBHomeBundle:Home:getAllTestedGames }

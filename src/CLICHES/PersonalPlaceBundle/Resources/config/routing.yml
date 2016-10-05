@@ -19,3 +19,9 @@ cliches_personalplace_privateplayer_end:
     defaults: { _controller: CLICHESPersonalPlaceBundle:PrivatePlayer:end }
     requirements:
         id: \d+
+
+cliches_personalplace_privateplayer_view:
+    path:     /parties-privées/{id}
+    defaults: { _controller: CLICHESPersonalPlaceBundle:PrivatePlayer:view }
+    requirements:
+        id: \d+

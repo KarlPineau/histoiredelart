@@ -1,3 +1,3 @@
 tools_home_home_index:
-    path:     /accueil
+    path:     /
     defaults: { _controller: TOOLSHomeBundle:Home:index }

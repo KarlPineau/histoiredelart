@@ -3,3 +3,15 @@ tb_player_player_index:
     defaults: { _controller: TBPlayerBundle:Player:index }
     requirements:
         testedGame_id: \d+
+
+tb_player_player_tracking:
+    path:     /partie/tracking/{answers}
+    defaults: { _controller: TBPlayerBundle:Player:tracking }
+    options:
+        expose: true
+
+tb_player_player_trackingToSmallWindow:
+    path:     /partie/trackingToSmallWindow/{testedSession_id}
+    defaults: { _controller: TBPlayerBundle:Player:trackingToSmallWindow }
+    options:
+        expose: true

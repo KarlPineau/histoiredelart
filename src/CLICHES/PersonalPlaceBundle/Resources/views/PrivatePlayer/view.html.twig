@@ -1,0 +1,52 @@
+{% extends "CLICHESLayoutBundle::layout.html.twig" %}
+
+{% block title %}
+    {{ privatePlayer.title }} -Parties privées - {{ parent() }}
+{% endblock %}
+
+{% block brandtitle %}
+    {{ privatePlayer.title }}
+{% endblock %}
+
+{% block h1 %}
+    {{ privatePlayer.title }}
+{% endblock %}
+
+{% block h1_extend %}
+    <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span></a>
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li><a href="{{ path('fos_user_profile_show') }}">Mon compte</a></li>
+    <li><a href="{{ path('cliches_personalplace_privateplayer_index') }}">Mes parties privées</a></li>
+    <li class="active">{{ privatePlayer.title }}</li>
+{% endblock %}
+
+{% block content %}
+    {% for view in privatePlayer.privatePlayerViews %}
+        <div class="panel panel-default">
+            <div class="panel-heading text-center">
+                <div class="">
+                    {{ render(controller('DATAImageBundle:Image:renderImage', {'view_id': view.id, 'class': 'image-cliches-list fancybox'})) }}
+                    <div class="caption"><small>&copy; {{ data_image_image_service.getImageForView(view).copyright }}</small></div>
+                </div>
+            </div>
+            <div class="list-group">
+                {% for field in data_image_view_service.getListFieldsForView() %}
+                    <dl class="dl-horizontal list-group-item">
+                        <dt>{{ field['label'] }} :</dt>
+                        <dd>
+                            {% if data_image_view_service.valueByField(field['field'], view) == 'unrelevant' %}<span class="text-danger">Champ non pertinent</span>
+                            {% elseif data_image_view_service.valueByField(field['field'], view) == 'empty' %}<span class="text-warning">Champ vide</span>
+                            {% else %}<span class="text-success">{{ data_image_view_service.valueByField(field['field'], view) }}</span>
+                            {% endif %}
+                        </dd>
+                    </dl>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <p class="alert alert-info">Pas de vue pour le moment</p>
+    {% endfor %}
+{% endblock %}

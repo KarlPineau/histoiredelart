@@ -1,0 +1,46 @@
+{% extends "TBPersonalPlaceBundle::layout.html.twig" %}
+
+{% block h1 %}Mes parties{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li><a href="{{ path('fos_user_profile_show') }}">Profil</a></li>
+    <li class="active">Mes parties</li>
+{% endblock %}
+
+{% block content %}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="jumbotron text-center">
+                <h2>Bienvenue sur votre page personnelle !</h2>
+                <p class="lead">Créez, modifiez, surveillez vos parties !</p>
+                <br />
+                <a class="btn btn-lg btn-primary" href="{{ path('tb_personalplace_generate_generate') }}">Créer une nouvelle partie</a>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h2>Mes parties</h2>
+
+            <table class="table table-striped table-bordered">
+                <tr>
+                    <th>Visualiser</th>
+                    <th>Jouer</th>
+                    <th>NbJoué</th>
+                </tr>
+            {% for testedGame in testedGames %}
+                <tr>
+                    <td><a href="{{ path('tb_personalplace_view_view', {'testedGame_id': testedGame.id}) }}">{{ testedGame.title }}</a></td>
+                    <td class="text-center"><a href="{{ path('tb_player_player_index', {'testedGame_id': testedGame.id}) }}" class="btn btn-sm btn-success">Jouer !</a></td>
+                    <td>TODO</td>
+                </tr>
+            {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}

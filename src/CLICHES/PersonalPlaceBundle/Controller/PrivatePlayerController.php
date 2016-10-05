@@ -17,6 +17,15 @@ class PrivatePlayerController extends Controller
         return $this->render('CLICHESPersonalPlaceBundle:PrivatePlayer:index.html.twig', array('privatePlayers' => $privatePlayers));
     }
 
+    public function viewAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $privatePlayer = $em->getRepository('CLICHESPersonalPlaceBundle:PrivatePlayer')->findOneBy(array('id' => $id, 'createUser' => $this->getUser()));
+        if($privatePlayer === null) {throw $this->createNotFoundException('Cet identifiant ('.$id.') n\'est pas défini');}
+
+        return $this->render('CLICHESPersonalPlaceBundle:PrivatePlayer:view.html.twig', array('privatePlayer' => $privatePlayer));
+    }
+
     public function registerAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
@@ -45,7 +54,7 @@ class PrivatePlayerController extends Controller
     public function endAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $privatePlayer = $em->getRepository('CLICHESPersonalPlaceBundle:PrivatePlayer')->findOneById($id);
+        $privatePlayer = $em->getRepository('CLICHESPersonalPlaceBundle:PrivatePlayer')->findOneBy(array('id' => $id, 'createUser' => $this->getUser()));
         if($privatePlayer === null) {throw $this->createNotFoundException('Cet identifiant ('.$id.') n\'est pas défini');}
 
         return $this->render('CLICHESPersonalPlaceBundle:PrivatePlayer:end.html.twig', array('privatePlayer' => $privatePlayer));

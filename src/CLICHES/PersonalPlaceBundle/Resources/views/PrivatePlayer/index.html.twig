@@ -26,9 +26,11 @@
     <section class="jumbotron">
         <h2>Ci-dessous, vos parties privées.</h2>
     </section>
-    {% for privatePlayer in privatePlayers %}
-        {{ privatePlayer.title }}<br />
-    {% else %}
-        <p class="alert alert-info">Pas de partie pour le moment</p>
-    {% endfor %}
+    <ul>
+        {% for privatePlayer in privatePlayers %}
+            <li><a href="{{ path('cliches_personalplace_privateplayer_view', {'id': privatePlayer.id}) }}">{{ privatePlayer.title }}</a></li>
+        {% else %}
+            <li class="text-info">Pas de partie pour le moment</li>
+        {% endfor %}
+    </ul>
 {% endblock %}

@@ -24,6 +24,12 @@ class PrivatePlayer
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="DATA\PersonalPlaceBundle\Entity\UserSessions", inversedBy="privatePlayers")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $userSession;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
@@ -45,10 +51,10 @@ class PrivatePlayer
     private $simpleSession;
 
     /**
-     * @ORM\OneToMany(targetEntity="CLICHES\PersonalPlaceBundle\Entity\PrivatePlayerEntity", mappedBy="privatePlayer")
+     * @ORM\OneToMany(targetEntity="CLICHES\PersonalPlaceBundle\Entity\PrivatePlayerView", mappedBy="privatePlayer")
      * @ORM\JoinColumn(nullable=true)
      */
-    private $privatePlayerEntity;
+    private $privatePlayerViews;
 
     /**
      * @var string
@@ -279,44 +285,67 @@ class PrivatePlayer
     {
         return $this->updateUser;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->privatePlayerEntity = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
-     * Add privatePlayerEntity
+     * Set userSession
      *
-     * @param \CLICHES\PersonalPlaceBundle\Entity\PrivatePlayerEntity $privatePlayerEntity
+     * @param \DATA\PersonalPlaceBundle\Entity\UserSession $userSession
      * @return PrivatePlayer
      */
-    public function addPrivatePlayerEntity(\CLICHES\PersonalPlaceBundle\Entity\PrivatePlayerEntity $privatePlayerEntity)
+    public function setUserSession(\DATA\PersonalPlaceBundle\Entity\UserSession $userSession)
     {
-        $this->privatePlayerEntity[] = $privatePlayerEntity;
+        $this->userSession = $userSession;
 
         return $this;
     }
 
     /**
-     * Remove privatePlayerEntity
+     * Get userSession
      *
-     * @param \CLICHES\PersonalPlaceBundle\Entity\PrivatePlayerEntity $privatePlayerEntity
+     * @return \DATA\PersonalPlaceBundle\Entity\UserSession 
      */
-    public function removePrivatePlayerEntity(\CLICHES\PersonalPlaceBundle\Entity\PrivatePlayerEntity $privatePlayerEntity)
+    public function getUserSession()
     {
-        $this->privatePlayerEntity->removeElement($privatePlayerEntity);
+        return $this->userSession;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->privatePlayerViews = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
-     * Get privatePlayerEntity
+     * Add privatePlayerViews
+     *
+     * @param \CLICHES\PersonalPlaceBundle\Entity\PrivatePlayerView $privatePlayerViews
+     * @return PrivatePlayer
+     */
+    public function addPrivatePlayerView(\CLICHES\PersonalPlaceBundle\Entity\PrivatePlayerView $privatePlayerViews)
+    {
+        $this->privatePlayerViews[] = $privatePlayerViews;
+
+        return $this;
+    }
+
+    /**
+     * Remove privatePlayerViews
+     *
+     * @param \CLICHES\PersonalPlaceBundle\Entity\PrivatePlayerView $privatePlayerViews
+     */
+    public function removePrivatePlayerView(\CLICHES\PersonalPlaceBundle\Entity\PrivatePlayerView $privatePlayerViews)
+    {
+        $this->privatePlayerViews->removeElement($privatePlayerViews);
+    }
+
+    /**
+     * Get privatePlayerViews
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getPrivatePlayerEntity()
+    public function getPrivatePlayerViews()
     {
-        return $this->privatePlayerEntity;
+        return $this->privatePlayerViews;
     }
 }

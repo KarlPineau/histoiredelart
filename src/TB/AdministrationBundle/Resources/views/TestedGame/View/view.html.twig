@@ -1,0 +1,127 @@
+{% extends "TBAdministrationBundle::layout.html.twig" %}
+
+{% block title %}{{ testedGame.title }} - {{ parent() }}{% endblock %}
+
+{% block h1 %}{{ testedGame.title }}{% endblock %}
+
+{% block h1_extend %}
+    <div class="btn-group">
+        <a href="{{ path('tb_administration_testedgame_edit', {'testedGame_id':testedGame.id}) }}" class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i> Editer</a>
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-right">
+            <li><a href="{{ path('tb_administration_testedgame_addItems', {'testedGame_id': testedGame.id}) }}"><i class="fa fa-plus" aria-hidden="true"></i> Ajouter des items</a></li>
+            <li><a href="{{ path('tb_administration_testedgame_editIcon', {'testedGame_id': testedGame.id}) }}"><i class="fa fa-image" aria-hidden="true"></i> Éditer l'icône</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="{{ path('tb_player_player_index', {'testedGame_id': testedGame.id}) }}"><i class="fa fa-play-circle" aria-hidden="true"></i> Jouer !</a></li>
+            <li><a href="{{ path('tb_administration_testedgame_updateOnlineStatus', {'testedGame_id': testedGame.id}) }}">
+                    {% if testedGame.isOnline == true %}<i class="fa fa-toggle-off" aria-hidden="true"></i> Set Offline
+                    {% else %}<i class="fa fa-toggle-on" aria-hidden="true"></i> Set Online
+                    {% endif %}
+                </a></li>
+            <li role="separator" class="divider"></li>
+            <li><a class="main-JS-delete" href="{{ path('tb_administration_testedgame_remove', {'testedGame_id': testedGame.id}) }}"><i class="fa fa-trash" aria-hidden="true"></i> Supprimer</a></li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li class="active">{{ testedGame.title }}</li>
+{% endblock %}
+
+{% block content %}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <h3>Infos Création</h3>
+                <dl>
+                    <dt>Créateur</dt>
+                    <dd><a href="{{ path('cas_administration_user_view', {'id': testedGame.createUser.id}) }}">{{ testedGame.createUser.email }}</a>
+                        (<a href="#">PublicPage</a>)</dd>
+                </dl>
+                <dl>
+                    <dt>Date de création</dt>
+                    <dd>{{ testedGame.createDate|date('d-m-Y, H:i:s') }}</dd>
+                </dl>
+                <dl>
+                    <dt>Dernière édition</dt>
+                    <dd>
+                        {% if testedGame.updateUser != null %}
+                        Le {{ testedGame.updateDate|date('d-m-Y, H:i:s') }}, par <a href="{{ path('cas_administration_user_view', {'id': testedGame.updateUser.id}) }}">{{ testedGame.updateUser.email }}</a>
+                        (<a href="#">PublicPage</a>)
+                        {% else %}Pas de données
+                        {% endif %}
+                    </dd>
+                </dl>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <h3>Infos Systèmes</h3>
+                <dl>
+                    <dt>Partie officielle</dt>
+                    <dd>{% if testedGame.isOfficial == true %}<span class="text-success">Oui</span>{% else %}Non{% endif %}</dd>
+                </dl>
+                <dl>
+                    <dt>En ligne ?</dt>
+                    <dd>{% if testedGame.isOnline == true %}Oui{% else %}<span class="text-warning">Non</span>{% endif %}</dd>
+                </dl>
+                <dl>
+                    <dt>Partie privée ?</dt>
+                    <dd>{% if testedGame.isPrivate == true %}<span class="text-warning">Oui</span>{% else %}Non{% endif %}</dd>
+                </dl>
+                <dl>
+                    <dt>Illustration</dt>
+                    <dl>{% if testedGame.icon != null %}{{ render(controller('DATAImageBundle:Image:renderImage', {'view_id': 0, 'image_id': testedGame.icon.id, 'class': 'image-cliches-list-micro fancybox'})) }}{% endif %}</dl>
+                </dl>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <h3>Infos Items</h3>
+                <dl>
+                    <dt>Nombre d'items</dt>
+                    <dd>{{ tb_model_testeditem.getByTestedGame(testedGame)|length }}</dd>
+                </dl>
+                <dl>
+                    <dt>Affichage aléatoire</dt>
+                    <dd>{% if testedGame.isRandomized == true %}Oui{% else %}Non{% endif %}</dd>
+                </dl>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <h3>Infos Parties</h3>
+                <dl>
+                    <dt>Nombre de sessions</dt>
+                    <dd><a href="{{ path('tb_administration_testedsession_getByTestedGame', {'testedGame_id': testedGame.id}) }}">{{ tb_model_testedsession.getByTestedGame(testedGame)|length }} sessions</a></dd>
+                </dl>
+                <dl>
+                    <dt>Statistiques des parties</dt>
+                    <dd>TODO</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        {% for testedItem in tb_model_testeditem.getByTestedGame(testedGame) %}
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="thumbnail thumbnail-tb-layout">
+                    {{ render(controller('DATAImageBundle:Image:renderImage', {'view_id': 0, 'image_id': testedItem.dataImage.id, 'class': 'image-cliche-tb fancybox'})) }}
+                </div>
+                <div class="divInfoPlace">
+                    <div class="buttonsInfoPlace pull-right">
+                        <div class="btn-group btn-group-sm">
+                            <a href="#" class="btn btn-sm btn-default"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                            <a href="#" class="btn btn-sm btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                    <p class="infoPlace">{{ testedItem.itemLabel }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

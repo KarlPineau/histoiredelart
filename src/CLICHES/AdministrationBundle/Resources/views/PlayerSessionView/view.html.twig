@@ -46,6 +46,11 @@
                             {% if session.dateEnd is not empty %} - {{ session.dateEnd|date('H:i:s') }}{% endif %}
                         </dd>
                     </dl>
+                    <br />
+                    <dl>
+                        <dt>Affichage EndPage :</dt>
+                        <dd>{% if playerEndView is not null %}Oui{% else %}Non{% endif %}</dd>
+                    </dl>
                 </div>
                 <div class="col-md-3">
                     <dl class="">

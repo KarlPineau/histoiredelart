@@ -1,16 +1,21 @@
 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-    {% if privateSessions > 0 %}
-        <form class="form-inline" style="display: inline-block;">
-            <div class="input-group">
-                <select class="form-control">
-                    {% for privateSession in privateSessions %}
-                        <option {% if ppid is defined and ppid == privateSession.id %}selected{% endif %}>{{ privateSession.title }}</option>
-                    {% endfor %}
-                </select>
-                <div class="input-group-btn">
-                    <button type="submit" class="btn {% if ppid is defined %}btn-primary{% else %}btn-default{% endif %}"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                </div>
+    <form class="form-inline" method="post" action="{{ path('data_public_entity_addViewToPrivateSession', {'view_id': view.id}) }}" {{ form_enctype(form) }} style="display: inline-block;">
+        {% if not form.vars.valid %}
+            <div class="alert alert-error">
+                <strong>Votre formulaire contient les erreurs suivantes :</strong>
+                {{ form_errors(form) }}
+                {{ form_errors(form.privatePlayers) }}
             </div>
-        </form>
-    {% endif %}
+            <br />
+        {% endif %}
+
+        <div class="input-group">
+            {{ form_label(form.privatePlayers, "Session :", {'label_attr': {'class': 'sr-only control-label'}}) }}
+            {{ form_widget(form.privatePlayers, {'attr': {'class': 'form-control'}}) }}
+
+            <div class="input-group-btn">
+                <button type="submit" class="btn {% if ppid is defined %}btn-primary{% else %}btn-default{% endif %}"><i class="fa fa-plus" aria-hidden="true"></i></button>
+            </div>
+        </div>
+    </form>
 {% endif %}

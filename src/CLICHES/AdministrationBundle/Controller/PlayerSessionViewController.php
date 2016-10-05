@@ -50,10 +50,13 @@ class PlayerSessionViewController extends Controller
                     'playerProposal' => null];
             }
         }
+
+        $playerEndView = $em->getRepository('CLICHESPlayerBundle:PlayerEndViews')->findOneByPlayerSession($session);
         
         return $this->render('CLICHESAdministrationBundle:PlayerSessionView:view.html.twig', array(
             'session' => $session,
-            'playerOeuvres' => $playerOeuvresCollection
+            'playerOeuvres' => $playerOeuvresCollection,
+            'playerEndView' => $playerEndView
         ));
     }
 }

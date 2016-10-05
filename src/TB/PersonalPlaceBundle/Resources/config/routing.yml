@@ -1,0 +1,19 @@
+tb_personalplace_home_index:
+    path:     /testedgame/
+    defaults: { _controller: TBPersonalPlaceBundle:Home:index }
+
+tb_personalplace_generate_generate:
+    path:     /testedgame/generate
+    defaults: { _controller: TBPersonalPlaceBundle:Generate:generate }
+
+tb_personalplace_view_view:
+    path:     /testedgame/view/{testedGame_id}
+    defaults: { _controller: TBPersonalPlaceBundle:View:view }
+    requirements:
+        testedGame_id: \d+
+
+tb_personalplace_edit_edit:
+    path:     /testedgame/edit/{testedGame_id}
+    defaults: { _controller: TBPersonalPlaceBundle:Edit:edit }
+    requirements:
+        testedGame_id: \d+

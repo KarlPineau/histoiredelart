@@ -1,0 +1,30 @@
+{% extends "TBHomeBundle::layout.html.twig" %}
+
+{% block title %}Toutes les parties - {{ parent() }}{% endblock %}
+
+{% block h1 %}Toutes les parties{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li class="active">Toutes les parties</li>
+{% endblock %}
+
+{% block content %}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    <div class="row">
+        <div class="col-xs-12 col-md-7">
+            <div class="panel panel-default">
+                <div class="list-group">
+                {% for testedGame in testedGames %}
+                    {% include 'TBHomeBundle:Home:Home/index-testedGame.html.twig' %}
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

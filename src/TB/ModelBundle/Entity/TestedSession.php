@@ -26,6 +26,13 @@ class TestedSession
     /**
      * @var boolean
      *
+     * @ORM\Column(name="toSmallWindow", type="boolean", nullable=true)
+     */
+    private $toSmallWindow;
+
+    /**
+     * @var boolean
+     *
      * @ORM\Column(name="isRandomized", type="boolean")
      */
     private $isRandomized;
@@ -242,5 +249,28 @@ class TestedSession
     public function getUpdateUser()
     {
         return $this->updateUser;
+    }
+
+    /**
+     * Set toSmallWindow
+     *
+     * @param boolean $toSmallWindow
+     * @return TestedSession
+     */
+    public function setToSmallWindow($toSmallWindow)
+    {
+        $this->toSmallWindow = $toSmallWindow;
+
+        return $this;
+    }
+
+    /**
+     * Get toSmallWindow
+     *
+     * @return boolean 
+     */
+    public function getToSmallWindow()
+    {
+        return $this->toSmallWindow;
     }
 }

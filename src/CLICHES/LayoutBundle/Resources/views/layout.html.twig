@@ -78,7 +78,7 @@
 {% endblock %}  
 
 {% block container %}
-<div class="container{% if 'player' in app.request.get('_route')%}-fluid{% endif %}" id="cliches-container">
+<div class="container{% if 'privateplayer' in app.request.get('_route')%}{% elseif 'player' in app.request.get('_route')%}-fluid{% endif %}" id="cliches-container">
     {% if 'administration' in app.request.get('_route') or
         'profile' in app.request.get('_route') or
         'personalplace' in app.request.get('_route') or

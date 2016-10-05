@@ -24,6 +24,12 @@ class PrivatePlayer
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="DATA\PersonalPlaceBundle\Entity\UserSessions", inversedBy="privatePlayers")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $userSession;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
@@ -45,21 +51,20 @@ class PrivatePlayer
     private $simpleSession;
 
     /**
-     * @ORM\OneToMany(targetEntity="CLICHES\PersonalPlaceBundle\Entity\PrivatePlayerEntity", mappedBy="privatePlayer")
+     * @ORM\OneToMany(targetEntity="CLICHES\PersonalPlaceBundle\Entity\PrivatePlayerView", mappedBy="privatePlayer")
      * @ORM\JoinColumn(nullable=true)
      */
-    private $privatePlayerEntity;
+    private $privatePlayerViews;
 
     /**
      * @var string
-     * @Assert\Ip
      *
      * @ORM\Column(name="ipCreateUser", type="string", length=255, nullable=true)
      */
     protected $ipCreateUser;
 
     /**
-     * @ORM\ManyToOne(targetEntity="KP\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="CAS\UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
      */
     protected $createUser;
@@ -73,7 +78,7 @@ class PrivatePlayer
     protected $createDate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="KP\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="CAS\UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
      */
     protected $updateUser;
@@ -238,10 +243,10 @@ class PrivatePlayer
     /**
      * Set createUser
      *
-     * @param \KP\UserBundle\Entity\User $createUser
+     * @param \CAS\UserBundle\Entity\User $createUser
      * @return PrivatePlayer
      */
-    public function setCreateUser(\KP\UserBundle\Entity\User $createUser = null)
+    public function setCreateUser(\CAS\UserBundle\Entity\User $createUser = null)
     {
         $this->createUser = $createUser;
 
@@ -251,7 +256,7 @@ class PrivatePlayer
     /**
      * Get createUser
      *
-     * @return \KP\UserBundle\Entity\User 
+     * @return \CAS\UserBundle\Entity\User
      */
     public function getCreateUser()
     {
@@ -261,10 +266,10 @@ class PrivatePlayer
     /**
      * Set updateUser
      *
-     * @param \KP\UserBundle\Entity\User $updateUser
+     * @param \CAS\UserBundle\Entity\User $updateUser
      * @return PrivatePlayer
      */
-    public function setUpdateUser(\KP\UserBundle\Entity\User $updateUser = null)
+    public function setUpdateUser(\CAS\UserBundle\Entity\User $updateUser = null)
     {
         $this->updateUser = $updateUser;
 
@@ -274,50 +279,33 @@ class PrivatePlayer
     /**
      * Get updateUser
      *
-     * @return \KP\UserBundle\Entity\User 
+     * @return \CAS\UserBundle\Entity\User
      */
     public function getUpdateUser()
     {
         return $this->updateUser;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->privatePlayerEntity = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
-     * Add privatePlayerEntity
+     * Set userSession
      *
-     * @param \CLICHES\PersonalPlaceBundle\Entity\PrivatePlayerEntity $privatePlayerEntity
+     * @param \DATA\PersonalPlaceBundle\Entity\UserSession $userSession
      * @return PrivatePlayer
      */
-    public function addPrivatePlayerEntity(\CLICHES\PersonalPlaceBundle\Entity\PrivatePlayerEntity $privatePlayerEntity)
+    public function setUserSession(\DATA\PersonalPlaceBundle\Entity\UserSession $userSession)
     {
-        $this->privatePlayerEntity[] = $privatePlayerEntity;
+        $this->userSession = $userSession;
 
         return $this;
     }
 
     /**
-     * Remove privatePlayerEntity
+     * Get userSession
      *
-     * @param \CLICHES\PersonalPlaceBundle\Entity\PrivatePlayerEntity $privatePlayerEntity
+     * @return \DATA\PersonalPlaceBundle\Entity\UserSession 
      */
-    public function removePrivatePlayerEntity(\CLICHES\PersonalPlaceBundle\Entity\PrivatePlayerEntity $privatePlayerEntity)
+    public function getUserSession()
     {
-        $this->privatePlayerEntity->removeElement($privatePlayerEntity);
-    }
-
-    /**
-     * Get privatePlayerEntity
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getPrivatePlayerEntity()
-    {
-        return $this->privatePlayerEntity;
+        return $this->userSession;
     }
 }

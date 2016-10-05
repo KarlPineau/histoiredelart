@@ -1,0 +1,30 @@
+{% extends "TBAdministrationBundle::layout.html.twig" %}
+
+{% block title %}Nouveau TestedGame - {{ parent() }}{% endblock %}
+
+{% block h1 %}Nouveau TestedGame{% endblock %}
+
+{% block h1_extend %}
+    <a class="btn btn-primary">Besoin d'aide ?</a>
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li class="active">Nouveau</li>
+{% endblock %}
+
+{% block content %}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    {% include "TBAdministrationBundle:TestedGame:Create/create_content.html.twig" %}
+{% endblock %}
+
+{% block javascript_sub %}
+    {% javascripts  '@TBAdministrationBundle/Resources/public/js/create.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

@@ -24,6 +24,12 @@ class TestedItemResult
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="TB\ModelBundle\Entity\TestedSession")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $testedSession;
+
+    /**
      * @ORM\ManyToOne(targetEntity="TB\ModelBundle\Entity\TestedItem")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -211,5 +217,28 @@ class TestedItemResult
     public function getUpdateUser()
     {
         return $this->updateUser;
+    }
+
+    /**
+     * Set testedSession
+     *
+     * @param \TB\ModelBundle\Entity\TestedSession $testedSession
+     * @return TestedItemResult
+     */
+    public function setTestedSession(\TB\ModelBundle\Entity\TestedSession $testedSession)
+    {
+        $this->testedSession = $testedSession;
+
+        return $this;
+    }
+
+    /**
+     * Get testedSession
+     *
+     * @return \TB\ModelBundle\Entity\TestedSession 
+     */
+    public function getTestedSession()
+    {
+        return $this->testedSession;
     }
 }

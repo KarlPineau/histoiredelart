@@ -14,8 +14,10 @@
     <input value="{{ entity.id }}" id="entityId" type="hidden" />
     <input value="http://data.histoiredelart.fr/item/{{ entity.id }}" type="text" class="form-control input-sm" readonly style="display: inline; width: auto;" />
     <div class="btn-group">
+        <a href="{{ path('data_public_entity_view', {'id': entity.id}) }}" class="btn btn-default">Version Public</a>
         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Actions <span class="caret"></span>
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
         </button>
         <ul class="dropdown-menu dropdown-menu-right">
             <li><a href="{{ path(data_data_entity_routing_service.getRoutingEdit(entity), {'slug': data_data_entity_service.getSlug(entity)}) }}" title="Editer" ><span class="glyphicon glyphicon-edit"></span> Editer</a></li>
@@ -33,7 +35,6 @@
             {% endif %}
         </ul>
     </div>
-    <a href="{{ path('data_public_entity_view', {'id': entity.id}) }}" class="btn btn-default">Public</a>
 {% endblock %}
 
 {% block breadcrumb %}

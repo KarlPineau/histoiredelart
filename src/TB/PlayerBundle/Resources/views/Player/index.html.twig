@@ -1,5 +1,7 @@
 {% extends "TBPlayerBundle::layout.html.twig" %}
 
+{% block title %}{{ testedGame.title }} - {{ parent() }}{% endblock %}
+
 {% block h1 %}{{ testedGame.title }}{% endblock %}
 
 {% block content %}
@@ -9,53 +11,67 @@
         </div>
     {% endfor %}
     <input type="hidden" id="testedItemsNumber" value="{{ testedGame.testedItems|length }}" />
+    <input type="hidden" id="testedSession" value="{{ testedSession.id }}" />
 
-    <div class="row">
-        {% for testedItem in testedGame.testedItems %}
-            <div class="col-md-3">
-                {{ render(controller('DATAImageBundle:Image:renderImage', {'view_id': 0, 'image_id': testedItem.dataImage.id, 'class': 'image-cliche-tb fancybox'})) }}
-                <div>Réponse:</div>
-                <div id="item-{{ loop.index }}" itemId="{{ loop.index }}" class="droppable ui-widget-header" style="height: 100px; width: 100px;"></div>
+    {# Div global du player#}
+    <div id="container-player" class="row">
+        {# Div des images #}
+        <div class="col-sm-10" id="droppable-container">
+            {% if testedGame.isRandomized == true %}{% set datasetItems = testedGame.testedItems|shuffle() %}
+            {% else %}{% set datasetItems = testedGame.testedItems %}
+            {% endif %}
+
+            {% for testedItem in datasetItems %}
+                {% if testedGame.testedItems|length <= 4 %}{% set colMd = 12/(testedGame.testedItems|length) %}
+                {% elseif testedGame.testedItems|length > 4 %}{% set colMd = 3 %}
+                {% endif %}
+
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="thumbnail thumbnail-tb-player">
+                        {{ render(controller('DATAImageBundle:Image:renderImage', {'view_id': 0, 'image_id': testedItem.dataImage.id, 'class': 'image-cliche-tb fancybox'})) }}
+                    </div>
+                    <div id="item-{{ testedItem.id }}" itemId="{{ testedItem.id }}" class="droppable"><p class="infoPlace">Placez ici votre étiquette</p></div>
+                </div>
+            {% endfor %}
+        </div>
+        {# Div des labels #}
+        <div class="col-sm-2">
+            <div class="affix" id="draggable-container" data-spy="affix">
+                <div class="draggable-header"><h2>Choisissez une étiquette :</h2></div>
+                <div class="draggable-content">
+                    <div class="gallery" id="labels">
+                        {% for testedItem in testedGame.testedItems|shuffle() %}
+                            <div class="draggable-text draggable" id="itemLabel-{{ testedItem.id }}" itemId="{{ testedItem.id }}">{{ testedItem.itemLabel }}<i aria-label="Replacer dans la liste" class="hidden fa fa-undo ifaundo"></i></div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="draggable-footer">
+                    <button type="button" class="btn btn-block btn-success" id="checkButton"><span style="font-size: 18px; font-weight: bold;">Vérifier  <i class="fa fa-question-circle" aria-hidden="true"></i></span></button>
+                </div>
             </div>
-        {% endfor %}
+        </div>
     </div>
 
-    <hr />
-    <div class="row">
-        {% for testedItem in testedGame.testedItems %}
-            <div class="btn btn-default draggable" style="cursor:grab!important;" id="itemLabel-{{ loop.index }}" itemId="{{ loop.index }}">{{ testedItem.itemLabel }}</div>
-        {% endfor %}
+    <div class="modal" id="sizeNoEnough" tabindex="-1" role="dialog" aria-labelledby="sizeNoEnoughLabel" style="height: 100%;">
+        <div class="modal-dialog" role="document" style="height: 98%;">
+            <div class="modal-content" style="height: 98%;">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="sizeNoEnoughLabel">Oups, votre écran n'est pas assez grand ...</h4>
+                </div>
+                <div class="modal-body text-center">
+                    <p class="lead">Oups ... Votre écran n'est pas assez grand pour afficher correctement notre interface.<br />
+                    Nous en sommes désolés <i class="fa fa-frown-o" aria-hidden="true"></i>.</p>
+                    <a href="{{ path('tb_home_home_index') }}" class="btn btn-lg btn-primary">Retour à l'accueil</a>
+                    <div style="margin-top: 20px; display: flex; align-items: center; justify-content: center;"><img class="giphySorry hidden" src="" style="display: block; max-width:60%;"/></div>
+                </div>
+            </div>
+        </div>
     </div>
-    {% endblock %}
+{% endblock %}
 
 {% block javascript_sub %}
-    <script>
-        //https://jqueryui.com/droppable/#photo-manager
-        $( function() {
-            var testedItemsNumber = $('#testedItemsNumber').val();
-
-            var draggableString;
-            for(i = 0; i <= testedItemsNumber; i++) {
-                if(i > 0) {draggableString += ',';}
-                draggableString += '#itemLabel-'+testedItemsNumber[i];
-            }
-
-            $(draggableString).draggable();
-            for(i = 0; i <= testedItemsNumber; i++) {
-                $('#item-2'+testedItemsNumber[i]).droppable({
-                    accept: '#itemLabel-'+testedItemsNumber[i],
-                    classes: {
-                        "ui-droppable-active": "ui-state-active",
-                        "ui-droppable-hover": "ui-state-hover"
-                    },
-                    drop: function( event, ui ) {
-                        $( this )
-                                .addClass( "ui-state-highlight" )
-                                .find( "p" )
-                                .html( "Dropped!" );
-                    }
-                });
-            }
-        } );
-    </script>
+    {{ parent() }}
+    {% javascripts  '@TBPlayerBundle/Resources/public/js/index.js'  %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
 {% endblock %}

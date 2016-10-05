@@ -1,0 +1,32 @@
+{% extends "TBHomeBundle::layout.html.twig" %}
+
+{% block title %}Bienvenue sur Clichés! - {{ parent() }}{% endblock %}
+
+{% block h1 %}Bienvenue sur Clichés!{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li class="active">Pourquoi s'inscrire ?</li>
+{% endblock %}
+
+{% block content %}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    <div class="jumbotron">
+        <h2>Rejoindre la communauté de histoiredelart.fr</h2>
+        <h2>Créer ses propres parties et les partages</h2>
+        <h2>Obtenir des statistiques sur la durée</h2>
+        <h2>Contribuer à l'enrichissement de Clichés!</h2>
+        <div>
+            <a class="btn btn-lg btn-primary" href="{{ path('fos_user_registration_register') }}">M'inscrire !</a> - <span class="lead">Déjà inscrit ?</span> <a class="btn btn-lg btn-success" href="{{ path('fos_user_security_login') }}">Me connecter</a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript_sub %}
+    {{ parent() }}
+{% endblock %}

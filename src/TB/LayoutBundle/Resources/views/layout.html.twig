@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
 
     <link rel="stylesheet" href="{{ asset('css/main.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('css/tb-layout.css') }}" type="text/css" />
 
     <link rel="shortcut icon" href="{{ asset('images/logo.png') }}">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ asset('images/logo.png') }}">
@@ -58,6 +59,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ app.user.email }} <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="{{ path('fos_user_profile_show') }}">Profil</a></li>
+                            <li><a href="{{ path('tb_personalplace_home_index') }}">Espace personnel</a></li>
                             <li><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
                         </ul>
                     </li>
@@ -72,17 +74,17 @@
 {% endblock %}  
 
 {% block container %}
-    <div class="container" id="cliches-container">
-        {% if 'administration' in app.request.get('_route') %}
-            <div>
-                <div class="pull-right">{% block h1_extend %}{% endblock %}</div>
-                <ol class="breadcrumb">
-                    {% block breadcrumb %}
-                        <li><a href="{{ path('tools_home_home_index') }}">Accueil</a></li>
-                    {% endblock %}
-                </ol>
-            </div>
-        {% endif%}
+    <div class="container">
+        {% if 'tb_home_home_index' in app.request.get('_route') %}{% else %}
+        <div>
+            <div class="pull-right">{% block h1_extend %}{% endblock %}</div>
+            <ol class="breadcrumb">
+                {% block breadcrumb %}
+                    <li><a href="{{ path('tb_home_home_index') }}">Accueil</a></li>
+                {% endblock %}
+            </ol>
+        </div>
+        {% endif %}
         {% block content %}{% endblock %}
     </div>
 {% endblock %}
@@ -90,7 +92,7 @@
 {% block footer %}
     <footer class="footer">
         <div class="container">
-            <p class="text-center alert-link"><small>Questions / Suggestions / Remarques / Aide : <a href="mailto:{{ cliches_mail }}" class="text-muted">{{ cliches_mail }}</a> - <a href="{{ path('cliches_home_home_version') }}" class="text-muted">Versions</a> - <a href="{{ path('cliches_home_home_cgu') }}" class="text-muted">CGU</a></small></p>
+            <p class="text-center alert-link text-muted"><small>Questions / Suggestions / Remarques / Aide : <a href="mailto:{{ cliches_mail }}" class="text-muted">{{ cliches_mail }}</a> - <a href="{{ path('cliches_home_home_version') }}" class="text-muted">Versions</a> - <a href="{{ path('cliches_home_home_cgu') }}" class="text-muted">CGU</a></small></p>
             {% block footer_content %}{% endblock %}
         </div>
     </footer>
@@ -99,7 +101,8 @@
 {% block javascript %}
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
-        
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56a802c313ab49f1" async="async"></script>
+
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
 

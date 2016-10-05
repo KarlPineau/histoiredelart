@@ -26,6 +26,13 @@ class TestedSession
     /**
      * @var boolean
      *
+     * @ORM\Column(name="toSmallWindow", type="boolean")
+     */
+    private $toSmallWindow;
+
+    /**
+     * @var boolean
+     *
      * @ORM\Column(name="isRandomized", type="boolean")
      */
     private $isRandomized;
@@ -37,7 +44,7 @@ class TestedSession
     private $testedGame;
 
     /**
-     * @ORM\ManyToOne(targetEntity="KP\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="CAS\UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
      */
     protected $createUser;
@@ -59,7 +66,7 @@ class TestedSession
     protected $createDate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="KP\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="CAS\UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
      */
     protected $updateUser;
@@ -201,10 +208,10 @@ class TestedSession
     /**
      * Set createUser
      *
-     * @param \KP\UserBundle\Entity\User $createUser
+     * @param \CAS\UserBundle\Entity\User $createUser
      * @return TestedSession
      */
-    public function setCreateUser(\KP\UserBundle\Entity\User $createUser = null)
+    public function setCreateUser(\CAS\UserBundle\Entity\User $createUser = null)
     {
         $this->createUser = $createUser;
 
@@ -214,7 +221,7 @@ class TestedSession
     /**
      * Get createUser
      *
-     * @return \KP\UserBundle\Entity\User 
+     * @return \CAS\UserBundle\Entity\User
      */
     public function getCreateUser()
     {
@@ -224,10 +231,10 @@ class TestedSession
     /**
      * Set updateUser
      *
-     * @param \KP\UserBundle\Entity\User $updateUser
+     * @param \CAS\UserBundle\Entity\User $updateUser
      * @return TestedSession
      */
-    public function setUpdateUser(\KP\UserBundle\Entity\User $updateUser = null)
+    public function setUpdateUser(\CAS\UserBundle\Entity\User $updateUser = null)
     {
         $this->updateUser = $updateUser;
 
@@ -237,7 +244,7 @@ class TestedSession
     /**
      * Get updateUser
      *
-     * @return \KP\UserBundle\Entity\User 
+     * @return \CAS\UserBundle\Entity\User
      */
     public function getUpdateUser()
     {

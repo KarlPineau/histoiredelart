@@ -2,6 +2,9 @@
 
 namespace DATA\PublicBundle\Controller;
 
+use CLICHES\PersonalPlaceBundle\Entity\PrivatePlayerView;
+use DATA\PersonalPlaceBundle\Entity\UserSessions;
+use DATA\PersonalPlaceBundle\Form\UserSessionsType;
 use DATA\PublicBundle\Entity\Reporting;
 use DATA\PublicBundle\Entity\Visit;
 use DATA\PublicBundle\Form\ReportingType;
@@ -103,7 +106,7 @@ class EntityController extends Controller
                 $em->flush();
 
                 $this->get('session')->getFlashBag()->add('notice', 'Votre signalement a bien été transmis. Merci pour votre contribution.' );
-                return $this->redirect($this->generateUrl('data_public_entity_view', array('id' => $entity->getId())));
+                return $this->redirectToRoute('data_public_entity_view', array('id' => $entity->getId()));
             }
 
             $arrayReturn['form'] = $form->createView();
@@ -154,5 +157,42 @@ class EntityController extends Controller
 
             return new Response(json_encode(true));
         }
+    }
+
+    public function addViewToPrivateSessionAction($view_id, Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $privateSessions = $em->getRepository('CLICHESPersonalPlaceBundle:PrivatePlayer')->findBy(array('createUser' => $this->getUser()), array('createDate' => 'DESC'));
+
+        $view = $em->getRepository('DATAImageBundle:View')->findOneById($view_id);
+        if ($view === null) { throw $this->createNotFoundException('View : [id='.$view_id.'] inexistant.'); }
+
+        $userSessions = new UserSessions();
+        $userSessions->setCreateUser($this->getUser());
+        $userSessions->setView($view);
+        foreach($privateSessions as $privateSession) {
+            $userSessions->addPrivatePlayer($privateSession);
+        }
+
+        $form = $this->createForm(new UserSessionsType(), $userSessions, array('attr' => array('user' => $this->getUser())));
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $privatePlayerView = new PrivatePlayerView();
+            $privatePlayerView->setCreateUser($this->getUser());
+            $privatePlayerView->setIpCreateUser($this->container->get('request')->getClientIp());
+            $privatePlayerView->setPrivatePlayer($form->get('privatePlayers')->getData());
+            $privatePlayerView->setView($view);
+            $em->persist($privatePlayerView);
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->add('notice', 'Félicitations, l\'oeuvre a bien été ajoutée à votre partie.');
+            return $this->redirectToRoute('data_public_entity_view', array('id' => $this->get('data_data.entity')->getByView($view)->getId()));
+        }
+
+        return $this->render('DATAPublicBundle:Entity:View/view-privatePlayer.html.twig', array(
+            'view' => $view,
+            'form' => $form->createView())
+        );
     }
 }

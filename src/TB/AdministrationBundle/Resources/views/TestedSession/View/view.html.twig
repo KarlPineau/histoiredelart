@@ -1,0 +1,24 @@
+{% extends "TBAdministrationBundle::layout.html.twig" %}
+
+{% block title %}TestedSession #{{ testedSession.id }} - {{ parent() }}{% endblock %}
+
+{% block h1 %}TestedSession #{{ testedSession.id }}{% endblock %}
+
+{% block h1_extend %}
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li><a href="{{ path('tb_administration_testedgame_view', {'testedGame_id': testedSession.testedGame.id}) }}">{{ testedSession.testedGame.title }}</a></li>
+    <li class="active">Session #{{ testedSession.id }}</li>
+{% endblock %}
+
+{% block content %}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+
+{% endblock %}
