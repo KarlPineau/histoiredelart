@@ -26,16 +26,6 @@ class LoginListener implements EventSubscriberInterface
 
     public function onSecurityInteractiveLogin( InteractiveLoginEvent $event )
     {
-        $token = $this->securityContext->getToken();
-        if( is_object( $token ) ) {
-            $user = $token->getUser();
-            if ($user instanceof User) {
-                $log = new Log();
-                $log->setUser($user);
-                $log->setContext('normal');
-                $this->em->persist($log);
-                $this->em->flush();
-            }
-        }
+
     }
 }

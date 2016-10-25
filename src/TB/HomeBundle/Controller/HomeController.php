@@ -9,7 +9,7 @@ class HomeController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $testedGames = $em->getRepository('TBModelBundle:TestedGame')->findBy(array('isOnline' => true), array('createDate' => 'DESC'), 10);
+        $testedGames = $em->getRepository('TBModelBundle:TestedGame')->findBy(array('isOnline' => true, 'isPrivate' => false), array('createDate' => 'DESC'), 10);
 
         return $this->render('TBHomeBundle:Home:index.html.twig', array('testedGames' => $testedGames));
     }
@@ -22,7 +22,15 @@ class HomeController extends Controller
     public function getAllTestedGamesAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $testedGames = $em->getRepository('TBModelBundle:TestedGame')->findBy(array('isOnline' => true), array('createDate' => 'DESC'));
+        $testedGames = $em->getRepository('TBModelBundle:TestedGame')->findBy(array('isOnline' => true, 'isPrivate' => false), array('createDate' => 'DESC'));
+
+        return $this->render('TBHomeBundle:Home:getAllTestedGame.html.twig', array('testedGames' => $testedGames));
+    }
+
+    public function getAllOfficialAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $testedGames = $em->getRepository('TBModelBundle:TestedGame')->findBy(array('isOfficial' => true, 'isPrivate' => false, 'isOnline' => true), array('createDate' => 'DESC'));
 
         return $this->render('TBHomeBundle:Home:getAllTestedGame.html.twig', array('testedGames' => $testedGames));
     }

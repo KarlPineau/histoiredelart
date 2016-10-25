@@ -29,7 +29,8 @@ class playerProposalFieldAction
     }
     
     public function foundFields($idImg)
-    {    
+    {
+        set_time_limit(0);
         /* Méthodologie de la fonction :
          *  - On récupère l'id de l'image -> on récupère vue et tout
          *  - On génère un fichier JSON
@@ -50,19 +51,21 @@ class playerProposalFieldAction
     
     public function getByPlayerProposal($playerProposal)
     {
+        set_time_limit(0);
         $repositoryPlayerProposalField = $this->em->getRepository('CLICHESPlayerBundle:PlayerProposalField');
         return $repositoryPlayerProposalField->findByPlayerProposal($playerProposal);
     }
 
-    public function getPourcentageFullByField($field=null)
+    public function getAverageFullByField($field=null)
     {
+        set_time_limit(0);
         if($field == null) {
-            $nullValue = count($this->em->getRepository('CLICHESPlayerBundle:PlayerProposalField')->findBy(array('value' => null)));
-            $totalValue = count($this->em->getRepository('CLICHESPlayerBundle:PlayerProposalField')->findBy(array()));
+            $nullValue = $this->em->getRepository('CLICHESPlayerBundle:PlayerProposalField')->countNull();
+            $totalValue = $this->em->getRepository('CLICHESPlayerBundle:PlayerProposalField')->countAll();
         } else {
-            $nullValue = count($this->em->getRepository('CLICHESPlayerBundle:PlayerProposalField')->findBy(array('field' => $field, 'value' => null)));
-            $totalValue = count($this->em->getRepository('CLICHESPlayerBundle:PlayerProposalField')->findBy(array('field' => $field)));
+            $nullValue = $this->em->getRepository('CLICHESPlayerBundle:PlayerProposalField')->countNullByField($field);
+            $totalValue = $this->em->getRepository('CLICHESPlayerBundle:PlayerProposalField')->countAllByField($field);
         }
-        return ($totalValue-$nullValue)/$totalValue;
+        return (($totalValue-$nullValue)*100)/$totalValue;
     }
 }

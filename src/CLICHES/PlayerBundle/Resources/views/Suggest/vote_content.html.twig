@@ -1,6 +1,6 @@
 {# src/HDA/ClichesBundle/Resources/views/Oeuvre/register_content.html.twig #}
 {% form_theme form 'bootstrap_3_layout.html.twig' %}
-<form class="form-horizontal" method="post" action="{{ path('cliches_player_result_result', {'playerProposal_id': playerProposal.id, 'validation': 'vote'}) }}" role="form">
+<form class="form-horizontal" method="post" action="{{ path('cliches_player_resultfield_result', {'playerProposal_id': playerProposal.id, 'validation': 'vote'}) }}" role="form">
     {% if not form.vars.valid %}
         <div class="alert alert-error">
             <strong>Votre formulaire contient les erreurs suivantes :</strong>

@@ -51,7 +51,7 @@ class PlayerSessionViewController extends Controller
             }
         }
 
-        $playerEndView = $em->getRepository('CLICHESPlayerBundle:PlayerEndViews')->findOneByPlayerSession($session);
+        $playerEndView = $this->get('cliches_player.playerendaction')->getBySession($session);
         
         return $this->render('CLICHESAdministrationBundle:PlayerSessionView:view.html.twig', array(
             'session' => $session,

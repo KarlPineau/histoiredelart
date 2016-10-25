@@ -7,13 +7,33 @@
         </div>
     {% endfor %}
 <div class="row" style="margin-top: 15%;">
-    <div class="col-md-offset-4 col-md-4">
+    <div class="col-md-4">
+        <div class="thumbnail">
+            <a href="{{path('data_public_home_index')}}">
+                <img src="{{ asset('images/cliches.jpg') }}" alt="Capture d'écran de DATA"/>
+            </a>
+            <div class="caption">
+                <h3 class="text-center"><a href="{{path('data_public_home_index')}}">DATA</a></h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
         <div class="thumbnail">
             <a href="{{path('cliches_home_home_index')}}">
                 <img src="{{ asset('images/cliches.jpg') }}" alt="Capture d'écran de Clichés!"/>
             </a>
             <div class="caption">
                 <h3 class="text-center"><a href="{{path('cliches_home_home_index')}}">Clichés!</a></h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="thumbnail">
+            <a href="{{path('tb_home_home_index')}}">
+                <img src="{{ asset('images/cliches.jpg') }}" alt="Capture d'écran de Match"/>
+            </a>
+            <div class="caption">
+                <h3 class="text-center"><a href="{{path('tb_home_home_index')}}">Match</a></h3>
             </div>
         </div>
     </div>

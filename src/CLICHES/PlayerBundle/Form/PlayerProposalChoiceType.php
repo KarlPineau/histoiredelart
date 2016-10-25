@@ -18,9 +18,10 @@ class PlayerProposalChoiceType extends AbstractType
     {
         $builder
             ->add('playerProposalChoiceValues',   ChoiceType::class,   array(
-                'choices' => array(),
-                'multiple' => false,
-                'expanded' => true))
+                                                                                'choices' => array(),
+                                                                                'multiple' => false,
+                                                                                'expanded' => true,
+                                                                                'required' => false))
         ;
     }
     

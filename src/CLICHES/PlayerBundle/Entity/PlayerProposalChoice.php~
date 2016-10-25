@@ -30,10 +30,23 @@ class PlayerProposalChoice
     private $playerProposal;
 
     /**
-     * @ORM\OneToMany(targetEntity="CLICHES\PlayerBundle\Entity\PlayerProposalChoice", mappedBy="playerProposalChoice", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="CLICHES\PlayerBundle\Entity\PlayerProposalChoiceValue", mappedBy="playerProposalChoice", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
      */
     private $playerProposalChoiceValues;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="field", type="string", length=255, nullable=false)
+     */
+    private $field;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="CLICHES\PlayerBundle\Entity\PlayerProposalChoiceValue")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $playerProposalChoiceValueSelected;
 
     /**
      * @var \DateTime

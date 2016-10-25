@@ -30,10 +30,23 @@ class PlayerProposalChoice
     private $playerProposal;
 
     /**
-     * @ORM\OneToMany(targetEntity="CLICHES\PlayerBundle\Entity\PlayerProposalChoice", mappedBy="playerProposalChoice", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="CLICHES\PlayerBundle\Entity\PlayerProposalChoiceValue", mappedBy="playerProposalChoice", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true)
      */
     private $playerProposalChoiceValues;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="field", type="string", length=255, nullable=false)
+     */
+    private $field;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="CLICHES\PlayerBundle\Entity\PlayerProposalChoiceValue")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $playerProposalChoiceValueSelected;
 
     /**
      * @var \DateTime
@@ -59,6 +72,29 @@ class PlayerProposalChoice
     public function __construct()
     {
         $this->playerProposalChoiceValues = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set field
+     *
+     * @param string $field
+     * @return PlayerProposalChoice
+     */
+    public function setField($field)
+    {
+        $this->field = $field;
+
+        return $this;
+    }
+
+    /**
+     * Get field
+     *
+     * @return string 
+     */
+    public function getField()
+    {
+        return $this->field;
     }
 
     /**
@@ -110,10 +146,10 @@ class PlayerProposalChoice
     /**
      * Add playerProposalChoiceValues
      *
-     * @param \CLICHES\PlayerBundle\Entity\PlayerProposalChoice $playerProposalChoiceValues
+     * @param \CLICHES\PlayerBundle\Entity\PlayerProposalChoiceValue $playerProposalChoiceValues
      * @return PlayerProposalChoice
      */
-    public function addPlayerProposalChoiceValue(\CLICHES\PlayerBundle\Entity\PlayerProposalChoice $playerProposalChoiceValues)
+    public function addPlayerProposalChoiceValue(\CLICHES\PlayerBundle\Entity\PlayerProposalChoiceValue $playerProposalChoiceValues)
     {
         $this->playerProposalChoiceValues[] = $playerProposalChoiceValues;
 
@@ -123,9 +159,9 @@ class PlayerProposalChoice
     /**
      * Remove playerProposalChoiceValues
      *
-     * @param \CLICHES\PlayerBundle\Entity\PlayerProposalChoice $playerProposalChoiceValues
+     * @param \CLICHES\PlayerBundle\Entity\PlayerProposalChoiceValue $playerProposalChoiceValues
      */
-    public function removePlayerProposalChoiceValue(\CLICHES\PlayerBundle\Entity\PlayerProposalChoice $playerProposalChoiceValues)
+    public function removePlayerProposalChoiceValue(\CLICHES\PlayerBundle\Entity\PlayerProposalChoiceValue $playerProposalChoiceValues)
     {
         $this->playerProposalChoiceValues->removeElement($playerProposalChoiceValues);
     }
@@ -138,5 +174,28 @@ class PlayerProposalChoice
     public function getPlayerProposalChoiceValues()
     {
         return $this->playerProposalChoiceValues;
+    }
+
+    /**
+     * Set playerProposalChoiceValueSelected
+     *
+     * @param \CLICHES\PlayerBundle\Entity\PlayerProposalChoiceValue $playerProposalChoiceValueSelected
+     * @return PlayerProposalChoice
+     */
+    public function setPlayerProposalChoiceValueSelected(\CLICHES\PlayerBundle\Entity\PlayerProposalChoiceValue $playerProposalChoiceValueSelected = null)
+    {
+        $this->playerProposalChoiceValueSelected = $playerProposalChoiceValueSelected;
+
+        return $this;
+    }
+
+    /**
+     * Get playerProposalChoiceValueSelected
+     *
+     * @return \CLICHES\PlayerBundle\Entity\PlayerProposalChoiceValue 
+     */
+    public function getPlayerProposalChoiceValueSelected()
+    {
+        return $this->playerProposalChoiceValueSelected;
     }
 }

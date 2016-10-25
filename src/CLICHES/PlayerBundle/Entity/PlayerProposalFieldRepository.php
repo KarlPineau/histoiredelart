@@ -12,4 +12,41 @@ use Doctrine\ORM\EntityRepository;
  */
 class PlayerProposalFieldRepository extends EntityRepository
 {
+    public function countAll()
+    {
+        $queryNullValue = $this->createQueryBuilder('f')
+            ->select('COUNT(f.id)')
+            ->getQuery();
+        return $queryNullValue->getSingleScalarResult();
+    }
+
+    public function countNull()
+    {
+        $queryNullValue = $this->createQueryBuilder('f')
+            ->select('COUNT(f.id)')
+            ->where('f.value is NULL')
+            ->getQuery();
+        return $queryNullValue->getSingleScalarResult();
+    }
+
+    public function countAllByField($field)
+    {
+        $queryNullValue = $this->createQueryBuilder('f')
+            ->select('COUNT(f.id)')
+            ->where('f.field = :field')
+            ->setParameter('field', $field)
+            ->getQuery();
+        return $queryNullValue->getSingleScalarResult();
+    }
+
+    public function countNullByField($field)
+    {
+        $queryNullValue = $this->createQueryBuilder('f')
+            ->select('COUNT(f.id)')
+            ->where('f.value is NULL')
+            ->andWhere('f.field = :field')
+            ->setParameter('field', $field)
+            ->getQuery();
+        return $queryNullValue->getSingleScalarResult();
+    }
 }

@@ -39,8 +39,7 @@ class HomeLoadType extends AbstractType
                                                         'empty_value' => 'Sélectionnez une discipline ...',
                                                         'mapped' => false))
             ->add('mode',             ChoiceType::class, array(
-                                                'choices'  =>  array('modeChoice' => 'Normale', 'modeField' => 'Élevée', 'modeTest' => 'Examen'),
-                                                'preferred_choices' => array('choice'),
+                                                'choices'  =>  array('modeChoice' => 'Normal', 'modeField' => 'Élevé', 'modeTest' => 'Examen'),
                                                 'required' => true,
                                                 'expanded' => true,
                                                 'multiple' => false

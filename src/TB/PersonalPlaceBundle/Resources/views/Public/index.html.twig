@@ -1,0 +1,42 @@
+{% extends "TBPersonalPlaceBundle::layout.html.twig" %}
+
+{% block h1 %}{{ user.username }}{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li class="active">{{ user.username }}</li>
+{% endblock %}
+
+{% block content %}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    <div class="row">
+        {% if testedGames|length > 0 %}
+            <div class="col-xs-12 col-md-6">
+                <div class="panel panel-default">
+                    <div class="list-group">
+                        {% for testedGame in testedGames %}
+                            {% include 'TBLayoutBundle::listTestedGame.html.twig' %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <div class="jumbotron text-center">
+                    <h2>Profil de {{ user.username }}</h2>
+                    <p class="lead">Découvre toutes les parties de {{ user.username }}</p>
+                    <br />
+                    <a class="btn btn-lg btn-primary" href="{{ path('tb_personalplace_testedgame_create') }}">
+                        {% if app.user == user %}Crée une nouvelle partie !{% else %}Crée ta propre partie{% endif %}
+                    </a>
+                </div>
+            </div>
+        {% else %}
+
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,4 +1,4 @@
-{% extends "TBAdministrationBundle::layout.html.twig" %}
+{% extends "TBPersonalPlaceBundle::layout.html.twig" %}
 
 {% block title %}Nouveau TestedGame - {{ parent() }}{% endblock %}
 
@@ -24,7 +24,7 @@
 {% endblock %}
 
 {% block javascript_sub %}
-    {% javascripts  '@TBAPersonalPlaceBundle/Resources/public/js/create.js' %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% javascripts  '@TBPersonalPlaceBundle/Resources/public/js/create.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 {% endblock %}

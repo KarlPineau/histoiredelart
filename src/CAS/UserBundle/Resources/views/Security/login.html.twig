@@ -17,7 +17,7 @@
                 <div class="alert alert-danger"><span class="glyphicon glyphicon-exclamation-sign"></span> {{ error.messageKey|trans(error.messageData, 'security') }}</div>
             {% endif %}
 
-            <label for="username" class="sr-only">Mail / Pseudo</label>
+            <label for="username" class="sr-only">Adresse mail</label>
             <input type="text" id="username" name="_username" placeholder="Adresse mail" value="{{ last_username }}" required="required" class="form-control in" autofocus />
 
             <label for="password" class="sr-only">Mot de passe</label>

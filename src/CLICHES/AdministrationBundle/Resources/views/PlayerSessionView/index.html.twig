@@ -36,7 +36,8 @@
                     <th>Matière</th>
                     <th>Période</th>
                     <th>Type</th>
-                    <th>nb</th>
+                    <th>End</th>
+                    <th>Nb</th>
                     <th>User</th>
                 </tr>
             {% for session in sessions %}
@@ -52,10 +53,13 @@
                         </a>
                     </td>
                     <td>
-                        {% if session.simpleSession == true %}<span class="text-info">Examen</span>
-                        {% elseif session.simpleSession == false %}Normal
+                        {% if session.proposalType == 'modeChoice' %}Choice
+                        {% elseif session.proposalType == 'modeField' %}Field
+                        {% elseif session.proposalType == 'modeTest' %}Test
+                        {% else %}<span class="text-warning">Undef.</span>
                         {% endif %}
                     </td>
+                    <td>{% if cliches_player_playerend_service.getBySession(session) != null %}Oui{% else %}Non{% endif %}</td>
                     <td>{{ cliches_player_playersession_service.getNumberCliches(session) }}</td>
                     <td>{{ session.ipPlayerUser }}{% if session.createUser is not empty %} <span class="glyphicon glyphicon-arrow-right"></span> <a href="{{ path('cas_administration_user_view', {'id': session.createUser.id}) }}">{{ session.createUser.email }}</a>{% endif %}</td>
                 </tr>

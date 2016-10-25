@@ -7,7 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class EndController extends Controller
 {
-    /* Méthode d'affichage des oeuvres : */
     public function endAction($playerSession_id)
     {
         $em = $this->getDoctrine()->getManager();
@@ -34,14 +33,21 @@ class EndController extends Controller
             $repositoryPlayerProposal = $em->getRepository('CLICHESPlayerBundle:PlayerProposal');
             $playerProposal = $repositoryPlayerProposal->findOneByPlayerOeuvre($playerOeuvre);
 
-            $servicePlayerResult = $this->container->get('cliches_player.playerResultAction');
-
-            if($playerProposal != null AND $servicePlayerResult->testFilled($playerProposal) == true) {
+            if($playerOeuvre->getPlayerSession()->getProposalType() == 'modeField') {
+                $servicePlayerResult = $this->container->get('cliches_player.playerResultAction');
+                if ($playerProposal != null AND $servicePlayerResult->testFilled($playerProposal) == true) {
+                    $playerOeuvresCollection[$key] = ['playerOeuvre' => $playerOeuvre,
+                        'playerProposal' => $servicePlayerResult->foundResults($playerProposal->getId(), false)];
+                } else {
+                    $playerOeuvresCollection[$key] = ['playerOeuvre' => $playerOeuvre,
+                        'playerProposal' => null];
+                }
+            } elseif($playerOeuvre->getPlayerSession()->getProposalType() == 'modeChoice') {
                 $playerOeuvresCollection[$key] = ['playerOeuvre' => $playerOeuvre,
-                    'playerProposal' => $servicePlayerResult->foundResults($playerProposal->getId(), false)];
-            } else {
+                    'playerProposal' => $playerProposal];
+            } elseif($playerOeuvre->getPlayerSession()->getProposalType() == 'modeTest') {
                 $playerOeuvresCollection[$key] = ['playerOeuvre' => $playerOeuvre,
-                    'playerProposal' => null];
+                    'playerProposal' => $playerProposal];
             }
         }
 

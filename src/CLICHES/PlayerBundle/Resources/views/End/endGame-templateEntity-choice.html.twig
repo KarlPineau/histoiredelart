@@ -1,0 +1,40 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="pull-right">
+            <a href="{{ path('data_public_entity_view', {'id': data_data_entity_service.getByView(playerOeuvre.view).id}) }}">Voir sur DATA</a>
+            {% if detailedProfile is defined and detailedProfile == true %}{{ playerOeuvre.createDate|date('d-m-Y H:i:s') }}{% endif %}
+        </div>
+        <h3 class="panel-title">&OElig;uvre #{{ loop.index }} :</h3>
+    </div>
+    <div class="panel-body">
+        <div class="col-md-12">
+            <div class="thumbnail">
+                {{ render(controller('DATAImageBundle:Image:renderImage', {'view_id': playerOeuvre.view.id, 'class': 'image-cliches-list'})) }}
+                {% set image = data_image_image_service.getImageForView(playerOeuvre.view) %}
+                <div class="caption">
+                    <p>&copy; {{image.copyright}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            {% for playerProposalChoice in playerProposal.playerProposalChoices %}
+                <div class="row">
+                    <div class="col-sm-3 control-label text-right">
+                        {{ playerProposalChoice.field }} :
+                    </div>
+                    <div class="col-sm-9">
+                        <ul class="list-unstyled">
+                            {% for playerProposalChoiceValue in playerProposalChoice.playerProposalChoiceValues %}
+                                {% if playerProposalChoiceValue == playerProposalChoice.playerProposalChoiceValueSelected and playerProposalChoiceValue.isTrue == true %}<li class="text-success">{{ playerProposalChoiceValue.value }} <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></li>
+                                {% elseif playerProposalChoiceValue != playerProposalChoice.playerProposalChoiceValueSelected and playerProposalChoiceValue.isTrue == true %}<li class="text-primary">{{ playerProposalChoiceValue.value }} <i class="fa fa-hand-o-left" aria-hidden="true"></i></li>
+                                {% elseif playerProposalChoiceValue == playerProposalChoice.playerProposalChoiceValueSelected and playerProposalChoiceValue.isTrue == false %}<li style="color: #e97676;">{{ playerProposalChoiceValue.value }} <i class="fa fa-thumbs-o-down" aria-hidden="true"></i></li>
+                                {% else %}<li>{{ playerProposalChoiceValue.value }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

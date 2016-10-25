@@ -25,6 +25,20 @@ tb_administration_testedgame_addItems:
     requirements:
         testedGame_id: \d+
 
+tb_administration_testedgame_editItem:
+    path:     /testedGame/edit-item/{testedGame_id}/{testedItem_id}
+    defaults: { _controller: TBAdministrationBundle:TestedGame:editItem }
+    requirements:
+        testedGame_id: \d+
+        testedItem_id: \d+
+
+tb_administration_testedgame_removeItem:
+    path:     /testedGame/remove-item/{testedGame_id}/{testedItem_id}
+    defaults: { _controller: TBAdministrationBundle:TestedGame:removeItem }
+    requirements:
+        testedGame_id: \d+
+        testedItem_id: \d+
+
 tb_administration_testedgame_view:
     path:     /testedGame/{testedGame_id}
     defaults: { _controller: TBAdministrationBundle:TestedGame:view }
@@ -34,6 +48,12 @@ tb_administration_testedgame_view:
 tb_administration_testedgame_updateOnlineStatus:
     path:     /testedGame/updateOnlineStatus/{testedGame_id}
     defaults: { _controller: TBAdministrationBundle:TestedGame:updateOnlineStatus }
+    requirements:
+        testedGame_id: \d+
+
+tb_administration_testedgame_updateOfficialStatus:
+    path:     /testedGame/updateOfficialStatus/{testedGame_id}
+    defaults: { _controller: TBAdministrationBundle:TestedGame:updateOfficialStatus }
     requirements:
         testedGame_id: \d+
 

@@ -1,48 +1,28 @@
 $(document).ready(function() {
-    /*
-    function generateChoiceValues(field)
-    {
+    $.each($('div[id^="cliches_player_playerproposal_loadchoice_type_"]'), function() {
+        var divType = $(this).prev();
         $.ajax({
             dataType: "json",
-            url: Routing.generate('cliches_player_proposalchoice_getvalues', {oeuvre_id: $('#oeuvre-id').val(), field: field, choices_number:3}),
+            url: Routing.generate('cliches_player_proposalchoice_getFieldsAjax', {field: divType.text()}),
             success: function(data){
-                //$('#ajax-loader').remove();
-                //generateFields(data, container_fields);
-                console.log(data);
+                divType.text(data);
             },
             error: function(error){
                 console.log(error);
             }
         });
-    }
-    function addPrototype(container, name, index) {
-        container.append($(container.attr('data-prototype').replace(/__name__label__/g, name + ' :').replace(/__name__/g, index)));
-    }
-
-    function generateFields(arrayJson, container_fields) {
-        for(var i = 0 ; i < arrayJson.length ; i++) {
-            addPrototype(container_fields, arrayJson[i]['label'], i);
-            //containerChoices = $('#cliches_player_playerproposal_loadchoice_type_playerProposalChoices_'+i+'_playerProposalChoiceValues');
-            //addPrototype(containerChoices, 'test', i);
-
-            generateChoiceValues(arrayJson[i]['field'])
-        }
-    }
-
-    var container_fields = $('#cliches_player_playerproposal_loadchoice_type_playerProposalChoices');
-        container_fields.prev().hide();
-
-    $.ajax({
-        dataType: "json",
-        url: Routing.generate('cliches_player_proposalfield_proposalfield', {idImg: $('img[class="image-cliches"]').attr('clichesnumber')}),
-        success: function(data){
-            $('#ajax-loader').remove();
-            generateFields(data, container_fields);
-        },
-        error: function(error){
-            console.log(error);
-        }
     });
-    */
+    $('div[id^="cliches_player_playerproposal_loadchoice_type_"]').prev().wrap('<div></div>').parent().addClass('col-sm-3 control-label');
+    $('div[id^="cliches_player_playerproposal_loadchoice_type_"]').addClass('col-sm-9').css('margin-bottom', '10px');
+
+    $.each($('input[id^="cliches_player_playerproposal_loadchoice_type_"]'), function() {
+        var id = $(this).attr('id');
+        var label = $('label[for^="'+id+'"]');
+        var labelText = label.text();
+
+        label.remove();
+        $(this).wrap('<div></div>');
+        $(this).wrap('<label for="'+id+'"></label>').parent().append('<span style="margin-left: 10px;">'+labelText+'</span>');
+    });
 });
 

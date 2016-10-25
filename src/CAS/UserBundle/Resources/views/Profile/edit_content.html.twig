@@ -5,6 +5,7 @@
         <div class="alert alert-error">
             <strong>Votre formulaire contient les erreurs suivantes :</strong>
             {{ form_errors(form) }}
+            {{ form_errors(form.username) }}
             {{ form_errors(form.email) }}
             {{ form_errors(form.current_password) }}
         </div>
@@ -12,7 +13,14 @@
     {% endif %}
 
     <fieldset>
-        <legend>Modification de l'adresse mail :</legend>
+        <legend>Informations :</legend>
+
+        <div class="form-group">
+            {{ form_label(form.username, "Nom d'utilisateur :", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+            <div class="col-sm-6">
+                {{ form_widget(form.username, {'attr': {'placeholder': '', 'class': 'form-control', 'type':'email'}}) }}
+            </div>
+        </div>
 
         <div class="form-group">
             {{ form_label(form.email, "Adresse mail :", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}

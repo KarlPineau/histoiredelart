@@ -3,6 +3,8 @@ tb_player_player_index:
     defaults: { _controller: TBPlayerBundle:Player:index }
     requirements:
         testedGame_id: \d+
+    options:
+        expose: true
 
 tb_player_player_tracking:
     path:     /partie/tracking/{answers}

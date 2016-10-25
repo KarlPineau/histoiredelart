@@ -1,3 +1,8 @@
+#Test
+cliches_administration_test_test:
+    path:     /test
+    defaults: { _controller: CLICHESAdministrationBundle:Test:index }
+
 #Gestion de l'accueil de l'administration
 cliches_administration_home_homepage:
     path:     /accueil

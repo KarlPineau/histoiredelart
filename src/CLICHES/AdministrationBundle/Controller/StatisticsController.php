@@ -9,6 +9,7 @@ class StatisticsController extends Controller
 {
     public function indexAction()
     {
+        set_time_limit(0);
         $em = $this->getDoctrine()->getManager();
         $repositorySession = $em->getRepository('CLICHESPlayerBundle:PlayerSession');
         $nbSessions = count($repositorySession->findAll());

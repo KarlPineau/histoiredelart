@@ -52,40 +52,40 @@
         </div>
         <div class="col-md-6">
             <div>
-                <div class="pull-right">Total: {{ countTeachingTestVotes }} - <a href="{{ path('cliches_administration_votes_statistics') }}" class="btn btn-default" title="Statistiques des votes" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-stats"></span></a></div>
-                <h3>Derniers votes :</h3>
+                <h3>Dernières sessions :</h3>
             </div>
             <table class="table table-bordered table-striped">
                 <tr>
                     <th>#</th>
-                    <th>Relation</th>
-                    <th>Vote</th>
+                    <th>Matière</th>
+                    <th>Période</th>
+                    <th>Type</th>
+                    <th>End</th>
+                    <th>Nb</th>
                     <th>User</th>
                 </tr>
-                {# -- Cette boucle utilise des entités pures -- #}
-                {% for teachingTestVote in teachingTestVotes %}
-                    {% set entity = data_data_entity_service.getByView(teachingTestVote.teachingTest.view) %}
+                {% for session in sessions %}
                     <tr>
                         <td>{{ loop.index }}</td>
+                        <td>{{ session.teaching.name }}</td>
                         <td>
-                            <a href="{{ path('data_teaching_teaching_view', {'slug': teachingTestVote.teachingTest.teaching.slug}) }}">{{ teachingTestVote.teachingTest.teaching.name }}</a>
-                            <span class="glyphicon glyphicon-resize-horizontal"></span>
-                            <a href="{{ path(data_data_entity_routing_service.getRoutingView(), {'id': entity.id}) }}">{{ data_data_entity_service.getName(entity) }}</a>
+                            <a href="{{ path('cliches_administration_playersession_view', {'session_id': session.id}) }}">
+                                {% if session.dateBegin is null and session.dateEnd is null %}Aucune donnée{% endif %}
+                                {% if session.dateBegin is not empty %}{{ session.dateBegin|date('d-m-Y H:i:s') }}{% endif %}
+                                {% if session.dateEnd is not empty %} - {{ session.dateEnd|date('H:i:s') }}
+                                    <span class="glyphicon glyphicon-arrow-right"></span> {{ cliches_player_playersession_service.getDiffTimeSession(session)|date("%H:%I:%S")}}{% endif %}
+                            </a>
                         </td>
                         <td>
-                            {% if teachingTestVote.vote == true %}<span class="text-success">Oui</span>
-                            {% elseif teachingTestVote.vote == false %}<span class="text-warning">Non</span>
+                            {% if session.proposalType == 'modeChoice' %}Choice
+                            {% elseif session.proposalType == 'modeField' %}Field
+                            {% elseif session.proposalType == 'modeTest' %}Test
+                            {% else %}<span class="text-warning">Undef.</span>
                             {% endif %}
                         </td>
-                        <td>
-                            {% if teachingTestVote.createUser != null %}{{ teachingTestVote.createUser.email }}
-                            {% else %}Inconnu
-                            {% endif %}
-                        </td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="4">Aucun vote à l'heure actuelle</td>
+                        <td>{% if cliches_player_playerend_service.getBySession(session) != null %}Oui{% else %}Non{% endif %}</td>
+                        <td>{{ cliches_player_playersession_service.getNumberCliches(session) }}</td>
+                        <td>{{ session.ipPlayerUser }}{% if session.createUser is not empty %} <span class="glyphicon glyphicon-arrow-right"></span> <a href="{{ path('cas_administration_user_view', {'id': session.createUser.id}) }}">{{ session.createUser.email }}</a>{% endif %}</td>
                     </tr>
                 {% endfor %}
             </table>
@@ -99,22 +99,22 @@
     <script>
         var sessionInTime = $("#sessionsInTime");
         var labels = [];
-            function daysInMonth(month, year) {
-                return new Date(year, month, 0).getDate();
-            }
-            var today = new Date();
-            var yyyy = today.getFullYear();
-            var month = today.getMonth()+1;
-            var lastDay = today.getDate()-15;
+        function daysInMonth(month, year) {
+            return new Date(year, month, 0).getDate();
+        }
+        var today = new Date();
+        var yyyy = today.getFullYear();
+        var month = today.getMonth()+1;
+        var lastDay = today.getDate()-30;
 
-            for(var i = 0 ; i <= 15 ; i++) {
-                var current = lastDay+i;
-                if(current > 0) {
-                    labels.push(current + '/' + month);
-                } else {
-                    labels.push(daysInMonth(month-1, yyyy)-i);
-                }
+        for(var i = 0 ; i <= 30 ; i++) {
+            var current = lastDay+i;
+            if(current > 0) {
+                labels.push(current + '/' + month);
+            } else {
+                labels.push(daysInMonth(month-1, yyyy)-i);
             }
+        }
 
         $.ajax({
             dataType: "json",

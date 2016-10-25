@@ -20,6 +20,7 @@
 {% endblock %}
 
 {% block h1_extend %}
+    <a href="{{ path('cliches_administration_playersession_index') }}" class="btn btn-default" title="Historique des Sessions" data-toggle="tooltip" data-placement="left"><i class="fa fa-history" aria-hidden="true"></i> Sessions</a>
     <a href="{{ path('cliches_administration_votes_statistics') }}" class="btn btn-default" title="Statistiques des votes" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-stats"></span> Votes</a>
     <a href="{{ path('cliches_administration_statistics_statisticsbyteaching') }}" class="btn btn-default"><span class="glyphicon glyphicon-stats"></span> Enseignements</a>
 {% endblock %}
@@ -112,6 +113,17 @@
                                 <dt>Répartition du temps de session</dt>
                                 <dd>X% des sessions < 10 min ; X% sessions < 30 min ...</dd>
                             </dl>
+                            <dl class="list-group-item dl-horizontal">
+                                <dt>Affichage de la page de fin</dt>
+                                <dd>{{ cliches_player_playersession_service.getAveragePageEndLoad()|round(2, 'floor') }}%</dd>
+                            </dl>
+                            <dl class="list-group-item dl-horizontal">
+                                <dt>Votes par session</dt>
+                                <dd>
+                                    Moyenne :
+                                    Médiane :
+                                </dd>
+                            </dl>
                         </div>
                     </div>
                 </div>
@@ -138,14 +150,16 @@
                             <dl class="list-group-item dl-horizontal">
                                 <dt>Remplissage des champs</dt>
                                 <dd>
-                                    Global : {{ cliches_player_playerproposalfield_service.getPourcentageFullByField()|round(2, 'floor') }}%<br />
-                                    Nom: {{ cliches_player_playerproposalfield_service.getPourcentageFullByField('name')|round(2, 'floor') }}%<br />
-                                    Sujet: {{ cliches_player_playerproposalfield_service.getPourcentageFullByField('sujet')|round(2, 'floor') }}%<br />
-                                    Auteur: {{ cliches_player_playerproposalfield_service.getPourcentageFullByField('auteur')|round(2, 'floor') }}%<br />
-                                    Date: {{ cliches_player_playerproposalfield_service.getPourcentageFullByField('datation')|round(2, 'floor') }}%<br />
-                                    Provenance: {{ cliches_player_playerproposalfield_service.getPourcentageFullByField('provenance')|round(2, 'floor') }}%<br />
-                                    LieuDeConservation: {{ cliches_player_playerproposalfield_service.getPourcentageFullByField('lieuDeConservation')|round(2, 'floor') }}%<br />
-                                    Mattech: {{ cliches_player_playerproposalfield_service.getPourcentageFullByField('mattech')|round(2, 'floor') }}%
+                                    <ul class="list-unstyled">
+                                        <li><strong>Global : {{ cliches_player_playerproposalfield_service.getAverageFullByField()|round(2, 'floor') }}%</strong></li>
+                                        <li>Nom: {{ cliches_player_playerproposalfield_service.getAverageFullByField('name')|round(2, 'floor') }}%</li>
+                                        <li>Sujet: {{ cliches_player_playerproposalfield_service.getAverageFullByField('sujet')|round(2, 'floor') }}%</li>
+                                        <li>Auteur: {{ cliches_player_playerproposalfield_service.getAverageFullByField('auteur')|round(2, 'floor') }}%</li>
+                                        <li>Date: {{ cliches_player_playerproposalfield_service.getAverageFullByField('datation')|round(2, 'floor') }}%</li>
+                                        <li>Provenance: {{ cliches_player_playerproposalfield_service.getAverageFullByField('provenance')|round(2, 'floor') }}%</li>
+                                        <li>LieuDeConservation: {{ cliches_player_playerproposalfield_service.getAverageFullByField('lieuDeConservation')|round(2, 'floor') }}%</li>
+                                        <li>Mattech: {{ cliches_player_playerproposalfield_service.getAverageFullByField('mattech')|round(2, 'floor') }}%</li>
+                                    </ul>
                                 </dd>
                             </dl>
                         </div>
@@ -157,7 +171,6 @@
 {% endblock %}
 
 {% block javascript_sub %}
-
     {{ parent() }}
     <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.3/Chart.bundle.js"></script>
     <script>

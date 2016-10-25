@@ -1,6 +1,6 @@
 {# src/HDA/ClichesBundle/Resources/views/Oeuvre/register_content.html.twig #}
 
-<form class="form-horizontal" method="post" action="{{ path('cliches_player_result_result', {'playerProposal_id': playerProposal.id, 'validation': 'suggest'}) }}" role="form">
+<form class="form-horizontal" method="post" action="{{ path('cliches_player_resultfield_result', {'playerProposal_id': playerProposal.id, 'validation': 'suggest'}) }}" role="form">
     {% if not form.vars.valid %}
     
     <div class="alert alert-error">

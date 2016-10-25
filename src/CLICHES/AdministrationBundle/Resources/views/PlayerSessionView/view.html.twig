@@ -56,8 +56,10 @@
                     <dl class="">
                         <dt>Type :</dt>
                         <dd>
-                            {% if session.simpleSession == true %}<span class="text-info">Examen</span>
-                            {% elseif session.simpleSession == false %}Normal
+                            {% if session.proposalType == 'modeChoice' %}Choice
+                            {% elseif session.proposalType == 'modeField' %}Field
+                            {% elseif session.proposalType == 'modeTest' %}Test
+                            {% else %}<span class="text-warning">Undef.</span>
                             {% endif %}
                         </dd>
                     </dl> <br />

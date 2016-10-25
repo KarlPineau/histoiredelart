@@ -23,6 +23,20 @@ class PlayerController extends Controller
         $em->persist($testedSession);
         $em->flush();
 
+        $urlToPlay = $this->generateUrl('tb_player_player_index', array('testedGame_id' => $testedGame->getId()), true);
+        $image = $testedGame->getIcon();
+        $seoPage = $this->container->get('sonata.seo.page');
+        $seoPage
+            ->addMeta('property', 'og:description', 'Teste tes connaissances en histoire de l\'art sur Clichés! - Viens participer au jeu conçu par '.$testedGame->getCreateUser()->getUsername().' et défis tes amis!')
+            ->addMeta('property', 'og:image', $this->get('templating.helper.assets')->getUrl('uploads/gallery/'.$image->getFileImage()->getImageName()))
+            ->addMeta('property', 'og:url', $urlToPlay)->addMeta('property', 'og:title', $testedGame->getTitle().' - Clichés!')
+            ->addMeta('property', 'twitter:title', $testedGame->getTitle().' - Clichés!')
+            ->addMeta('property', 'twitter:description', 'Teste tes connaissances en histoire de l\'art sur Clichés! - Viens participer au jeu conçu par '.$testedGame->getCreateUser()->getUsername().' et défis tes amis!')
+            ->addMeta('property', 'twitter:image', $this->get('templating.helper.assets')->getUrl('uploads/gallery/'.$image->getFileImage()->getImageName()))
+            ->addMeta('property', 'twitter:url', $urlToPlay)
+            ->addMeta('property', 'twitter:card', 'summary_large_image')
+        ;
+
         return $this->render('TBPlayerBundle:Player:index.html.twig', array(
             'testedGame' => $testedGame,
             'testedSession' => $testedSession

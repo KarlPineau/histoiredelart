@@ -12,6 +12,7 @@
     {% endfor %}
     <input type="hidden" id="testedItemsNumber" value="{{ testedGame.testedItems|length }}" />
     <input type="hidden" id="testedSession" value="{{ testedSession.id }}" />
+    <input type="hidden" id="testedGameId" value="{{ testedGame.id }}" />
 
     {# Div global du player#}
     <div id="container-player" class="row">
@@ -46,7 +47,9 @@
                     </div>
                 </div>
                 <div class="draggable-footer">
-                    <button type="button" class="btn btn-block btn-success" id="checkButton"><span style="font-size: 18px; font-weight: bold;">Vérifier  <i class="fa fa-question-circle" aria-hidden="true"></i></span></button>
+                    <div class="btn-group-vertical btn-block" role="group" aria-label="Action button">
+                        <button type="button" class="btn btn-lg btn-success" id="checkButton"><span style="font-size: 18px; font-weight: bold;">Vérifier  <i class="fa fa-question-circle" aria-hidden="true"></i></span></button>
+                    </div>
                 </div>
             </div>
         </div>

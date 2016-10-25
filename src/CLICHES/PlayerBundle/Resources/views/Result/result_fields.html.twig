@@ -1,0 +1,27 @@
+<div class="well">
+    {% include "CLICHESPlayerBundle:Result:result_fields_content.html.twig" %}
+    <div>
+        {% for flashMessage in app.session.flashbag.get('noticeAlert') %}
+            <div class="alert alert-success">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+    </div>
+    <br />
+    {% if isSuggestEnriched == true or isVote == true %}
+        <legend>Aidez-nous à améliorer Clichés!</legend>
+        {% if isSuggestEnriched == true %}
+            {% include "CLICHESPlayerBundle:Suggest:suggest_content_enriched.html.twig" %}
+        {% elseif isVote == true %}
+            {% include "CLICHESPlayerBundle:Suggest:vote_content.html.twig" %}
+        {% endif %}
+    {% elseif isSuggest == true %}
+        <hr />
+        <div class="text-right">
+            {% include "CLICHESPlayerBundle:Suggest:suggest_content.html.twig" %}
+        </div>
+    {% else %}
+        <div class="pull-right"><a href="{{ path('cliches_player_end_end', {'playerSession_id' : playerProposal.playerOeuvre.playerSession.id }) }}" class="btn btn-default" title="Terminer la partie" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-log-out"></span></a></div>
+        <div class="text-center"><a class="btn btn-success" title="Continuer vers le cliché suivant" href="{{ path('cliches_player_selection_selection', {'playerSession_id': playerProposal.playerOeuvre.playerSession.id}) }}">Continuer</a></div>
+    {% endif %}
+</div>

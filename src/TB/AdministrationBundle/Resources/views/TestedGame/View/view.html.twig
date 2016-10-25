@@ -21,6 +21,11 @@
                     {% else %}<i class="fa fa-toggle-on" aria-hidden="true"></i> Set Online
                     {% endif %}
                 </a></li>
+            <li><a href="{{ path('tb_administration_testedgame_updateOfficialStatus', {'testedGame_id': testedGame.id}) }}">
+                    {% if testedGame.isOfficial == true %}<i class="fa fa-certificate" aria-hidden="true"></i> Set Non Official
+                    {% else %}<i class="fa fa-certificate" aria-hidden="true"></i> Set Official
+                    {% endif %}
+                </a></li>
             <li role="separator" class="divider"></li>
             <li><a class="main-JS-delete" href="{{ path('tb_administration_testedgame_remove', {'testedGame_id': testedGame.id}) }}"><i class="fa fa-trash" aria-hidden="true"></i> Supprimer</a></li>
         </ul>
@@ -46,7 +51,7 @@
                 <dl>
                     <dt>Créateur</dt>
                     <dd><a href="{{ path('cas_administration_user_view', {'id': testedGame.createUser.id}) }}">{{ testedGame.createUser.email }}</a>
-                        (<a href="#">PublicPage</a>)</dd>
+                        (<a href="{{ path('tb_personalplace_public_index', {'user_id':testedGame.createUser.id}) }}">PublicPage</a>)</dd>
                 </dl>
                 <dl>
                     <dt>Date de création</dt>
@@ -115,8 +120,8 @@
                 <div class="divInfoPlace">
                     <div class="buttonsInfoPlace pull-right">
                         <div class="btn-group btn-group-sm">
-                            <a href="#" class="btn btn-sm btn-default"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                            <a href="#" class="btn btn-sm btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            <a href="{{ path('tb_administration_testedgame_editItem', {'testedGame_id': testedGame.id, 'testedItem_id': testedItem.id}) }}" class="btn btn-sm btn-default"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                            <a href="{{ path('tb_administration_testedgame_removeItem', {'testedGame_id': testedGame.id, 'testedItem_id': testedItem.id}) }}" class="btn btn-sm btn-danger main-JS-delete"><i class="fa fa-trash" aria-hidden="true"></i></a>
                         </div>
                     </div>
                     <p class="infoPlace">{{ testedItem.itemLabel }}</p>

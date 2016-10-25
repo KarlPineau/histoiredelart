@@ -9,11 +9,13 @@ class playerSessionAction
 {
     protected $em;
     protected $security;
+    protected $endService;
     
-    public function __construct(EntityManager $EntityManager, SecurityContext $security_context)
+    public function __construct(EntityManager $EntityManager, SecurityContext $security_context, playerEndAction $endService)
     {
         $this->em = $EntityManager;
         $this->security = $security_context;
+        $this->endService = $endService;
     }
     
     public function countOeuvreByTeaching($teaching_name)
@@ -183,5 +185,17 @@ class playerSessionAction
         asort($arrayNumberOeuvres);
 
         return $arrayNumberOeuvres[(count($arrayNumberOeuvres)+1)/2];
+    }
+
+    public function getAveragePageEndLoad()
+    {
+        $repositorySession = $this->em->getRepository('CLICHESPlayerBundle:PlayerSession');
+        $count = 0;
+
+        foreach($repositorySession->findAll() as $session) {
+            if($this->endService->getBySession($session) != null) {$count++;}
+        }
+
+        return ($count*100)/count($repositorySession->findAll());
     }
 }

@@ -52,33 +52,11 @@
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="well">
-                    {% include "CLICHESPlayerBundle:Result:result_content.html.twig" %}
-                    <div>
-                        {% for flashMessage in app.session.flashbag.get('noticeAlert') %}
-                            <div class="alert alert-success">
-                                {{ flashMessage }}
-                            </div>
-                        {% endfor %}
-                    </div>
-                    <br />
-                    {% if isSuggestEnriched == true or isVote == true %}
-                        <legend>Aidez-nous à améliorer Clichés!</legend>
-                        {% if isSuggestEnriched == true %}
-                            {% include "CLICHESPlayerBundle:Suggest:suggest_content_enriched.html.twig" %}
-                        {% elseif isVote == true %}
-                            {% include "CLICHESPlayerBundle:Result:vote_content.html.twig" %}
-                        {% endif %}
-                    {% elseif isSuggest == true %}
-                        <hr />
-                        <div class="text-right">
-                            {% include "CLICHESPlayerBundle:Suggest:suggest_content.html.twig" %}
-                        </div>
-                    {% else %}
-                        <div class="pull-right"><a href="{{ path('cliches_player_end_end', {'playerSession_id' : playerProposal.playerOeuvre.playerSession.id }) }}" class="btn btn-default" title="Terminer la partie" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-log-out"></span></a></div>
-                        <div class="text-center"><a class="btn btn-success" title="Continuer vers le cliché suivant" href="{{ path('cliches_player_selection_selection', {'playerSession_id': playerProposal.playerOeuvre.playerSession.id}) }}">Continuer</a></div>
-                    {% endif %}
-                </div>
+                {% if playerProposal.playerOeuvre.playerSession.proposalType == 'modeChoice' %}
+                    {% include "CLICHESPlayerBundle:Result:result_choices.html.twig" %}
+                {% elseif playerProposal.playerOeuvre.playerSession.proposalType == 'modeField' %}
+                    {% include "CLICHESPlayerBundle:Result:result_fields.html.twig" %}
+                {% endif %}
             </div>
         </div>
         
@@ -88,6 +66,15 @@
 
 {% block javascript_sub %}
     {% javascripts  '@CLICHESPlayerBundle/Resources/public/js/result.js'  %}
-        <script type="text/javascript" src="{{ asset_url }}"></script>
+    <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
+    {% if playerProposal.playerOeuvre.playerSession.proposalType == 'modeChoice' %}
+        {% javascripts  '@CLICHESPlayerBundle/Resources/public/js/resultChoice.js'  %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% elseif playerProposal.playerOeuvre.playerSession.proposalType == 'modeField' %}
+        {% javascripts  '@CLICHESPlayerBundle/Resources/public/js/resultField.js'  %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% endif %}
 {% endblock %}

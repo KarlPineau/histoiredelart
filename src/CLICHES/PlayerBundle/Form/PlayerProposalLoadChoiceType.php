@@ -3,6 +3,7 @@
 namespace CLICHES\PlayerBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -14,11 +15,25 @@ class PlayerProposalLoadChoiceType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
+        foreach($options['attr']['listChoices'] as $field => $choices) {
+            $builder
+                ->add($field,   ChoiceType::class,   array(
+                    'choices' => $choices,
+                    'label' => strtolower($field),
+                    'multiple' => false,
+                    'expanded' => true,
+                    'required' => false,
+                    'empty_value' => false,
+                    'mapped' => false))
+            ;
+        }
+
+        /*$builder
             ->add('playerProposalChoices',   'collection',   array( 'type' => new PlayerProposalChoiceType(),
-                                                                    'allow_add'    => true,
-                                                                    'allow_delete' => true))
-        ;
+                'allow_add'    => true,
+                'allow_delete' => true,
+                'mapped' => false))
+        ;*/
     }
         
     /**

@@ -53,7 +53,7 @@ $(document).ready(function() {
             maxFilePreviewSize: 10240,
             language: 'fr',
             showUpload: false,
-            allowedFileExtensions: ["jpg", "png", "gif"],
+            allowedFileExtensions: ["jpg", "jpeg", "png", "gif"],
             maxImageWidth: 800,
             maxImageHeight: 800,
             minImageWidth: 300,
@@ -82,11 +82,8 @@ $(document).ready(function() {
 
     var index = 0;
     var container_testedItem = $('#tb_modelbundle_testedgame_testedItems');
-
-    $('#buttonAddTestedItem').on('click', function() {
-        ++index;
-        addTestedItem(container_testedItem, index);
-    });
+    ++index;
+    addTestedItem(container_testedItem, index);
 
     /* IMAGE : COPYRIGHT */
     $('#tb_modelbundle_testedgame_icon_copyright').parent().addClass('form-group col-md-12');
@@ -102,7 +99,7 @@ $(document).ready(function() {
         maxFilePreviewSize: 10240,
         language: 'fr',
         showUpload: false,
-        allowedFileExtensions: ["jpg", "png", "gif"],
+        allowedFileExtensions: ["jpg", "jpeg", "png", "gif"],
         maxImageWidth: 800,
         maxImageHeight: 800,
         minImageWidth: 300,

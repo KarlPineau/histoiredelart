@@ -21,21 +21,52 @@
 
     <div class="row">
         <div class="col-md-6">
-            <h2>Les dernières parties</h2>
-
-            <table class="table table-striped table-bordered">
-                <tr>
-                    <th>Titre</th>
-                    <th>Items</th>
-                    <th>Sessions</th>
-                </tr>
-                {% for testedGame in testedGames %}
+            <div class="panel panel-default">
+                <div class="list-group">
+                    {% for testedGame in testedGames %}
+                        {% include 'TBLayoutBundle::listTestedGame.html.twig' %}
+                    {% endfor %}
+                    <div class="list-group-item list-group-item-btn">
+                        <a href="{{ path('tb_home_home_getAllTestedGames') }}" class="btn btn-block btn-lg btn-primary btn-list-group-item btn-list-group-item-radius-bottom">Afficher toutes les parties</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div>
+                <div class="pull-right">
+                    <a href="#" class="btn btn-primary"><i class="glyphicon glyphicon-stats"></i></a>
+                </div>
+                <h2>Dernières sessions</h2>
+            </div>
+            <table class="table table-bordered table-striped">
+                <thead>
                     <tr>
-                        <td>{% if testedGame.isOnline == false %}<span class="label label-warning">Offline</span> {% endif %}<a href="{{ path('tb_administration_testedgame_view', {'testedGame_id': testedGame.id}) }}">{{ testedGame.title }}</a></td>
-                        <td>{{ tb_model_testeditem.getByTestedGame(testedGame)|length }}</td>
-                        <td><a href="{{ path('tb_administration_testedsession_getByTestedGame', {'testedGame_id': testedGame.id}) }}">{{ tb_model_testedsession.getByTestedGame(testedGame)|length }}</a></td>
+                        <th>#</th>
+                        <th>User</th>
+                        <th>Game</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for testedSession in testedSessions %}
+                    <tr>
+                        <td><a href="{{ path('tb_administration_testedsession_view', {'testedSession_id': testedSession.id}) }}">{{ loop.index }}</a></td>
+                        <td>
+                            {{ testedSession.ipCreateUser }}
+                            {% if testedSession.createUser != null %}
+                                <div><small><a href="{{ path('cas_administration_user_view', {'id': testedSession.createUser.id}) }}">{{ testedSession.createUser.username }}</a></small></div>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ path('tb_administration_testedgame_view', {'testedGame_id': testedSession.testedGame.id}) }}">{{ testedSession.testedGame.title }}</a>
+                        </td>
+                        <td>
+                           {{ testedSession.createDate|date('d-m-Y H:i:s') }}
+                        </td>
                     </tr>
                 {% endfor %}
+                </tbody>
             </table>
         </div>
     </div>

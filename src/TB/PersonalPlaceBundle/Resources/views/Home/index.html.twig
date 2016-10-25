@@ -21,7 +21,7 @@
                 <h2>Bienvenue sur votre page personnelle !</h2>
                 <p class="lead">Créez, modifiez, surveillez vos parties !</p>
                 <br />
-                <a class="btn btn-lg btn-primary" href="{{ path('tb_personalplace_generate_generate') }}">Créer une nouvelle partie</a>
+                <a class="btn btn-lg btn-primary" href="{{ path('tb_personalplace_testedgame_create') }}">Créer une nouvelle partie</a>
             </div>
         </div>
         <div class="col-md-6">
@@ -35,7 +35,7 @@
                 </tr>
             {% for testedGame in testedGames %}
                 <tr>
-                    <td><a href="{{ path('tb_personalplace_view_view', {'testedGame_id': testedGame.id}) }}">{{ testedGame.title }}</a></td>
+                    <td><a href="{{ path('tb_personalplace_testedgame_view', {'testedGame_id': testedGame.id}) }}">{{ testedGame.title }}</a></td>
                     <td class="text-center"><a href="{{ path('tb_player_player_index', {'testedGame_id': testedGame.id}) }}" class="btn btn-sm btn-success">Jouer !</a></td>
                     <td>TODO</td>
                 </tr>

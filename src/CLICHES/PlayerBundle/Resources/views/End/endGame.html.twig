@@ -56,7 +56,7 @@
         {% if not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
             <div class="alert alert-info text-center">
                 <strong><a href="{{ path('fos_user_registration_register') }}">Inscris-toi</a> pour retrouver l'historique de toutes tes parties !</strong><br />
-                <small>Déjà inscrit(e) ? N'oubliez pas de <a href="{{ path('fos_user_security_login') }}">te connecter</a>.</small>
+                <small>Déjà inscrit(e) ? N'oublie pas de <a href="{{ path('fos_user_security_login') }}">te connecter</a>.</small>
             </div>
         {% endif %}
 

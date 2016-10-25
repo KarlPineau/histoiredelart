@@ -26,7 +26,7 @@ $(document).ready(function() {
 
     $.ajax({
         dataType: "json",
-        url: Routing.generate('cliches_player_proposalfield_proposalfield', {idImg: $('img[class="image-cliches"]').attr('clichesnumber')}),
+        url: Routing.generate('cliches_player_proposalfield_getFieldsAjax', {idImg: $('img[class="image-cliches"]').attr('clichesnumber')}),
         success: function(data){
             $('#ajax-loader').remove();
             generateFields(data, container_fields);

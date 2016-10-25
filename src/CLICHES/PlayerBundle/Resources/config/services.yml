@@ -1,7 +1,7 @@
 services:
     cliches_player.playersessionaction:
         class: CLICHES\PlayerBundle\Service\playerSessionAction
-        arguments: [ "@doctrine.orm.entity_manager", "@security.context"]
+        arguments: [ "@doctrine.orm.entity_manager", "@security.context", "@cliches_player.playerendaction"]
     cliches_player.playerselectionaction:
         class: CLICHES\PlayerBundle\Service\playerSelectionAction
         arguments: [ "@doctrine.orm.entity_manager", "@security.context", "@data_data.entity"]
@@ -25,4 +25,7 @@ services:
         arguments: [ "@doctrine.orm.entity_manager", "@security.context", "@data_data.entity"]
     cliches_player.playerexcludeaction:
         class: CLICHES\PlayerBundle\Service\playerExcludeAction
+        arguments: [ "@doctrine.orm.entity_manager", "@security.context"]
+    cliches_player.playerendaction:
+        class: CLICHES\PlayerBundle\Service\playerEndAction
         arguments: [ "@doctrine.orm.entity_manager", "@security.context"]

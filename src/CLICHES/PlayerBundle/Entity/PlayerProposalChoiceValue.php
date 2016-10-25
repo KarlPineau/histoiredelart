@@ -30,6 +30,13 @@ class PlayerProposalChoiceValue
     private $playerProposalChoice;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="isTrue", type="boolean")
+     */
+    private $isTrue;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="field", type="string", length=255, nullable=false)
@@ -44,7 +51,7 @@ class PlayerProposalChoiceValue
     private $value;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Data\DataBundle\Entity\Entity")
+     * @ORM\ManyToOne(targetEntity="DATA\DataBundle\Entity\Entity")
      * @ORM\JoinColumn(nullable=false)
      */
     private $entity;
@@ -163,7 +170,7 @@ class PlayerProposalChoiceValue
     /**
      * Set entity
      *
-     * @param \Data\DataBundle\Entity\Entity $entity
+     * @param \DATA\DataBundle\Entity\Entity $entity
      * @return PlayerProposalChoiceValue
      */
     public function setEntity(\Data\DataBundle\Entity\Entity $entity)
@@ -176,10 +183,33 @@ class PlayerProposalChoiceValue
     /**
      * Get entity
      *
-     * @return \Data\DataBundle\Entity\Entity 
+     * @return \DATA\DataBundle\Entity\Entity
      */
     public function getEntity()
     {
         return $this->entity;
+    }
+
+    /**
+     * Set isTrue
+     *
+     * @param boolean $isTrue
+     * @return PlayerProposalChoiceValue
+     */
+    public function setIsTrue($isTrue)
+    {
+        $this->isTrue = $isTrue;
+
+        return $this;
+    }
+
+    /**
+     * Get isTrue
+     *
+     * @return boolean 
+     */
+    public function getIsTrue()
+    {
+        return $this->isTrue;
     }
 }

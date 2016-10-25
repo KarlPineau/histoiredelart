@@ -31,24 +31,62 @@ cliches_player_proposal_proposal:
         playerOeuvre_id:  \d+
 
 cliches_player_proposalfield_proposalfield:
-    path:     /partie/proposalfield/{idImg}
+    path:     /partie/proposition/champ/{playerOeuvre_id}
     defaults: { _controller: CLICHESPlayerBundle:ProposalField:proposalField }
+    requirements:
+        playerOeuvre_id:  \d+
+
+cliches_player_proposalfield_getFieldsAjax:
+    path:     /partie/proposition/champ/ajax/{idImg}
+    defaults: { _controller: CLICHESPlayerBundle:ProposalField:getFieldsAjax }
     options:
         expose: true
 
+cliches_player_proposalchoice_proposalchoice:
+    path:     /partie/proposition/choix/{playerOeuvre_id}
+    defaults: { _controller: CLICHESPlayerBundle:ProposalChoice:proposalChoice }
+    requirements:
+        playerOeuvre_id:  \d+
+
+cliches_player_proposalchoice_getFieldsAjax:
+    path:     /partie/proposition/choix/ajax/champ/{field}
+    defaults: { _controller: CLICHESPlayerBundle:ProposalChoice:getFieldsAjax }
+    options:
+        expose: true
+
+cliches_player_proposaltest_proposaltest:
+    path:     /partie/proposition/examen/{playerOeuvre_id}
+    defaults: { _controller: CLICHESPlayerBundle:ProposalTest:proposalTest }
+    requirements:
+        playerOeuvre_id:  \d+
+
 # Gestion de l'affichage des résultats :
 cliches_player_result_result:
-    path:     /partie/resultat/{playerProposal_id}/{validation}
+    path:     /partie/resultat/{playerProposal_id}
     defaults:
         _controller: CLICHESPlayerBundle:Result:result
+    requirements:
+        playerProposal_id:  \d+
+
+cliches_player_resultchoice_result:
+    path:     /partie/resultat/choix/{playerProposal_id}
+    defaults:
+        _controller: CLICHESPlayerBundle:ResultChoice:result
+    requirements:
+        playerProposal_id:  \d+
+
+cliches_player_resultfield_result:
+    path:     /partie/resultat/champ/{playerProposal_id}/{validation}
+    defaults:
+        _controller: CLICHESPlayerBundle:ResultField:result
         validation: null
     requirements:
         playerProposal_id:  \d+
         validation: \S{0,255}
         
-cliches_player_result_results:
-    path:     /partie/resultats/{playerProposal_id}
-    defaults: { _controller: CLICHESPlayerBundle:Result:results }
+cliches_player_resultfield_results:
+    path:     /partie/resultats/champ/{playerProposal_id}
+    defaults: { _controller: CLICHESPlayerBundle:ResultField:results }
     options:
         expose: true
 

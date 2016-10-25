@@ -8,6 +8,7 @@
         <div class="alert alert-danger">
             <strong>Votre formulaire contient les erreurs suivantes :</strong>
             {{ form_errors(form) }}
+            {{ form_errors(form.username) }}
             {{ form_errors(form.email) }}
             {{ form_errors(form.plainPassword.first) }}
             {{ form_errors(form.plainPassword.second) }}
@@ -15,8 +16,11 @@
         <br />
     {% endif %}
 
+        {{ form_label(form.username, "Nom d'utilisateur :", {'label_attr': {'class': 'sr-only'}}) }}
+    {{ form_widget(form.username, {'attr': {'placeholder': 'Nom d\'utilisateur', 'class': 'form-control in', 'autofocus':'autofocus'}}) }}
+
         {{ form_label(form.email, "Adresse mail :", {'label_attr': {'class': 'sr-only'}}) }}
-    {{ form_widget(form.email, {'attr': {'placeholder': 'Adresse mail', 'class': 'form-control', 'autofocus':'autofocus', 'style': 'margin-bottom: 10px;'}}) }}
+    {{ form_widget(form.email, {'attr': {'placeholder': 'Adresse mail', 'class': 'form-control out', 'style': 'margin-bottom: 10px;'}}) }}
 
         {{ form_label(form.plainPassword.first, "Mot de passe :", {'label_attr': {'class': 'sr-only'}}) }}
     {{ form_widget(form.plainPassword.first, {'attr': {'placeholder': 'Mot de passe', 'class': 'form-control in'}}) }}
