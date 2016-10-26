@@ -1,14 +1,12 @@
-/**
- * Created by karlpineau on 25/09/2016.
- */
-//https://jqueryui.com/droppable/#photo-manager
-$( function() {
-    $(window).scroll(function (event) {
+$(function() {
+    var scrollMarginTop = $('#header-main').outerHeight();
+    $(window).scroll(function () {
         var scroll = $(window).scrollTop();
         if(scroll < 50) {
             $('#draggable-container').css('margin-top', '');
         } else if(scroll >= 50) {
-            $('#draggable-container').css('margin-top', '-50px');
+            marginTop = '-'+scrollMarginTop.toString()+'px';
+            $('#draggable-container').css('margin-top', marginTop);
         }
     });
 
@@ -166,10 +164,10 @@ $( function() {
             $('.draggable-text').css('cursor', 'default');
             $('.ifaundo').hide();
             $('#container-player').prepend('' +
-                '<div class="alert alert-success text-center" style="margin-bottom: 0px; border-radius: 0px">' +
+                '<div id="container-topInfo" class="alert alert-success text-center" style="margin-bottom: 0px; border-radius: 0px">' +
                 '   <span style="font-size:25px; font-weight: bold;">Bien joué ! <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></span>' +
                 '   <br/>' +
-                '   <div style="margin-top: 5px;"><div class="addthis_sharing_toolbox"></div></div>' +
+                '   <div style="margin-top: 5px;"><div class="addthis_inline_share_toolbox"></div></div>' +
                 '   <span style="font-size:15px; font-weight: bold;">Partage ton score et vois si tes amis savent eux-aussi répondre !</span>' +
                 '</div>');
             $('.draggable-footer').html('' +
@@ -177,6 +175,8 @@ $( function() {
                 '   <span style="font-size:25px; font-weight: bold;">Bien joué ! <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></span>' +
                 '</div>').css('margin-top', '0px');
             $.getScript("//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56a802c313ab49f1");
+            scrollMarginTop = $('#header-main').outerHeight()+$('#container-topInfo').outerHeight();
+            console.log(scrollMarginTop);
         }
     }
 
@@ -253,10 +253,10 @@ $( function() {
 
         /* Update messages to user */
         $('#container-player').prepend('' +
-            '<div class="alert alert-primary text-center" style="margin-bottom: 0px; border-radius: 0px">' +
+            '<div id="container-topInfo" class="alert alert-primary text-center" style="margin-bottom: 0px; border-radius: 0px">' +
             '   <span style="font-size:25px; font-weight: bold;">Bien essayé !</span>' +
             '   <br/>' +
-            '   <div style="margin-top: 5px;"><div class="addthis_sharing_toolbox"></div></div>' +
+            '   <div style="margin-top: 5px;"><div class="addthis_inline_share_toolbox"></div></div>' +
             '   <span style="font-size:15px; font-weight: bold;">Partage ton score ou <a href="'+Routing.generate('tb_player_player_index', {'testedGame_id': $('#testedGameId').val()})+'">retente ta chance !</a></span>' +
             '</div>');
         $.getScript("//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56a802c313ab49f1");
@@ -270,6 +270,8 @@ $( function() {
             console.log("success got data", data);
             $('.giphy').attr('src', data.data.image_original_url).removeClass('hidden');
         });
+        scrollMarginTop = $('#header-main').outerHeight()+$('#container-topInfo').outerHeight(true);
+        console.log(scrollMarginTop);
     }
 
     $('#checkButton').on('click', function () {

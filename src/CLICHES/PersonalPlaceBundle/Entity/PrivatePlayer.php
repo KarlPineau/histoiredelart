@@ -289,10 +289,10 @@ class PrivatePlayer
     /**
      * Set userSession
      *
-     * @param \DATA\PersonalPlaceBundle\Entity\UserSession $userSession
+     * @param \DATA\PersonalPlaceBundle\Entity\UserSessions $userSession
      * @return PrivatePlayer
      */
-    public function setUserSession(\DATA\PersonalPlaceBundle\Entity\UserSession $userSession)
+    public function setUserSession(\DATA\PersonalPlaceBundle\Entity\UserSessions $userSession)
     {
         $this->userSession = $userSession;
 
@@ -302,7 +302,7 @@ class PrivatePlayer
     /**
      * Get userSession
      *
-     * @return \DATA\PersonalPlaceBundle\Entity\UserSession 
+     * @return \DATA\PersonalPlaceBundle\Entity\UserSessions
      */
     public function getUserSession()
     {

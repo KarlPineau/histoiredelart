@@ -92,6 +92,7 @@ $(document).ready(function() {
     $('#tb_modelbundle_testedgame_icon_copyright').parent().addClass('col-md-9');
     $('#tb_modelbundle_testedgame_icon_copyright').val('Inconnu');
 
+    $('#tb_modelbundle_testedgame_icon_fileImage').prev().text('Votre image');
     $('#tb_modelbundle_testedgame_icon_fileImage_imageFile_file').prev().hide();
     $('#tb_modelbundle_testedgame_icon_fileImage_imageFile').prev().hide();
     $("#tb_modelbundle_testedgame_icon_fileImage_imageFile_file").fileinput({

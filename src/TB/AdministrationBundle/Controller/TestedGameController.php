@@ -54,8 +54,11 @@ class TestedGameController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             foreach ($testedGame->getTestedItems() as $testedItem) {
                 $testedItem->setTestedGame($testedGame);
+                $testedItem->setCreateUser($this->getUser());
                 $em->persist($testedItem);
             }
+            $testedGame->setUpdateUser($this->getUser());
+            $em->persist($testedGame);
             $em->flush();
 
             $this->get('session')->getFlashBag()->add('notice', 'Félicitations, les modifications ont bien été enregistrées.' );
@@ -80,7 +83,10 @@ class TestedGameController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $testedItem->setUpdateUser($this->getUser());
             $em->persist($testedItem);
+            $testedGame->setUpdateUser($this->getUser());
+            $em->persist($testedGame);
             $em->flush();
 
             $this->get('session')->getFlashBag()->add('notice', 'Félicitations, les modifications ont bien été enregistrées.' );
@@ -106,6 +112,7 @@ class TestedGameController extends Controller
             $em->remove($testedItemResult);
         }
         $testedGame->removeTestedItem($testedItem);
+        $testedGame->setUpdateUser($this->getUser());
         $em->persist($testedGame);
         $em->remove($testedItem);
         $em->flush();
@@ -124,6 +131,7 @@ class TestedGameController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $testedGame->setUpdateUser($this->getUser());
             $em->persist($testedGame);
             $em->flush();
 
@@ -146,6 +154,7 @@ class TestedGameController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $testedGame->setUpdateUser($this->getUser());
             $em->persist($testedGame);
             $em->flush();
 
@@ -182,6 +191,8 @@ class TestedGameController extends Controller
             $testedGame->setIsOnline(true);
         }
 
+        $testedGame->setUpdateUser($this->getUser());
+
         $em->persist($testedGame);
         $em->flush();
 
@@ -200,6 +211,8 @@ class TestedGameController extends Controller
         } else {
             $testedGame->setIsOfficial(true);
         }
+
+        $testedGame->setUpdateUser($this->getUser());
 
         $em->persist($testedGame);
         $em->flush();

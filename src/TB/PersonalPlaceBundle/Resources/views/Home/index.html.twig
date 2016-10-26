@@ -27,20 +27,13 @@
         <div class="col-md-6">
             <h2>Mes parties</h2>
 
-            <table class="table table-striped table-bordered">
-                <tr>
-                    <th>Visualiser</th>
-                    <th>Jouer</th>
-                    <th>NbJoué</th>
-                </tr>
             {% for testedGame in testedGames %}
-                <tr>
-                    <td><a href="{{ path('tb_personalplace_testedgame_view', {'testedGame_id': testedGame.id}) }}">{{ testedGame.title }}</a></td>
-                    <td class="text-center"><a href="{{ path('tb_player_player_index', {'testedGame_id': testedGame.id}) }}" class="btn btn-sm btn-success">Jouer !</a></td>
-                    <td>TODO</td>
-                </tr>
+                {% include 'TBLayoutBundle::listTestedGame.html.twig' %}
+            {% else %}
+                <div class="alert alert-primary">
+                    <p>Vous n'avez pas encore créé de partie. <a href="{{ path('tb_personalplace_testedgame_create') }}">Commencer l'aventure !</a></p>
+                </div>
             {% endfor %}
-            </table>
         </div>
     </div>
 {% endblock %}

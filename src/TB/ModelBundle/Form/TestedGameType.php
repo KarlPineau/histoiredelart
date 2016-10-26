@@ -22,7 +22,7 @@ class TestedGameType extends AbstractType
     {
         $builder
             ->add('title',          'text',                 array('required' => true))
-            ->add('isRandomized',   CheckboxType::class,    array('label'    => 'Ordre aléatoire autorisé',
+            ->add('isRandomized',   CheckboxType::class,    array('label'    => 'Ordre aléatoire autorisé (les images seront mélangées)',
                                                                   'required' => false))
             ->add('isPrivate',      CheckboxType::class,    array('label'    => 'Partie privée (non référencée sur le site)',
                                                                   'required' => false))

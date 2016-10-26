@@ -39,6 +39,31 @@
         </div>
     {% endfor %}
 
+    {% if testedGame.isOnline == false %}
+        <div class="alert alert-danger">
+            Votre partie est actuellement hors-ligne. Elle n'est pas disponible sur le site.<a href="{{ path('tb_personalplace_testedgame_updateOnlineStatus', {'testedGame_id': testedGame.id}) }}">Cliquez-ici</a> pour passer votre partie en ligne.
+        </div>
+    {% elseif testedGame.isPrivate == true %}
+        <div class="alert alert-warning">
+            Votre partie n'est pas référencée sur le site. Seuls les utilisateurs disposant du lien peuvent y jouer.<br />
+            <a href="{{ path('tb_personalplace_testedgame_edit', {'testedGame_id':testedGame.id}) }}">Modifiez ses paramètres</a> pour passer votre partie en mode public.
+        </div>
+    {% endif %}
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-sm-4 text-center">
+                <h2>Partagez votre partie !</h2>
+            </div>
+            <div class="col-sm-4 text-center">
+                <div style="margin-top: 15px;">
+                    <div class="addthis_inline_share_toolbox"></div>
+                </div>
+            </div>
+            <div class="col-sm-4 text-center">
+                <input class="form-control input-lg" style="display: inline-block;" value="{{ app.request.getSchemeAndHttpHost() ~ path('tb_player_player_index', {'testedGame_id': testedGame.id}) }}" />
+            </div>
+        </div>
+    </div>
     <div class="jumbotron">
         <div class="row">
             <div class="col-md-3 col-sm-6 col-xs-12">
@@ -54,9 +79,7 @@
                 <dl>
                     <dt>Dernière édition</dt>
                     <dd>
-                        {% if testedGame.updateUser != null %}
-                        Le {{ testedGame.updateDate|date('d-m-Y, H:i:s') }}, par {{ testedGame.updateUser.username }}
-                        (<a href="#">PublicPage</a>)
+                        {% if testedGame.updateUser != null %}Le {{ testedGame.updateDate|date('d-m-Y, H:i:s') }}, par <a href="{{ path('tb_personalplace_public_index', {'user_id':testedGame.updateUser.id}) }}">{{ testedGame.updateUser.username }}</a>
                         {% else %}Pas de données
                         {% endif %}
                     </dd>

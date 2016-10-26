@@ -19,7 +19,7 @@ class PlayerProposalLoadChoiceType extends AbstractType
             $builder
                 ->add($field,   ChoiceType::class,   array(
                     'choices' => $choices,
-                    'label' => strtolower($field),
+                    'label' => lcfirst($field),
                     'multiple' => false,
                     'expanded' => true,
                     'required' => false,
@@ -27,13 +27,6 @@ class PlayerProposalLoadChoiceType extends AbstractType
                     'mapped' => false))
             ;
         }
-
-        /*$builder
-            ->add('playerProposalChoices',   'collection',   array( 'type' => new PlayerProposalChoiceType(),
-                'allow_add'    => true,
-                'allow_delete' => true,
-                'mapped' => false))
-        ;*/
     }
         
     /**

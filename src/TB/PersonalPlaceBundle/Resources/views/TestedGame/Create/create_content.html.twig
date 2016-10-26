@@ -16,10 +16,10 @@
         <div class="col-sm-6 col-xs-12">
             <div class="well">
                 <fieldset>
-                    <legend>Partie :</legend>
+                    <legend>A propos de la partie :</legend>
 
                     <div class="form-group">
-                        {{ form_label(form.title, "Titre :", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
+                        {{ form_label(form.title, "Titre", {'label_attr': {'class': 'col-md-3 control-label'}}) }}
                         <div class="col-md-9">
                             {{ form_widget(form.title, {'attr': {'placeholder': 'Typologie de céramique chinoise', 'class': 'form-control'}}) }}
                         </div>
@@ -52,7 +52,7 @@
                         <div class="pull-right">
                             <button type="button" id="buttonAddTestedItem" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></button>
                         </div>
-                        <legend>Items :</legend>
+                        <legend>A propos des images :</legend>
                     </div>
 
                     {{ form_widget(form.testedItems) }}

@@ -80,8 +80,11 @@ class TestedGameController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             foreach ($testedGame->getTestedItems() as $testedItem) {
                 $testedItem->setTestedGame($testedGame);
+                $testedItem->setCreateUser($this->getUser());
                 $em->persist($testedItem);
             }
+            $testedGame->setUpdateUser($this->getUser());
+            $em->persist($testedGame);
             $em->flush();
 
             $this->get('session')->getFlashBag()->add('notice', 'Félicitations, les modifications ont bien été enregistrées.' );
@@ -106,7 +109,10 @@ class TestedGameController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $testedItem->setUpdateUser($this->getUser());
             $em->persist($testedItem);
+            $testedGame->setUpdateUser($this->getUser());
+            $em->persist($testedGame);
             $em->flush();
 
             $this->get('session')->getFlashBag()->add('notice', 'Félicitations, les modifications ont bien été enregistrées.' );
@@ -132,6 +138,7 @@ class TestedGameController extends Controller
             $em->remove($testedItemResult);
         }
         $testedGame->removeTestedItem($testedItem);
+        $testedGame->setUpdateUser($this->getUser());
         $em->persist($testedGame);
         $em->remove($testedItem);
         $em->flush();
@@ -150,6 +157,7 @@ class TestedGameController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $testedGame->setUpdateUser($this->getUser());
             $em->persist($testedGame);
             $em->flush();
 
@@ -172,6 +180,7 @@ class TestedGameController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $testedGame->setUpdateUser($this->getUser());
             $em->persist($testedGame);
             $em->flush();
 
@@ -188,11 +197,24 @@ class TestedGameController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $testedGame = $em->getRepository('TBModelBundle:TestedGame')->findOneById($testedGame_id);
-
         if($testedGame === null OR $testedGame->getCreateUser() != $this->getUser()) {throw $this->createNotFoundException('TestedGame non trouvé :'.$testedGame_id);}
 
+        $urlToPlay = $this->generateUrl('tb_player_player_index', array('testedGame_id' => $testedGame->getId()), true);
+        $image = $testedGame->getIcon();
+        $seoPage = $this->container->get('sonata.seo.page');
+        $seoPage
+            ->addMeta('property', 'og:description', 'Teste tes connaissances en histoire de l\'art sur Clichés! - Viens participer au jeu conçu par '.$testedGame->getCreateUser()->getUsername().' et défis tes amis!')
+            ->addMeta('property', 'og:image', $this->get('templating.helper.assets')->getUrl('uploads/gallery/'.$image->getFileImage()->getImageName()))
+            ->addMeta('property', 'og:url', $urlToPlay)->addMeta('property', 'og:title', $testedGame->getTitle().' - Clichés!')
+            ->addMeta('property', 'twitter:title', $testedGame->getTitle().' - Clichés!')
+            ->addMeta('property', 'twitter:description', 'Teste tes connaissances en histoire de l\'art sur Clichés! - Viens participer au jeu conçu par '.$testedGame->getCreateUser()->getUsername().' et défis tes amis!')
+            ->addMeta('property', 'twitter:image', $this->get('templating.helper.assets')->getUrl('uploads/gallery/'.$image->getFileImage()->getImageName()))
+            ->addMeta('property', 'twitter:url', $urlToPlay)
+            ->addMeta('property', 'twitter:card', 'summary_large_image')
+        ;
+
         return $this->render('TBPersonalPlaceBundle:TestedGame:View/view.html.twig', array(
-            'testedGame' => $testedGame,
+            'testedGame' => $testedGame
         ));
     }
 
@@ -207,6 +229,7 @@ class TestedGameController extends Controller
         } else {
             $testedGame->setIsOnline(true);
         }
+        $testedGame->setUpdateUser($this->getUser());
 
         $em->persist($testedGame);
         $em->flush();

@@ -21,6 +21,10 @@ class testedGame
     /* -------------------------------------------- Actions             --------------------------------------------- */
     public function remove($testedGame) {
         foreach($this->em->getRepository('TBModelBundle:TestedItem')->findByTestedGame($testedGame) as $testedItem) {
+            foreach($this->em->getRepository('TBModelBundle:TestedItemResult')->findByTestedItem($testedItem) as $testedItemResult) {
+                $this->em->remove($testedItemResult);
+            }
+
             $this->em->remove($testedItem);
         }
 
