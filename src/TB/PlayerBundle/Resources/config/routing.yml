@@ -12,8 +12,8 @@ tb_player_player_tracking:
     options:
         expose: true
 
-tb_player_player_trackingToSmallWindow:
-    path:     /partie/trackingToSmallWindow/{testedSession_id}
-    defaults: { _controller: TBPlayerBundle:Player:trackingToSmallWindow }
+tb_player_player_trackingTooSmallWindow:
+    path:     /partie/trackingTooSmallWindow/{testedSession_id}
+    defaults: { _controller: TBPlayerBundle:Player:trackingTooSmallWindow }
     options:
         expose: true

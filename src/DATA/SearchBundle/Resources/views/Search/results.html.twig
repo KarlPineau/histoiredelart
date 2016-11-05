@@ -54,9 +54,13 @@
                     <td>{{ ((searchResults.getPaginationData.current-1)*100)+loop.index }}</td>
                     <td>
                         {% set viewArray = {'id': result.id, 'search': searchLog.id} %}
-                        {% if access == 'true' %}{% set viewArray = viewArray|merge({'access': true}) %}{% endif %}
+                        {% set routeView = data_data_entity_routing_service.getRoutingPublicView() %}
+                        {% if access == 'true' %}
+                            {% set viewArray = viewArray|merge({'access': true}) %}
+                            {% set routeView = data_data_entity_routing_service.getRoutingView() %}
+                        {% endif %}
                         {% if ppid is defined %}{% set viewArray = viewArray|merge({'ppid': ppid}) %}{% endif %}
-                        <a href="{{ path(data_data_entity_routing_service.getRoutingPublicView(), viewArray) }}">{{data_data_entity_service.getName(result)}}</a>
+                        <a href="{{ path(routeView, viewArray) }}">{{data_data_entity_service.getName(result)}}</a>
                     </td>
                     <td>{% if data_data_entity_service.get('auteur', result) != null %}{{ data_data_entity_service.get('auteur', result) }}{% else %}Auteur inconnu{% endif %}</td>
                     <td>{% if data_data_entity_service.get('datation', result) != null %}{{ data_data_entity_service.get('datation', result) }}{% else %}Datation inconnue{% endif %}</td>

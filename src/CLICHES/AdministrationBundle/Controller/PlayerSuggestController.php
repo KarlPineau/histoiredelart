@@ -7,33 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class PlayerSuggestController extends Controller
 {
-    public function transitionAction()
-    {
-        set_time_limit(0);
-        $em = $this->getDoctrine()->getManager();
-        $count = 0;
-
-        foreach($em->getRepository('CLICHESPlayerBundle:PlayerError')->findAll() as $playerError) {
-            $playerSuggest = new PlayerSuggest();
-            $playerSuggest->setCreateUser($playerError->getCreateUser());
-            $playerSuggest->setIpCreateUser($playerError->getIpCreateUser());
-            $playerSuggest->setCreateDate($playerError->getCreateDate());
-            $playerSuggest->setPlayerSuggestAccept($playerError->getPlayerErrorAccept());
-            $playerSuggest->setPlayerSuggestAcceptExplain($playerError->getPlayerErrorAcceptExplain());
-            $playerSuggest->setPlayerSuggestContent($playerError->getPlayerErrorComment());
-            $playerSuggest->setPlayerSuggestField(null);
-            $playerSuggest->setPlayerSuggestTraitement($playerError->getPlayerErrorTraitement());
-            $playerSuggest->setView($playerError->getPlayerOeuvre()->getView());
-            $em->persist($playerSuggest);
-            $em->remove($playerError);
-            $count++;
-        }
-        $em->flush();
-
-        $this->get('session')->getFlashBag()->add('notice', $count.' PlayerError migrés.');
-        return $this->redirectToRoute('cliches_administration_playersuggest_index');
-    }
-
     public function indexAction()
     {
         $repositoryPlayerSuggest = $this->getDoctrine()->getManager()->getRepository('CLICHESPlayerBundle:PlayerSuggest');

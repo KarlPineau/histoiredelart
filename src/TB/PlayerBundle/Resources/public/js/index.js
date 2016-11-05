@@ -52,7 +52,6 @@ $(function() {
             var item = ui.draggable,
                 containerItem = item.parent().parent();
             resetImage( ui.draggable );
-
             containerItem.html('<p class="infoPlace">Placez ici votre label</p>');
         }
     });
@@ -75,7 +74,7 @@ $(function() {
                 $( "ul", droppable ) :
                 $( "<ul class='gallery ui-helper-reset'/>" ).appendTo( droppable );
 
-            item.css("background-color", "");
+            item.css("background-color", "").css("color", "#000");
             item.find('i.fa-undo').removeClass('hidden');
             item.find('i.fa-undo').on( "click", function( event ) {
                 var item = $( this ).parent(), target = $( event.target );
@@ -107,6 +106,7 @@ $(function() {
         item.fadeOut(function() {
             item
                 .css("background-color", "")
+                .css("color", "#000")
                 .addClass('ui-draggable ui-draggable-handle')
                 .appendTo('#labels')
                 .fadeIn()
@@ -157,7 +157,6 @@ $(function() {
             $('#answerButton').on('click', function () {getAnwser();});
             var xhr = $.get("http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=cat&rating=pg-13");
             xhr.done(function(data) {
-                console.log("success got data", data);
                 $('.giphy').attr('src', data.data.image_original_url).removeClass('hidden');
             });
         } else {
@@ -176,7 +175,6 @@ $(function() {
                 '</div>').css('margin-top', '0px');
             $.getScript("//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56a802c313ab49f1");
             scrollMarginTop = $('#header-main').outerHeight()+$('#container-topInfo').outerHeight();
-            console.log(scrollMarginTop);
         }
     }
 
@@ -205,7 +203,6 @@ $(function() {
                 if($('#itemLabel-'+imageId).parent().is('ul.gallery')) {ulGallery = true;}
 
                 label = $('#itemLabel-'+imageId).wrap('<div id="removeDiv-'+imageId+'"></div>').parent().html();
-                //console.log(label);
                 if(ulGallery == true) {
                     $('#removeDiv-'+imageId).parent().parent().append('<p class="infoPlace">Placez ici votre étiquette</p>');
                     $('#removeDiv-'+imageId).parent().remove();
@@ -267,11 +264,9 @@ $(function() {
             '</div>').css('margin-top', '0px');
         var xhr = $.get("http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=cat+tired&rating=pg-13");
         xhr.done(function(data) {
-            console.log("success got data", data);
             $('.giphy').attr('src', data.data.image_original_url).removeClass('hidden');
         });
         scrollMarginTop = $('#header-main').outerHeight()+$('#container-topInfo').outerHeight(true);
-        console.log(scrollMarginTop);
     }
 
     $('#checkButton').on('click', function () {
@@ -316,7 +311,7 @@ $(function() {
 
         $.ajax({
             dataType: "json",
-            url: Routing.generate('tb_player_player_trackingToSmallWindow', {'testedSession_id': $('#testedSession').val()}),
+            url: Routing.generate('tb_player_player_trackingTooSmallWindow', {'testedSession_id': $('#testedSession').val()}),
             success: function(data){
                 console.log(data);
             },

@@ -1,0 +1,4 @@
+services:
+#    tb_tested_game.example:
+#        class: TB\TestedGameBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

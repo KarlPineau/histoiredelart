@@ -233,14 +233,19 @@ class entity
          *      - Data favorite <- Check
          *      - Name Entity Recognition <- Check
          *      - SemanticEnrichment <- Check
+         *      - PlayerProposalChoiceValue <- Check
          */
 
+        foreach($this->em->getRepository('CLICHESPlayerBundle:PlayerProposalChoiceValue')->findBy(array('entity' => $entity)) as $playerProposalChoiceValue) {
+            if($left != null) {$playerProposalChoiceValue->setEntity($left); $this->em->persist($playerProposalChoiceValue);}
+            else {$playerProposalChoiceValue->setEntity(null); $this->em->persist($playerProposalChoiceValue);}
+        }
         foreach ($this->getSemanticEnrichments($entity) as $semanticEnrichment) {
-            //Pas de left dans ce cas car SemanticEnrichments dépend de la sub-entity qui est delete dans tous les cas
-            $this->em->delete($semanticEnrichment);
+            //Pas de left dans ce cas car SemanticEnrichments dépend de la sub-entity qui est remove dans tous les cas
+            $this->em->remove($semanticEnrichment);
         }
         foreach ($this->em->getRepository('TOOLSNerBundle:NameEntityRecognition')->findByUsedIn($entity) as $nameEntityRecognition) {
-            //Pas de left dans ce cas car NameEntityRecognition dépend de la sub-entity qui est delete dans tous les cas
+            //Pas de left dans ce cas car NameEntityRecognition dépend de la sub-entity qui est remove dans tous les cas
             $this->em->remove($nameEntityRecognition);
         }
         foreach ($this->getViews($entity) as $view) {

@@ -13,25 +13,9 @@ class SuggestController extends Controller
             $em = $this->getDoctrine()->getManager();
             $repositorySuggest = $em->getRepository('CLICHESPlayerBundle:PlayerSuggest');
             $playerSuggests = $repositorySuggest->findBy(array('createUser' => $current_user), array('createDate' => 'DESC'));
-            $repositoryError = $em->getRepository('CLICHESPlayerBundle:PlayerError');
-            $playerErrors = $repositoryError->findBy(array('createUser' => $current_user), array('createDate' => 'DESC'));
-
-            $finalArray = array();
-            foreach($playerSuggests as $playerSuggest) {
-                $finalArray[] = [
-                    'type' => 'playerSuggest',
-                    'entity' => $playerSuggest
-                ];
-            }
-            foreach($playerErrors as $playerError) {
-                $finalArray[] = [
-                    'type' => 'playerError',
-                    'entity' => $playerError
-                ];
-            }
 
             return $this->render('CLICHESPersonalPlaceBundle:Suggest:index.html.twig', array(
-                'playerModifications' => $finalArray,
+                'playerSuggests' => $playerSuggests,
             ));
 
         } else {

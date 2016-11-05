@@ -9,10 +9,6 @@ cliches_administration_home_homepage:
     defaults: { _controller: CLICHESAdministrationBundle:Homepage:index }
 
 #PlayerSuggests :
-cliches_administration_playersuggest_transition:
-    path:     /suggestions/transition
-    defaults: { _controller: CLICHESAdministrationBundle:PlayerSuggest:transition }
-
 cliches_administration_playersuggest_archives:
     path:     /suggestions/archives
     defaults: { _controller: CLICHESAdministrationBundle:PlayerSuggest:archives }

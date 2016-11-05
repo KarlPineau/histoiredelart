@@ -5,7 +5,7 @@
 {% block h1 %}Administration{% endblock %}
 
 {% block h1_extend %}
-    <a class="btn btn-primary" href="{{ path('tb_administration_testedgame_create') }}"><i class="fa fa-plus" aria-hidden="true"></i> Nouveau</a>
+    <a class="btn btn-primary" href="{{ path('tb_testedgame_testedgame_create') }}"><i class="fa fa-plus" aria-hidden="true"></i> Nouveau</a>
 {% endblock %}
 
 {% block breadcrumb %}
@@ -35,7 +35,10 @@
         <div class="col-md-6">
             <div>
                 <div class="pull-right">
-                    <a href="#" class="btn btn-primary"><i class="glyphicon glyphicon-stats"></i></a>
+                    <div class="btn-group">
+                        <a href="{{ path('tb_testedgame_testedsession_index') }}" class="btn btn-primary"><i class="fa fa-history" aria-hidden="true"></i></a>
+                        <a href="#" class="btn btn-primary"><i class="glyphicon glyphicon-stats"></i></a>
+                    </div>
                 </div>
                 <h2>Dernières sessions</h2>
             </div>
@@ -51,7 +54,7 @@
                 <tbody>
                 {% for testedSession in testedSessions %}
                     <tr>
-                        <td><a href="{{ path('tb_administration_testedsession_view', {'testedSession_id': testedSession.id}) }}">{{ loop.index }}</a></td>
+                        <td><a href="{{ path('tb_testedgame_testedsession_view', {'testedSession_id': testedSession.id}) }}">{{ loop.index }}</a></td>
                         <td>
                             {{ testedSession.ipCreateUser }}
                             {% if testedSession.createUser != null %}
@@ -59,7 +62,7 @@
                             {% endif %}
                         </td>
                         <td>
-                            <a href="{{ path('tb_administration_testedgame_view', {'testedGame_id': testedSession.testedGame.id}) }}">{{ testedSession.testedGame.title }}</a>
+                            <a href="{{ path('tb_testedgame_testedgame_view', {'testedGame_id': testedSession.testedGame.id}) }}">{{ testedSession.testedGame.title }}</a>
                         </td>
                         <td>
                            {{ testedSession.createDate|date('d-m-Y H:i:s') }}

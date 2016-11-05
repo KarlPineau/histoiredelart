@@ -10,3 +10,11 @@ services:
     tb_model.testedgame:
         class: TB\ModelBundle\Service\testedGame
         arguments: [ "@doctrine.orm.entity_manager", "@security.context"]
+
+    tb_model.testeditemresult:
+        class: TB\ModelBundle\Service\testedItemResult
+        arguments: [ "@doctrine.orm.entity_manager", "@security.context"]
+
+    tb_model.testeditemresultsession:
+        class: TB\ModelBundle\Service\testedItemResultSession
+        arguments: [ "@doctrine.orm.entity_manager", "@security.context"]

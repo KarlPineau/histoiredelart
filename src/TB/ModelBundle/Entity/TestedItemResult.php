@@ -24,10 +24,10 @@ class TestedItemResult
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="TB\ModelBundle\Entity\TestedSession")
+     * @ORM\ManyToOne(targetEntity="TB\ModelBundle\Entity\TestedItemResultSession", inversedBy="testedItemResultSession")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $testedSession;
+    private $testedItemResultSession;
 
     /**
      * @ORM\ManyToOne(targetEntity="TB\ModelBundle\Entity\TestedItem")
@@ -220,25 +220,25 @@ class TestedItemResult
     }
 
     /**
-     * Set testedSession
+     * Set testedItemResultSession
      *
-     * @param \TB\ModelBundle\Entity\TestedSession $testedSession
+     * @param \TB\ModelBundle\Entity\TestedItemResultSession $testedItemResultSession
      * @return TestedItemResult
      */
-    public function setTestedSession(\TB\ModelBundle\Entity\TestedSession $testedSession)
+    public function setTestedItemResultSession(\TB\ModelBundle\Entity\TestedItemResultSession $testedItemResultSession)
     {
-        $this->testedSession = $testedSession;
+        $this->testedItemResultSession = $testedItemResultSession;
 
         return $this;
     }
 
     /**
-     * Get testedSession
+     * Get testedItemResultSession
      *
-     * @return \TB\ModelBundle\Entity\TestedSession 
+     * @return \TB\ModelBundle\Entity\TestedItemResultSession 
      */
-    public function getTestedSession()
+    public function getTestedItemResultSession()
     {
-        return $this->testedSession;
+        return $this->testedItemResultSession;
     }
 }

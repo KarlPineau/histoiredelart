@@ -122,16 +122,17 @@ class analysis
         //On boucle cet array et on cree une ligne par mot (en minuscule et en clé) avec pour valeur toutes les entités matchés :
         $globalWordArray = array();
         foreach($globalArraySplitName as $keySplitName => $arraySplitName) {
-            foreach($arraySplitName['stringSplit'] as $stringSplit) {
-                //Mais on exclut du tableau tous les mots tagués comme mot de liaison
-                $wordStringSplit = $repositoryWordType->findOneByWord($stringSplit);
-                if($wordStringSplit != null) {
-                    if($wordStringSplit->getType()->getName() != 'liaison') {
+            if(isset($arraySplitName['stringSplit'])) {
+                foreach ($arraySplitName['stringSplit'] as $stringSplit) {
+                    //Mais on exclut du tableau tous les mots tagués comme mot de liaison
+                    $wordStringSplit = $repositoryWordType->findOneByWord($stringSplit);
+                    if ($wordStringSplit != null) {
+                        if ($wordStringSplit->getType()->getName() != 'liaison') {
+                            $globalWordArray[strtolower($stringSplit)][] = $globalArraySplitName[$keySplitName]['entity'];
+                        }
+                    } else {
                         $globalWordArray[strtolower($stringSplit)][] = $globalArraySplitName[$keySplitName]['entity'];
                     }
-                }
-                else{
-                    $globalWordArray[strtolower($stringSplit)][] = $globalArraySplitName[$keySplitName]['entity'];
                 }
             }
         }

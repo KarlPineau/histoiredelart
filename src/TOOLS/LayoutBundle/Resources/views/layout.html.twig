@@ -50,6 +50,7 @@
         <div class="collapse navbar-collapse">
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{{ path('tb_home_home_index') }}">ConfusArt</a></li>
                     <li><a href="{{ path('cliches_home_home_index') }}">Clichés!</a></li>
                     <li><a href="{{ path('data_public_home_index') }}">DATA</a></li>
                     {% if is_granted("ROLE_ADMIN") %}<li><a href="{{ path('tools_administration_home_index') }}">Administration</a></li>{% endif %}

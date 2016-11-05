@@ -1,0 +1,65 @@
+{% extends "TBTestedGameBundle::layout.html.twig" %}
+
+{% block title %}TestedSession #{{ testedSession.id }} - {{ parent() }}{% endblock %}
+
+{% block h1 %}TestedSession #{{ testedSession.id }}{% endblock %}
+
+{% block h1_extend %}
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li><a href="{{ path('tb_testedgame_testedgame_view', {'testedGame_id': testedSession.testedGame.id}) }}">{{ testedSession.testedGame.title }}</a></li>
+    <li class="active">Session #{{ testedSession.id }}</li>
+{% endblock %}
+
+{% block content %}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-sm-6">
+                <h2>Infos Sessions</h2>
+
+                <dl>
+                    <dt>Créateur</dt>
+                    <dd>
+                        {{ testedSession.ipCreateUser }}
+                        {% if testedSession.createUser != null %}
+                            <br />
+                            <a href="{{ path('cas_administration_user_view', {'id': testedSession.createUser.id}) }}">{{ testedSession.createUser.email }}</a>
+                            (<a href="{{ path('tb_personalplace_public_index', {'user_id': testedSession.createUser.id}) }}">PublicPage</a>)
+                        {% endif %}
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>Date de création</dt>
+                    <dd>{{ testedSession.createDate|date('d-m-Y, H:i:s') }}</dd>
+                </dl>
+                <dl>
+                    <dt>TooSmallWindows ?</dt>
+                    <dd>{% if testedSession.tooSmallWindow == true %}<span class="text-danger">Oui</span>{% else %}Non{% endif %}</dd>
+                </dl>
+                <dl>
+                    <dt>IsRandomized ?</dt>
+                    <dd>{% if testedSession.isRandomized == true %}Oui{% else %}Non{% endif %}</dd>
+                </dl>
+            </div>
+            <div class="col-sm-6">
+                <h2>Résultats</h2>
+                {% for resultSession in tb_model_testeditemresultsession.getByTestedSession(testedSession) %}
+                    {% if loop.index > 1 %}<hr />{% endif %}
+                    {% for result in tb_model_testeditemresult.getByTestedItemResultSession(resultSession) %}
+                        <div>
+                            {{ result.proposedLabel }} : {{ result.testedItem.itemLabel }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

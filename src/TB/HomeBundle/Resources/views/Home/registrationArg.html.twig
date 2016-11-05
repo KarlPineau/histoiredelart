@@ -1,8 +1,8 @@
 {% extends "TBHomeBundle::layout.html.twig" %}
 
-{% block title %}Bienvenue sur Clichés! - {{ parent() }}{% endblock %}
+{% block title %}Bienvenue sur histoiredelart.fr - {{ parent() }}{% endblock %}
 
-{% block h1 %}Bienvenue sur Clichés!{% endblock %}
+{% block h1 %}Bienvenue sur histoiredelart.fr{% endblock %}
 
 {% block breadcrumb %}
     {{ parent() }}
@@ -17,12 +17,62 @@
     {% endfor %}
 
     <div class="jumbotron">
+        <div class="text-center">
+            <div class="btn-group btn-group-lg">
+                <a class="btn btn-lg btn-primary" href="{{ path('fos_user_registration_register') }}"><i class="fa fa-sign-in" aria-hidden="true"></i> M'inscrire !</a>
+                <a class="btn btn-lg btn-success" href="{{ path('fos_user_security_login') }}"><i class="fa fa-user" aria-hidden="true"></i> Me connecter</a>
+            </div>
+        </div>
+        <p class="lead">Cher.e internaute,</p>
+        <h2>Bienvenue sur histoiredelart.fr</h2>
+        <div class="row">
+            <div class="col-sm-2 text-center text-primary">
+                <i class="fa fa-5x fa-thumbs-o-up" aria-hidden="true"></i>
+            </div>
+            <div class="col-md-10">
+                <p class="lead">Nous sommes heureux de proposer, développer et maintenir ce site et ses applications.</p>
+                <p class="lead text-center"><a href="{{ path('data_public_home_index') }}" target="_blank">DATA</a> - <a href="{{ path('cliches_home_home_index') }}" target="_blank">Clichés</a> - <a href="{{ path('tb_home_home_index') }}" target="_blank">ConfusArt</a></p>
+            </div>
+        </div>
+
         <h2>Rejoindre la communauté de histoiredelart.fr</h2>
-        <h2>Créer ses propres parties et les partager</h2>
-        <h2>Obtenir des statistiques sur la durée</h2>
-        <h2>Contribuer à l'enrichissement de Clichés!</h2>
-        <div>
-            <a class="btn btn-lg btn-primary" href="{{ path('fos_user_registration_register') }}">M'inscrire !</a> - <span class="lead">Déjà inscrit ?</span> <a class="btn btn-lg btn-success" href="{{ path('fos_user_security_login') }}">Me connecter</a>
+        <div class="row">
+            <div class="col-md-10">
+                <p class="lead">Rejoindre notre communauté, c'est nous apporter ton soutien. Nos utilisateurs sont en effet nos principaux pourvoyeurs de données, sans lesquelles ce site ne peut exister. Ainsi, les jeux de ConfusArt, les oeuvres proposées sur Clichés,
+                    les corrections d'erreurs dans les données viennent principalement de nos utilisateurs et c'est grâce à eux que ce site s'améliore.</p>
+            </div>
+            <div class="col-sm-2 text-center text-success">
+                <i class="fa fa-5x fa-users" aria-hidden="true"></i>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2 text-center text-primary">
+                <i class="fa fa-5x fa-comments" aria-hidden="true"></i>
+            </div>
+            <div class="col-md-10">
+                <p class="lead"><strong>Nous t'invitons donc chaleureusement à contribuer toi-aussi à l'enrichissement du site.</strong> C'est un pari gagnant : si chacun de nos utilisateurs proposait l'ajout d'une seule oeuvre, cela ne lui prendrait que quelques secondes mais cela permettrait à histoiredelart.fr de proposer deux fois plus de contenus.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10">
+                <p class="lead">Afin de pouvoir contrôler les ajouts et modifications sur le site, nous te demandons simplement de <a href="{{ path('fos_user_registration_register') }}">t'inscrire</a>. En échange, tu auras désormais accès à de nouveaux outils comme un historique de tes sessions de jeu.</p>
+            </div>
+            <div class="col-sm-2 text-center text-success">
+                <i class="fa fa-5x fa-handshake-o" aria-hidden="true"></i>
+            </div>
+        </div>
+
+        <br />
+        <div class="text-center">
+            <div class="btn-group btn-group-lg">
+                <a class="btn btn-lg btn-primary" href="{{ path('fos_user_registration_register') }}"><i class="fa fa-sign-in" aria-hidden="true"></i> M'inscrire !</a>
+                <a class="btn btn-lg btn-success" href="{{ path('fos_user_security_login') }}"><i class="fa fa-user" aria-hidden="true"></i> Me connecter</a>
+            </div>
+        </div>
+        <h2>Partager, c'est nous aider !</h2>
+        <p class="lead">Contribue à faire connaitre histoiredelart.fr en partageant le projet auprès de tes contacts !</p>
+        <div class="text-center">
+            <div class="addthis_inline_share_toolbox"></div>
         </div>
     </div>
 {% endblock %}

@@ -17,8 +17,6 @@
 {% endblock %}
 
 {% block h1_extend %}
-    <a href="{{ path('cas_administration_user_generatePreferences') }}" class="btn btn-primary">Génération UserPreferences</a>
-    <a href="{{ path('cas_administration_user_generateUsernames') }}" class="btn btn-primary">Génération Username</a>
     {{ knp_pagination_render(users) }}
 {% endblock %}
 

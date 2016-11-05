@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block title %}
-    tb.histoiredelart.fr {{ parent() }}
+    confusart.histoiredelart.fr {{ parent() }}
 {% endblock %}
 
 {% block follow %}{% endblock %}
@@ -59,7 +59,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ app.user.username }} <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="{{ path('fos_user_profile_show') }}">Profil</a></li>
-                        <li><a href="{{ path('tb_personalplace_home_index') }}">Espace personnel</a></li>
+                        <li><a href="{{ path('tb_personalplace_home_index') }}">Mes parties</a></li>
                         <li><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
                     </ul>
                 </li>

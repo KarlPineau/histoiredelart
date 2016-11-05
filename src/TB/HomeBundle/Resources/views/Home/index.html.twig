@@ -1,8 +1,8 @@
 {% extends "TBHomeBundle::layout.html.twig" %}
 
-{% block title %}Bienvenue sur Clichés! - {{ parent() }}{% endblock %}
+{% block title %}Bienvenue sur ConfusArt - {{ parent() }}{% endblock %}
 
-{% block h1 %}Bienvenue sur Clichés!{% endblock %}
+{% block h1 %}Bienvenue sur ConfusArt{% endblock %}
 
 {% block content %}
     {% for flashMessage in app.session.flashbag.get('notice') %}
@@ -11,6 +11,9 @@
         </div>
     {% endfor %}
 
+    <div class="alert alert-primary">
+        <strong>À vous de jouer !</strong> Vous avez apprécié le jeu ? Contribuez à son enrichissement en créant de nouvelles parties sur de nouvelles thématiques !
+    </div>
     <div class="row">
         <div class="col-xs-12 col-md-7">
             <div class="panel panel-default">

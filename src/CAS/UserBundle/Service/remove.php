@@ -23,7 +23,6 @@ class remove
          * -> CAS/User/UserPreferences : Remove
          * -> CLICHES/PersonalPlace/PrivatePlayer : UPDATE
          * -> CLICHES/PersonalPlace/PrivatePlayerSession : UPDATE
-         * -> CLICHES/Player/PlayerError : UPDATE
          * -> CLICHES/Player/PlayerSession : UPDATE
          * -> CLICHES/Player/PlayerSuggest : UPDATE
          * -> DATA/Data/Artwork : UPDATE
@@ -62,7 +61,6 @@ class remove
         foreach($this->em->getRepository('CLICHESPersonalPlaceBundle:PrivatePlayer')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null); $this->em->persist($item);}
         foreach($this->em->getRepository('CLICHESPersonalPlaceBundle:PrivatePlayerSession')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null); $this->em->persist($item);}
         foreach($this->em->getRepository('CLICHESPersonalPlaceBundle:PrivatePlayerSession')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null); $this->em->persist($item);}
-        foreach($this->em->getRepository('CLICHESPlayerBundle:PlayerError')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null); $this->em->persist($item);}
         foreach($this->em->getRepository('CLICHESPlayerBundle:PlayerSession')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null); $this->em->persist($item);}
         foreach($this->em->getRepository('CLICHESPlayerBundle:PlayerSession')->findBy(array('updateUser' => $user)) as $item) {$item->setUpdateUser(null); $this->em->persist($item);}
         foreach($this->em->getRepository('CLICHESPlayerBundle:PlayerSuggest')->findBy(array('createUser' => $user)) as $item) {$item->setCreateUser(null); $this->em->persist($item);}

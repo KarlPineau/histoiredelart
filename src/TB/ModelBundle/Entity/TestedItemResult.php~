@@ -24,10 +24,10 @@ class TestedItemResult
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="TB\ModelBundle\Entity\TestedSession")
+     * @ORM\ManyToOne(targetEntity="TB\ModelBundle\Entity\TestedItemResultSession", inversedBy="testedItemResultSession")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $testedSession;
+    private $testedItemResultSession;
 
     /**
      * @ORM\ManyToOne(targetEntity="TB\ModelBundle\Entity\TestedItem")

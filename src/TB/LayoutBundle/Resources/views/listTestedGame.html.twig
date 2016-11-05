@@ -1,9 +1,9 @@
 <div class="list-group-item container-testedGame-list" {% if testedGame.icon != null %}style="background-image: url({{ asset('uploads/gallery/' ~ testedGame.icon.fileImage.imageName) }});"{% endif %}>
     <div class="row">
         <div class="col-sm-8 col-xs-12">
-            <h3 class="h3-testedGame-list">{% if is_granted("ROLE_ADMIN") %}<a href="{{ path('tb_administration_testedgame_view', {'testedGame_id': testedGame.id}) }}" class="h3-testedGame-list">{{ testedGame.title }}</a>{% else %}{{ testedGame.title }}{% endif %}</h3>
+            <h3 class="h3-testedGame-list">{% if is_granted("ROLE_ADMIN") %}<a href="{{ path('tb_testedgame_testedgame_view', {'testedGame_id': testedGame.id}) }}" class="h3-testedGame-list">{{ testedGame.title }}</a>{% else %}{{ testedGame.title }}{% endif %}</h3>
             {% if testedGame.isOfficial != true %}
-                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and app.user == testedGame.createUser and 'administration' not in app.request.get('_route') %}<strong class="strong-testedGame-list"><i class="fa fa-user" aria-hidden="true"></i> Par toi-même</strong> <a class="btn btn-sm btn-default" href="{{ path('tb_personalplace_testedgame_view', {'testedGame_id': testedGame.id}) }}"><i class="fa fa-cog" aria-hidden="true"></i> Administrer</a>
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and app.user == testedGame.createUser and 'administration' not in app.request.get('_route') %}<strong class="strong-testedGame-list"><i class="fa fa-user" aria-hidden="true"></i> Par toi-même</strong> <a class="btn btn-sm btn-default" href="{{ path('tb_testedgame_testedgame_view', {'testedGame_id': testedGame.id}) }}"><i class="fa fa-cog" aria-hidden="true"></i> Administrer</a>
                 {% else %}<strong class="strong-testedGame-list">Par <a href="{{ path('tb_personalplace_public_index', {'user_id':testedGame.createUser.id}) }}">{{ testedGame.createUser.username }}</a></strong>
                 {% endif %}
             {% else %}<strong class="strong-testedGame-list vertical-align"><img src="{{ asset('images/logo.png') }}" class="logo-icon-xs logo-icon-margin-right" /> Clichés!</strong>

@@ -30,7 +30,7 @@
                     <h2>Profil de {{ user.username }}</h2>
                     <p class="lead">Découvre toutes les parties de {{ user.username }}</p>
                     <br />
-                    <a class="btn btn-lg btn-primary" href="{{ path('tb_personalplace_testedgame_create') }}">
+                    <a class="btn btn-lg btn-primary" href="{{ path('tb_testedgame_testedgame_create') }}">
                         {% if app.user == user %}Crée une nouvelle partie !{% else %}Crée ta propre partie{% endif %}
                     </a>
                 </div>

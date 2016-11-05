@@ -26,9 +26,9 @@ class TestedSession
     /**
      * @var boolean
      *
-     * @ORM\Column(name="toSmallWindow", type="boolean", nullable=true)
+     * @ORM\Column(name="tooSmallWindow", type="boolean", nullable=true)
      */
-    private $toSmallWindow;
+    private $tooSmallWindow;
 
     /**
      * @var boolean
@@ -252,25 +252,25 @@ class TestedSession
     }
 
     /**
-     * Set toSmallWindow
+     * Set tooSmallWindow
      *
-     * @param boolean $toSmallWindow
+     * @param boolean $tooSmallWindow
      * @return TestedSession
      */
-    public function setToSmallWindow($toSmallWindow)
+    public function setTooSmallWindow($tooSmallWindow)
     {
-        $this->toSmallWindow = $toSmallWindow;
+        $this->tooSmallWindow = $tooSmallWindow;
 
         return $this;
     }
 
     /**
-     * Get toSmallWindow
+     * Get tooSmallWindow
      *
      * @return boolean 
      */
-    public function getToSmallWindow()
+    public function getTooSmallWindow()
     {
-        return $this->toSmallWindow;
+        return $this->tooSmallWindow;
     }
 }

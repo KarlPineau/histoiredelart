@@ -16,7 +16,7 @@
 
 
 {% block content %}
-    {% if  playerModifications is not empty %}
+    {% if playerSuggests is not empty %}
         <table class="table table-striped table-bordered" style="width: 100%">
             <tr>
                 <th class="text-center">#</th>
@@ -24,50 +24,34 @@
                 <th class="text-center">Suggestion</th>
                 <th class="text-center">Traitement</th>
             </tr>
-            {% for playerModification in playerModifications %}
-            <tr>
-                <td>{{ loop.index }}</td>
-                <td>
-                    <strong>
-                        {% if playerModification['type'] == 'playerSuggest' %}{{ data_data_entity_service.getName(null, playerModification['entity'].view) }}
-                        {% elseif playerModification['type'] == 'playerError' %}{{ data_data_entity_service.getName(null, playerModification['entity'].playerOeuvre.view) }}
+            {% for playerSuggest in playerSuggests %}
+                <tr>
+                    <td class="text-center">
+                        {{ loop.index }}<br />
+                        {% if playerSuggest.playerSuggestField != null %}<p><span class="label label-warning">Suggest</span></p>
+                        {% else %}<p><span class="label label-success">Error</span></p>
                         {% endif %}
-                    </strong>
-                    <div class="thumbnail">
-                        {% if playerModification['type'] == 'playerSuggest' %}{{ render(controller('DATAImageBundle:Image:renderImage', {'view_id': playerModification['entity'].view.id, 'class': 'image-cliches-list'})) }}
-                        {% elseif playerModification['type'] == 'playerError' %}{{ render(controller('DATAImageBundle:Image:renderImage', {'view_id': playerModification['entity'].playerOeuvre.view.id, 'class': 'image-cliches-list'})) }}
+                    </td>
+                    <td>
+                        <strong><a href="{{ path('data_public_entity_view', { 'id' : playerSuggest.view.entity.id} ) }}">{{ data_data_entity_service.getName(playerSuggest.view.entity) }}</a></strong>
+                        <div class="thumbnail">{{ render(controller('DATAImageBundle:Image:renderImage', {'view_id': playerSuggest.view.id, 'class': 'image-cliches-list thumbnail'})) }}</div>
+                    </td>
+                    <td>
+                        {% if playerSuggest.playerSuggestField != null %}
+                            <strong>{{ playerSuggest.playerSuggestField }} :</strong>
+                            <ul>
+                                <li><em>Valeur actuelle :</em> <strong>{{ cliches_player_playersuggest_service.findCurrentValue(playerSuggest) }}</strong></li>
+                                <li><em>Valeur proposée :</em> <strong>{{ playerSuggest.playerSuggestContent }}</strong></li>
+                            </ul>
+                        {% else %}<strong>{{ playerSuggest.playerSuggestContent }}</strong>
                         {% endif %}
-                    </div>
-                </td>
-                <td>
-                    {% if playerModification['type'] == 'playerSuggest' %}
-                        <dl class="dl-horizontal">
-                            <dt>{{ playerModification['entity'].playerSuggestField }} :</dt>
-                            <dd>{{ playerModification['entity'].playerSuggestContent }}</dd>
-                        </dl>
-                    {% elseif playerModification['type'] == 'playerError' %}<p class="text-center"><strong>{{ playerModification['entity'].playerErrorComment }}</strong></p>
-                    {% endif %}
-                </td>
-                <td class="text-center">
-                    {% if playerModification['type'] == 'playerSuggest' %}
-                        {% if playerModification['entity'].playerSuggestTraitement == false %}
-                            <p><span class="label label-info">Pas encore été traitée</span></p>
-                        {% else %}
-                            {% if playerModification['entity'].playerSuggestAccept == true %}<p><span class="label label-success">Acceptée</span></p>
-                            {% else %}<p><span class="label label-warning">Refusée</span></p>
-                            {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {% if playerSuggest.playerSuggestAccept == true %}<p class="text-success">Validé</p>
+                        {% else %}<p class="text-warning">Refusé</p>
                         {% endif %}
-                    {% elseif playerModification['type'] == 'playerError' %}
-                        {% if playerModification['entity'].playerErrorTraitement == false %}
-                            <p><span class="label label-info">Pas encore été traitée</span></p>
-                        {% else %}
-                            {% if playerModification['entity'].playerErrorAccept == true %}<p><span class="label label-success">Acceptée</span></p>
-                            {% else %}<p><span class="label label-warning">Refusée</span></p>
-                            {% endif %}
-                        {% endif %}
-                    {% endif %}
-                </td>
-            </tr>
+                    </td>
+                </tr>
             {% endfor %}
         </table>
         <div class="well">

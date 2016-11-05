@@ -1,0 +1,39 @@
+{% extends "TBTestedGameBundle::layout.html.twig" %}
+
+{% block title %}{{ testedGame.title }} - Fin - {{ parent() }}{% endblock %}
+
+{% block h1 %}{{ testedGame.title }}{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li class="active">{{ testedGame.title }}</li>
+{% endblock %}
+
+{% block content %}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="jumbotron text-center">
+                <h1>Félicitations ! Ta partie est désormais créée.</h1>
+                <br />
+                <p class="lead">N'hésite pas à la partager sur tes réseaux sociaux si tu veux que tes amies la voient !</p>
+                <div style="margin-top: 10px;"><div class="addthis_inline_share_toolbox"></div></div>
+                <div style="margin-top: 10px;">
+                    <p class="lead">Ou partage ce lien :
+                        <input class="form-control input-lg" style="display: inline-block; min-width: 200px; width: 50%;" value="{{ app.request.getSchemeAndHttpHost() ~ path('tb_player_player_index', {'testedGame_id': testedGame.id}) }}" />
+                    </p>
+                </div>
+                <div style="margin-top: 10px;">
+                    <a href="{{ path('tb_player_player_index', {'testedGame_id': testedGame.id}) }}" class="btn btn-lg btn-default"><i class="fa fa-play-circle" aria-hidden="true"></i> Jouer !</a>
+                    <a href="{{ path('tb_testedgame_testedgame_view', {'testedGame_id': testedGame.id}) }}" class="btn btn-lg btn-default"><i class="fa fa-cog" aria-hidden="true"></i> Administrer</a>
+                    <a href="{{ path('tb_testedgame_testedgame_create') }}" class="btn btn-lg btn-default"><i class="fa fa-plus-circle" aria-hidden="true"></i> Nouvelle partie</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

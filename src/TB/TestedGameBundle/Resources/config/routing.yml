@@ -1,0 +1,83 @@
+# TestedGame administration :
+tb_testedgame_testedgame_create:
+    path:     /testedGame/create
+    defaults: { _controller: TBTestedGameBundle:TestedGame:create }
+
+tb_testedgame_testedgame_create_end:
+    path:     /profile/testedGame/create/end/{testedGame_id}
+    defaults: { _controller: TBTestedGameBundle:TestedGame:createEnd }
+    requirements:
+        testedGame_id: \d+
+
+tb_testedgame_testedgame_edit:
+    path:     /testedGame/edit/{testedGame_id}
+    defaults: { _controller: TBTestedGameBundle:TestedGame:edit }
+    requirements:
+        testedGame_id: \d+
+
+tb_testedgame_testedgame_editIcon:
+    path:     /testedGame/edit-icon/{testedGame_id}
+    defaults: { _controller: TBTestedGameBundle:TestedGame:editIcon }
+    requirements:
+        testedGame_id: \d+
+
+tb_testedgame_testedgame_addItems:
+    path:     /testedGame/add-items/{testedGame_id}
+    defaults: { _controller: TBTestedGameBundle:TestedGame:addItems }
+    requirements:
+        testedGame_id: \d+
+
+tb_testedgame_testedgame_editItem:
+    path:     /testedGame/edit-item/{testedGame_id}/{testedItem_id}
+    defaults: { _controller: TBTestedGameBundle:TestedGame:editItem }
+    requirements:
+        testedGame_id: \d+
+        testedItem_id: \d+
+
+tb_testedgame_testedgame_removeItem:
+    path:     /testedGame/remove-item/{testedGame_id}/{testedItem_id}
+    defaults: { _controller: TBTestedGameBundle:TestedGame:removeItem }
+    requirements:
+        testedGame_id: \d+
+        testedItem_id: \d+
+
+tb_testedgame_testedgame_view:
+    path:     /testedGame/{testedGame_id}
+    defaults: { _controller: TBTestedGameBundle:TestedGame:view }
+    requirements:
+        testedGame_id: \d+
+
+tb_testedgame_testedgame_updateOnlineStatus:
+    path:     /testedGame/updateOnlineStatus/{testedGame_id}
+    defaults: { _controller: TBTestedGameBundle:TestedGame:updateOnlineStatus }
+    requirements:
+        testedGame_id: \d+
+
+tb_testedgame_testedgame_updateOfficialStatus:
+    path:     /testedGame/updateOfficialStatus/{testedGame_id}
+    defaults: { _controller: TBTestedGameBundle:TestedGame:updateOfficialStatus }
+    requirements:
+        testedGame_id: \d+
+
+tb_testedgame_testedgame_remove:
+    path:     /testedGame/remove/{testedGame_id}
+    defaults: { _controller: TBTestedGameBundle:TestedGame:remove }
+    requirements:
+        testedGame_id: \d+
+
+# TestedSession administration :
+tb_testedgame_testedsession_index:
+    path:     /testedSessions
+    defaults: { _controller: TBTestedGameBundle:TestedSession:index }
+
+tb_testedgame_testedsession_getByTestedGame:
+    path:     /testedSession/getByTestedGame/{testedGame_id}
+    defaults: { _controller: TBTestedGameBundle:TestedSession:getByTestedGame }
+    requirements:
+        testedGame_id: \d+
+
+tb_testedgame_testedsession_view:
+    path:     /testedSession/{testedSession_id}
+    defaults: { _controller: TBTestedGameBundle:TestedSession:view }
+    requirements:
+        testedSession_id: \d+

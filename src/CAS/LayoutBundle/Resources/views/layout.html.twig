@@ -49,7 +49,7 @@
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
                     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}<li class="bg-primary"><a href="{{ path('data_import_import_index') }}" style="color:#FFF;">Contribuer</a></li>{% endif %}
-                    <li><a href="{{ path('tb_home_home_index') }}">TB</a></li>
+                    <li><a href="{{ path('tb_home_home_index') }}">ConfusArt</a></li>
                     <li><a href="{{ path('cliches_home_home_index') }}">Clichés!</a></li>
                     <li><a href="{{ path('data_public_home_index') }}">DATA</a></li>
                     {% if is_granted("ROLE_MODO") %}<li><a href="{{ path('cas_administration_user_index') }}">Administration</a></li>{% endif %}

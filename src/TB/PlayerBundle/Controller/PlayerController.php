@@ -5,6 +5,7 @@ namespace TB\PlayerBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use TB\ModelBundle\Entity\TestedItemResult;
+use TB\ModelBundle\Entity\TestedItemResultSession;
 use TB\ModelBundle\Entity\TestedSession;
 
 class PlayerController extends Controller
@@ -13,7 +14,7 @@ class PlayerController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $testedGame = $em->getRepository('TBModelBundle:TestedGame')->findOneById($testedGame_id);
-        if ($testedGame === null) {throw $this->createNotFoundException('TestedGame : [id='.$testedGame_id.'] inexistant.');}
+        if ($testedGame === null or $testedGame->getIsOnline() == false) {throw $this->createNotFoundException('TestedGame : [id='.$testedGame_id.'] inexistant.');}
 
         $testedSession = new TestedSession();
         $testedSession->setIpCreateUser($this->container->get('request')->getClientIp());
@@ -51,31 +52,34 @@ class PlayerController extends Controller
             $answers = json_decode($answers);
             $em = $this->getDoctrine()->getManager();
 
-            foreach($answers as $answer) {
+            $testedItemResultSession = new TestedItemResultSession();
+            foreach($answers as $key => $answer) {
                 $testedItem = $em->getRepository('TBModelBundle:TestedItem')->findOneById($answer->testedItem_id);
                 $testedSession = $em->getRepository('TBModelBundle:TestedSession')->findOneById($answer->testedSession_id);
+                if($key == 0) {$testedItemResultSession->setTestedSession($testedSession);}
 
                 $testedItemResult = new TestedItemResult();
                 $testedItemResult->setProposedLabel($answer->label);
                 $testedItemResult->setTestedItem($testedItem);
-                $testedItemResult->setTestedSession($testedSession);
+                $testedItemResult->setTestedItemResultSession($testedItemResultSession);
                 if($this->getUser() != null) {$testedItemResult->setCreateUser($this->getUser());}
                 $em->persist($testedItemResult);
             }
+            $em->persist($testedItemResultSession);
             $em->flush();
 
             return new Response(json_encode(true));
         }
     }
 
-    public function trackingToSmallWindowAction($testedSession_id)
+    public function trackingTooSmallWindowAction($testedSession_id)
     {
         $request = $this->get('request');
         if($request->isXmlHttpRequest())
         {
             $em = $this->getDoctrine()->getManager();
             $testedSession = $em->getRepository('TBModelBundle:TestedSession')->findOneById($testedSession_id);
-            $testedSession->setToSmallWindow(true);
+            $testedSession->setTooSmallWindow(true);
             $em->persist($testedSession);
             $em->flush();
 
