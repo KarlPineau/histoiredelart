@@ -10,7 +10,7 @@
     {% endfor %}
 
     <div class="well">
-        {{ render(controller('DATASearchBundle:Search:search', {'access': 'true', 'type': ''})) }}
+        {{ render(controller('DATASearchBundle:Search:search', {'access': 'true'})) }}
     </div>
 
     <div class="row">
@@ -23,7 +23,6 @@
                 </ul>
                 <ul>
                     <li><a href="{{path('data_search_searchindex_buildindex')}}">Construction de l'index de recherche</a>
-                    <li><a href="{{ path('data_public_sitemap_sitemap') }}">Sitemap</a></li>
                 </ul>
                 <ul>
                     <li><a href="{{path('data_administration_semanticEnrichment_generate')}}">Enrichissement sémantique</a>
@@ -57,6 +56,12 @@
                 <ul>
                     <li><a href="{{path('data_import_import_index')}}">Importation</a></li>
                     <li><a href="{{path('data_import_administrationimport_index')}}">Administration <label class="label label-info">{{ import }}</label></a></li>
+                </ul>
+            </div>
+            <div class="well">
+                <h2>Recherche</h2>
+                <ul>
+                    <li><a href="{{path('data_administration_search_statistics')}}">Historique</a></li>
                 </ul>
             </div>
             <div class="well">

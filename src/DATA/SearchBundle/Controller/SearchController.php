@@ -15,14 +15,27 @@ class SearchController extends Controller
         return $this->render('DATASearchBundle:Search:index.html.twig');
     }
 
-    public function searchAction(Request $request)
+    public function searchAction($access=null, $teaching=null, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
 
-        if(isset($_GET['access']) AND ($_GET['access'] == 'true' OR $_GET['access'] == 'false')) {
-            $access = $_GET['access'];
-        } else { $access = null; }
-        if(isset($_GET['teaching'])) { $teaching = $_GET['teaching']; } else { $teaching = null; }
+        /* Définition des variables GET : */
+        if($access == null) {
+            if(isset($_GET['access']) AND ($_GET['access'] == 'true' OR $_GET['access'] == 'false' OR $_GET['access'] == true OR $_GET['access'] == false)) {
+                $access = $_GET['access'];
+            } elseif(isset($_POST['access']) AND ($_POST['access'] == 'true' OR $_POST['access'] == 'false' OR $_POST['access'] == true OR $_POST['access'] == false)) {
+                $access = $_POST['access'];
+            } else { $access = null; }
+        }
+
+        if($teaching == null) {
+            if (isset($_GET['teaching'])) {
+                $teaching = $_GET['teaching'];
+            } elseif (isset($_POST['teaching'])) {
+                $teaching = $_POST['teaching'];
+            } else {$teaching = null;}
+        }
+        /* Définition des variables GET */
 
         $query = null;
         if(isset($_GET['query'])) {
@@ -33,16 +46,19 @@ class SearchController extends Controller
             $query = $searchLog->getSearchValue();
         }
 
+        /* Création du formulaire de recherche : */
         $form = $this->createForm(new SearchType);
         $form->handleRequest($request);
 
-        $resultReturnedArray = array('query' => $form->get('search')->getData(),
-            'access' => $access,
-            'teaching' => $teaching
-        );
-        if(isset($_GET['ppid']) AND !empty($_GET['ppid'])) { $resultReturnedArray['ppid'] = $_GET['ppid'];}
-
         if ($form->isSubmitted() && $form->isValid()) {
+            $resultReturnedArray = array(
+                'query' => $form->get('search')->getData(),
+                'access' => $access,
+                'teaching' => $teaching
+            );
+            if(isset($_GET['ppid']) AND !empty($_GET['ppid'])) { $resultReturnedArray['ppid'] = $_GET['ppid'];}
+            elseif(isset($_POST['ppid']) AND !empty($_POST['ppid'])) { $resultReturnedArray['ppid'] = $_POST['ppid'];}
+
             return $this->redirect(
                 $this->generateUrl('data_search_search_result', $resultReturnedArray)
             );
@@ -55,6 +71,7 @@ class SearchController extends Controller
             'query' => $query
         );
         if(isset($_GET['ppid']) AND !empty($_GET['ppid'])) { $viewRetunedArray['ppid'] = $_GET['ppid'];}
+        elseif(isset($_POST['ppid']) AND !empty($_POST['ppid'])) { $viewRetunedArray['ppid'] = $_POST['ppid'];}
 
         return $this->render('DATASearchBundle:Search:search.html.twig', $viewRetunedArray);
     }
@@ -73,20 +90,23 @@ class SearchController extends Controller
         }
 
 
-        if (isset($_GET['access']) AND ($_GET['access'] == 'true' OR $_GET['access'] == 'false')) {
+        if(isset($_GET['access']) AND ($_GET['access'] == 'true' OR $_GET['access'] == 'false')) {
             $access = $_GET['access'];
+        } elseif(isset($_POST['access']) AND ($_POST['access'] == 'true' OR $_POST['access'] == 'false')) {
+            $access = $_POST['access'];
         } else {
             $access = null;
         }
-        if (isset($_GET['teaching'])) {
+
+        if(isset($_GET['teaching'])) {
             $teaching = $_GET['teaching'];
+        } elseif(isset($_POST['teaching'])) {
+            $teaching = $_POST['teaching'];
         } else {
             $teaching = null;
         }
 
-        $searchService = $this->container->get('data_search.search');
-        $searchResults = $searchService->search($query, $teaching);
-
+        $searchResults = $this->container->get('data_search.search')->search($query, $teaching);
         /*return $this->render('DATASearchBundle:Search:test.html.twig', array(
             'searchResults' => $searchResults
         ));*/
@@ -118,8 +138,19 @@ class SearchController extends Controller
             'searchLog' => $searchLog
         );
         if(isset($_GET['ppid']) AND !empty($_GET['ppid'])) { $returnedArray['ppid'] = $_GET['ppid'];}
+        elseif(isset($_POST['ppid']) AND !empty($_POST['ppid'])) { $returnedArray['ppid'] = $_POST['ppid'];}
 
-        return $this->render('DATASearchBundle:Search:results.html.twig', $returnedArray);
+        if($teaching == null) {
+            return $this->render('DATASearchBundle:Search:results.html.twig', $returnedArray);
+        } else {
+            $returnedArray['teaching'] = $em->getRepository('DATATeachingBundle:Teaching')->findOneBySlug($teaching);
+            $returnedArray['listEntities'] = $results;
+            if($access == true or $access == 'true') {
+                return $this->render('DATATeachingBundle:Teaching:view.html.twig', $returnedArray);
+            } else {
+                return $this->render('DATAPublicBundle:Teaching:view.html.twig', $returnedArray);
+            }
+        }
     }
 
     public function autocompleteAction()

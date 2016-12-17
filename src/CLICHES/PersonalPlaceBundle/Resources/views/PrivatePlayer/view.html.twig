@@ -29,7 +29,7 @@
             <div class="panel-heading text-center">
                 <div class="">
                     {{ render(controller('DATAImageBundle:Image:renderImage', {'view_id': view.id, 'class': 'image-cliches-list fancybox'})) }}
-                    <div class="caption"><small>&copy; {{ data_image_image_service.getImageForView(view).copyright }}</small></div>
+                    <div class="caption"><small>&copy; {{ data_image_image_service.getOneByView(view).copyright }}</small></div>
                 </div>
             </div>
             <div class="list-group">

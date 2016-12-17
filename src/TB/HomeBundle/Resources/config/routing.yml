@@ -1,11 +1,23 @@
 tb_home_home_index:
     path:     /
     defaults: { _controller: TBHomeBundle:Home:index }
+    options:
+        sitemap:
+            priority: 1
+            changefreq: weekly
 
 tb_home_home_registrationArg:
     path:     /pourquoi-s'inscrire
     defaults: { _controller: TBHomeBundle:Home:registrationArg }
+    options:
+        sitemap:
+            priority: 0.6
+            changefreq: monthly
 
 tb_home_home_getAllTestedGames:
     path:     /parties
     defaults: { _controller: TBHomeBundle:Home:getAllTestedGames }
+    options:
+        sitemap:
+            priority: 0.8
+            changefreq: weekly

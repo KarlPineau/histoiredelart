@@ -33,7 +33,7 @@
                     <div class="col-xs-12">
                         <div class="thumbnail">
                             {{ render(controller('DATAImageBundle:Image:renderImage', {'view_id': playerProposal.playerOeuvre.view.id, 'class': 'image-cliches fancybox'})) }}
-                            {% set image = data_image_image_service.getImageForView(playerProposal.playerOeuvre.view) %}
+                            {% set image = data_image_image_service.getOneByView(playerProposal.playerOeuvre.view) %}
                             <div class="caption text-muted">
                                 <div class="pull-right"><small><span class="glyphicon glyphicon-zoom-in"></span> Cliquer pour zoomer</small></div>
                                 <p>&copy; {{image.copyright}}</p>

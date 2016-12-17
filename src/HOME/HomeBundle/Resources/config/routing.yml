@@ -1,3 +1,7 @@
 home_home_home_index:
     path:     /
     defaults: { _controller: HOMEHomeBundle:Home:index }
+    options:
+        sitemap:
+            priority: 1
+            changefreq: monthly

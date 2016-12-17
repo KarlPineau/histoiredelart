@@ -1,7 +1,3 @@
 cas_home_testmail_index:
     path:     /mailtest
     defaults: { _controller: CASHomeBundle:TestMail:index }
-
-cas_home_redirection_about:
-    path:     /about
-    defaults: { _controller: CASHomeBundle:Home:aboutRedirection }

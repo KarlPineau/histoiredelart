@@ -3,7 +3,9 @@
 namespace DATA\ImageBundle\Service;
 
 use DATA\DataBundle\Service\entity;
+use DATA\ImageBundle\Service\image;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\SecurityContext;
 
 /*
@@ -15,13 +17,19 @@ class view
     protected $security;
     protected $entity;
     protected $viewAction;
+    protected $assets;
+    protected $image;
+    protected $request;
 
-    public function __construct(EntityManager $EntityManager, SecurityContext $security_context, entity $entity, viewAction $viewAction)
+    public function __construct(EntityManager $EntityManager, SecurityContext $security_context, entity $entity, viewAction $viewAction, $assets, image $image, RequestStack $request)
     {
         $this->em = $EntityManager;
         $this->security = $security_context;
         $this->entity = $entity;
         $this->viewAction = $viewAction;
+        $this->assets = $assets;
+        $this->image = $image;
+        $this->request = $request->getCurrentRequest();
     }
     
     //Fonction retournant une oeuvre au hasard valable pour une session
@@ -168,5 +176,15 @@ class view
             }
         }
         $this->em->flush();
+    }
+
+    public function getThumbnail($view) {
+        $image = $this->image->getOneByView($view);
+        if($this->request->getHttpHost() == 'localhost:8888') {
+            return $this->assets->getUrl($this->request->getScheme().'://' .$this->request->getHttpHost().'/histoiredelart/web/uploads/gallery/'.$image->getFileImage()->getImageName());
+        } else {
+            return $this->assets->getUrl($this->request->getScheme().'://' .$this->request->getHttpHost().'/web/uploads/gallery/'.$image->getFileImage()->getImageName());
+        }
+
     }
 }

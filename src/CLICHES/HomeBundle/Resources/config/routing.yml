@@ -1,19 +1,35 @@
 cliches_home_home_index:
     path:     /
     defaults: { _controller: CLICHESHomeBundle:Home:index }
+    options:
+        sitemap:
+            priority: 1
+            changefreq: monthly
 
 cliches_home_home_load:
-     path:     /accueil/partie
-     defaults: { _controller: CLICHESHomeBundle:Home:load }
+    path:     /accueil/partie
+    defaults: { _controller: CLICHESHomeBundle:Home:load }
 
 cliches_home_home_version:
-     path:     /version
-     defaults: { _controller: CLICHESHomeBundle:Home:version }
+    path:     /version
+    defaults: { _controller: CLICHESHomeBundle:Home:version }
+    options:
+        sitemap:
+            priority: 0.1
+            changefreq: monthly
 
 cliches_home_home_discover:
-     path:     /découvrir
-     defaults: { _controller: CLICHESHomeBundle:Home:discover }
+    path:     /découvrir
+    defaults: { _controller: CLICHESHomeBundle:Home:discover }
+    options:
+        sitemap:
+            priority: 0.6
+            changefreq: monthly
 
 cliches_home_home_cgu:
-     path:     /cgu
-     defaults: { _controller: CLICHESHomeBundle:Home:cgu }
+    path:     /cgu
+    defaults: { _controller: CLICHESHomeBundle:Home:cgu }
+    options:
+        sitemap:
+            priority: 0.3
+            changefreq: monthly

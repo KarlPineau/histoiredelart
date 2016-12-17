@@ -10,7 +10,7 @@
         <div class="col-md-12">
             <div class="thumbnail">
                 {{ render(controller('DATAImageBundle:Image:renderImage', {'view_id': playerOeuvre.view.id, 'class': 'image-cliches-list'})) }}
-                {% set image = data_image_image_service.getImageForView(playerOeuvre.view) %}
+                {% set image = data_image_image_service.getOneByView(playerOeuvre.view) %}
                 <div class="caption">
                     <p>&copy; {{image.copyright}}</p>
                 </div>

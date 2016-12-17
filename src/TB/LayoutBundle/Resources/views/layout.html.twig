@@ -53,6 +53,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="{{ path('cliches_home_home_index') }}">Clichés!</a></li>
                 <li><a href="{{ path('data_public_home_index') }}">DATA</a></li>
+                {% if is_granted("ROLE_MODO") %}<li><a href="{{ path('cas_administration_user_index') }}">CAS</a></li>{% endif %}
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 {% if is_granted("ROLE_ADMIN") %}<li><a href="{{ path('tb_administration_home_index') }}">Administration</a></li>{% endif %}
                 <li class="dropdown">

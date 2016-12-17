@@ -2,15 +2,27 @@
 data_public_home_index:
     path:     /
     defaults: { _controller: DATAPublicBundle:Home:index }
+    options:
+        sitemap:
+            priority: 1
+            changefreq: monthly
 
 data_public_home_index_home:
     path:     /accueil
     defaults: { _controller: DATAPublicBundle:Home:index }
+    options:
+        sitemap:
+            priority: 1
+            changefreq: monthly
 
 #Gestion des entités :
 data_public_entity_index:
-    path:     /oeuvres
+    path:     /items
     defaults: { _controller: DATAPublicBundle:Entity:index }
+    options:
+        sitemap:
+            priority: 0.8
+            changefreq: monthly
 
 data_public_entity_view:
     path:     /item/{id}
@@ -42,6 +54,10 @@ data_public_entity_addViewToPrivateSession:
 data_public_teaching_index:
     path:     /enseignements
     defaults: { _controller: DATAPublicBundle:Teaching:index }
+    options:
+        sitemap:
+            priority: 0.8
+            changefreq: monthly
 
 data_public_teaching_view:
     path:     /enseignement/voir/{slug}
@@ -53,14 +69,13 @@ data_public_teaching_view:
 data_public_university_index:
     path:     /universites
     defaults: { _controller: DATAPublicBundle:University:index }
+    options:
+        sitemap:
+            priority: 0.8
+            changefreq: monthly
 
 data_public_university_view:
     path:     /universite/voir/{slug}
     defaults: { _controller: DATAPublicBundle:University:view }
     requirements:
         slug:  \S{0,255}
-
-# Sitemap :
-data_public_sitemap_sitemap:
-    path:     /sitemap.xml
-    defaults: { _controller: DATAPublicBundle:Sitemaps:sitemap }

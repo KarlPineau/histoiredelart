@@ -11,7 +11,7 @@
             {% include 'DATADataBundle:Entity:View/Views/view-views-informations.html.twig' %}
             <dl class="dl-horizontal list-group-item">
                 <dt>Crédit :</dt>
-                <dd>{{ data_image_image_service.getImageForView(view).copyright }}</dd>
+                <dd>{{ data_image_image_service.getOneByView(view).copyright }}</dd>
             </dl>
             <dl class="dl-horizontal list-group-item">
                 <dt>Fusionner vers :</dt>

@@ -1,0 +1,7 @@
+api_data_item_get:
+    path:     /item/get
+    defaults: { _controller: APIDataBundle:Item:get }
+
+api_data_search_query:
+    path:     /search
+    defaults: { _controller: APIDataBundle:Search:query }

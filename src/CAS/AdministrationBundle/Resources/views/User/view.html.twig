@@ -19,6 +19,10 @@
     {{ user.email }}
 {% endblock %}
 
+{% block h1_extend %}
+    <a class="btn btn-danger main-JS-delete" href="{{ path('cas_administration_user_remove', {'id': user.id}) }}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+{% endblock %}
+
 {% block content %}
     <div class="row">
         <section id="content" class="col-lg-12">

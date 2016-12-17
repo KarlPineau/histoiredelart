@@ -31,9 +31,9 @@
         <hr />
         {% if ppid is defined %}
             <p><span class="label label-info">Commencez une recherche pour sélectionner les oeuvres de votre partie privée</span></p>
-            {{ render(controller('DATASearchBundle:Search:search', {'access': 'false', 'type': '', 'ppid': ppid})) }}
+            {{ render(controller('DATASearchBundle:Search:search', {'type': '', 'ppid': ppid})) }}
         {% else %}
-            {{ render(controller('DATASearchBundle:Search:search', {'access': 'false', 'type': ''})) }}
+            {{ render(controller('DATASearchBundle:Search:search', {'type': ''})) }}
         {% endif %}
     </div>
 

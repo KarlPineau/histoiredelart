@@ -23,7 +23,7 @@ class image
     }
     
     //Fonction retournant une oeuvre au hasard valable pour une session
-    public function getImageForView($view) 
+    public function getOneByView($view)
     {
         $repositoryImage = $this->em->getRepository('DATAImageBundle:Image');
 	    return $repositoryImage->findOneByView($view);

@@ -54,3 +54,8 @@ data_administration_teachingtest_index:
 data_administration_teachingtest_lastvotes:
     path:     /teaching-test/derniers-votes
     defaults: { _controller: DATAAdministrationBundle:TeachingTest:lastVotes }
+
+#Searches administration :
+data_administration_search_statistics:
+    path:     /recherches/statistiques
+    defaults: { _controller: DATAAdministrationBundle:Search:statistics }

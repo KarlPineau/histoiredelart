@@ -50,4 +50,16 @@ class UserController extends Controller
             'lastPlayerSessions' => $lastPlayerSessions
         ));
     }
+
+    public function removeAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('CASUserBundle:User')->findOneById($id);
+        if($user === null) { throw $this->createNotFoundException('User : [id='.$id.'] inexistant.'); }
+
+        $this->get('cas_user.remove')->remove($user);
+        $em->flush();
+        $this->get('session')->getFlashBag()->add('notice', 'L\'utilisateur a bien été supprimé');
+        return $this->redirect($this->generateUrl('cas_administration_user_index'));
+    }
 }

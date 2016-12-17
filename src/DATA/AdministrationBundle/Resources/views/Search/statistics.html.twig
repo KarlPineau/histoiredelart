@@ -1,0 +1,53 @@
+{# src/DATA/DataBundle/Resources/views/Artwork/index.html.twig #}
+ 
+{% extends "DATADataBundle::layout.html.twig" %}
+
+{% block title %}
+    Historique des recherches - {{ parent() }}
+{% endblock %} 
+    
+{% block h1 %}
+    Historique des recherches :
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li class="active">Historique des recherches</li>
+{% endblock %}    
+    
+{% block content %}
+<div class="row">
+    <section class="col-md-12">
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="alert col-md-12 alert-success">
+                {{ flashMessage }}
+            </div>
+            <br />
+        {% endfor %}
+
+        <h2>Recherches : {{ searches.getTotalItemCount }}</h2>
+
+        <table class="table table-striped table-bordered">
+            <tr>
+                <th>#</th>
+                <th>Requêtes</th>
+                <th>Résultats</th>
+                <th>Date</th>
+            </tr>
+            {% for search in searches %}
+                <tr>
+                    <td>{{ ((searches.getPaginationData.current-1)*100)+loop.index }}</td>
+                    <td>{{ search.searchValue }}</td>
+                    <td>{{ search.searchNumberResults }}</td>
+                    <td>{{ search.createDate|date('d-m-Y') }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">Aucune recherche.</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <div class="text-center">{{ knp_pagination_render(searches) }}</div>
+    </section>
+</div>
+{% endblock %}

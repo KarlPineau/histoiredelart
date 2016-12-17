@@ -8,3 +8,9 @@ cas_administration_user_view:
     requirements:
         id:  \d+
 
+cas_administration_user_remove:
+    path:     /utilisateur/supprimer/{id}
+    defaults: { _controller: CASAdministrationBundle:User:remove }
+    requirements:
+        id:  \d+
+

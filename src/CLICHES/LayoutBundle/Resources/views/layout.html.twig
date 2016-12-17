@@ -46,17 +46,8 @@
                 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}<li class="bg-primary"><a href="{{ path('data_import_import_index') }}" style="color: #FFF;">Contribuer</a></li>{% endif %}
                 <li><a href="{{ path('tb_home_home_index') }}">ConfusArt</a></li>
                 <li><a href="{{ path('data_public_home_index') }}">DATA</a></li>
-                {% if is_granted("ROLE_MODO") %}
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{{ path('cliches_administration_home_homepage') }}">Administration</a></li>
-                            <li><a href="{{ path('data_administration_home_index') }}">DATA</a></li>
-                            {#<li><a href="{{ path('tools_administration_home_index') }}">TOOLS</a></li>#}
-                            {% if is_granted("ROLE_ADMIN") %}<li><a href="{{ path('cas_administration_user_index') }}">Users</a></li>{% endif %}
-                        </ul>
-                    </li>
-                {% endif %}
+                {% if is_granted("ROLE_MODO") %}<li><a href="{{ path('cas_administration_user_index') }}">CAS</a></li>{% endif %}
+                {% if is_granted("ROLE_MODO") %}<li><a href="{{ path('cliches_administration_home_homepage') }}">Administration</a></li>{% endif %}
                 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ app.user.username }} <b class="caret"></b></a>

@@ -11,16 +11,16 @@
     {% endif %}
 {% endfor %}
 
-<div class="panel-group" id="view-views-proposals" role="tablist" aria-multiselectable="true" style="margin: 0px;">
+<div class="panel-group" id="view-views-proposals-{{ view.id }}" role="tablist" aria-multiselectable="true" style="margin: 0px;">
     <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="view-views-proposalsHeading">
+        <div class="panel-heading" role="tab" id="view-views-proposalsHeading-{{ view.id }}">
             <h4 class="panel-title">
-                <a role="button" data-toggle="collapse" data-parent="#view-views-proposals" href="#view-views-proposalsCollapse" aria-expanded="false" aria-controls="view-views-proposalsCollapse">
+                <a role="button" data-toggle="collapse" data-parent="#view-views-proposals-{{ view.id }}" href="#view-views-proposalsCollapse-{{ view.id }}" aria-expanded="false" aria-controls="view-views-proposalsCollapse-{{ view.id }}">
                     <dl class="dl-horizontal" style="margin-bottom: 0px;"><dt>Rempli :</dt><dd>{{ countFullPlayerProposalField }}/{{ cliches_player_playeroeuvre_service.countByView(view) }}</dd></dl>
                 </a>
             </h4>
         </div>
-        <div id="view-views-proposalsCollapse" class="panel-collapse collapse" role="tabpanel" aria-labelledby="view-views-proposalsHeading">
+        <div id="view-views-proposalsCollapse-{{ view.id }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="view-views-proposalsHeading-{{ view.id }}">
             <div class="panel-body">
                 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                     {% for playerOeuvre in relatedView['proposals'] %}
@@ -32,12 +32,12 @@
                         {% if fullPlayerProposalField == true %}
                             {% set countFullPlayerProposalField = countFullPlayerProposalField + 1 %}
                             <div class="panel panel-default">
-                                <div class="panel-heading" role="tab" id="heading{{ loop.index }}">
-                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ loop.index }}" aria-expanded="true" aria-controls="collapse{{ loop.index }}">
+                                <div class="panel-heading" role="tab" id="heading-{{ view.id }}-{{ loop.index }}">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion-{{ view.id }}-{{ loop.index }}" href="#collapse-{{ view.id }}-{{ loop.index }}" aria-expanded="true" aria-controls="collapse-{{ view.id }}-{{ loop.index }}">
                                         #{{ loop.index }}
                                     </a>
                                 </div>
-                                <div id="collapse{{ loop.index }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{ loop.index }}">
+                                <div id="collapse-{{ view.id }}-{{ loop.index }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading-{{ view.id }}-{{ loop.index }}">
                                     <div class="panel-body">
                                         <ul>
                                             {% for playerProposalField in cliches_player_playerproposalfield_service.getByPlayerProposal(cliches_player_playerproposal_service.getPlayerProposalByPlayerOeuvre(playerOeuvre)) %}

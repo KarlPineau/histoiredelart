@@ -62,9 +62,8 @@ class search
                 foreach ($countEntities as $idEntity => $count) {
                     $entity = $this->entity->find('one', array('id' => $idEntity));
                     $concerned = false;
-                    $teachingsForEntity = $this->entity->getTeachings($entity);
-                    foreach ($teachingsForEntity as $teachingForEntity) {
-                        if ($teachingForEntity == $entity) {
+                    foreach ($this->entity->getTeachings($entity) as $teachingForEntity) {
+                        if ($teachingForEntity == $teaching) {
                             $concerned = true;
                         }
                     }
