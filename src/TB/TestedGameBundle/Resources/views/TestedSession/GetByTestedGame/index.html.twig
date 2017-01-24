@@ -1,8 +1,8 @@
 {% extends "TBTestedGameBundle::layout.html.twig" %}
 
-{% block title %}TestedSessions for {{ testedGame.title }} - {{ parent() }}{% endblock %}
+{% block title %}TestedSessions - {{ testedGame.title }} - {{ parent() }}{% endblock %}
 
-{% block h1 %}TestedSessions for {{ testedGame.title }}{% endblock %}
+{% block h1 %}TestedSessions{% endblock %}
 
 {% block h1_extend %}
 {% endblock %}
@@ -35,9 +35,28 @@
         {% for testedSession in testedSessions %}
             <tr>
                 <td>{{ ((testedSessions.getPaginationData.current-1)*100)+loop.index }}</td>
-                <td><a href="{{ path('tb_testedgame_testedsession_view', {'testedSession_id': testedSession.id}) }}">#{{ testedSession.id }}</a></td>
-                <td><a href="{{ path('tb_testedgame_testedgame_view', {'testedGame_id': testedSession.testedGame.id}) }}">{{ testedSession.testedGame.title }}</a></td>
-                <td>{% if testedSession.createUser is not null %}<a href="{{ path('cas_administration_user_view', {'id': testedSession.createUser.id}) }}">{{ testedSession.createUser.email }}</a> -> {% endif %}{{ testedSession.ipCreateUser }}</td>
+                <th >
+                    <a href="{{ path('tb_testedgame_testedsession_view', {'testedSession_id': testedSession.id}) }}">
+                        <div class="pull-right">
+                            {% if tb_model_testeditemresultsession.getByTestedSession(testedSession) != null %}<span class="text-success" title="Le joueur a soumis un résultat"><i class="fa fa-check-square" aria-hidden="true"></i></span>
+                            {% else %}<span class="text-warning" title="Le joueur n'a pas soumis de résultat"><i class="fa fa-check-square" aria-hidden="true"></i></span>
+                            {% endif %}
+                        </div>
+
+                        #{{ testedSession.id }}
+                    </a>
+                </th>
+                <td>
+                    <a href="{{ path('tb_testedgame_testedgame_view', {'testedGame_id': testedSession.testedGame.id}) }}">{{ testedSession.testedGame.title }}</a>
+                </td>
+                <td>
+                    <div class="pull-right">
+                        {% if testedSession.tooSmallWindow == false %}<span class="text-success" title="L'écran était suffisamment large pour jouer"><i class="fa fa-desktop" aria-hidden="true"></i></span>
+                        {% elseif testedSession.tooSmallWindow == true %}<span class="text-warning" title="L'écran n'était pas suffisamment large pour jouer"><i class="fa fa-desktop" aria-hidden="true"></i></span>
+                        {% endif %}
+                    </div>
+                    {% if testedSession.createUser is not null %}<a href="{{ path('cas_administration_user_view', {'id': testedSession.createUser.id}) }}">{{ testedSession.createUser.email }}</a> -> {% endif %}{{ testedSession.ipCreateUser }}
+                </td>
                 <td>{{ testedSession.createDate|date('d-m-Y, H:i:s') }}</td>
             </tr>
         {% else %}

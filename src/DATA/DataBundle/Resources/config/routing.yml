@@ -3,6 +3,10 @@ data_data_entity_index:
     path:     /oeuvres
     defaults: { _controller: DATADataBundle:Entity:index }
 
+data_data_entity_getNoSameAs:
+    path:     /no-same-as
+    defaults: { _controller: DATADataBundle:Entity:getNoSameAs }
+
 data_data_entity_view:
     path:     /{id}
     defaults: { _controller: DATADataBundle:Entity:view }

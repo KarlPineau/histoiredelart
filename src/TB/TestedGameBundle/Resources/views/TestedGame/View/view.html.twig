@@ -6,16 +6,16 @@
 
 {% block h1_extend %}
     <div class="btn-group">
-        <a href="{{ path('tb_testedgame_testedgame_edit', {'testedGame_id':testedGame.id}) }}" class="btn btn-primary"><i class="fa fa-pencil" aria-hidden="true"></i> Editer</a>
+        <a href="{{ path('tb_player_player_index', {'testedGame_id':testedGame.id}) }}" class="btn btn-primary"><i class="fa fa-play-circle" aria-hidden="true"></i> Jouer !</a>
         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="caret"></span>
             <span class="sr-only">Toggle Dropdown</span>
         </button>
         <ul class="dropdown-menu dropdown-menu-right">
+            <li><a href="{{ path('tb_testedgame_testedgame_edit', {'testedGame_id': testedGame.id}) }}"><i class="fa fa-pencil" aria-hidden="true"></i> Editer</a></li>
             <li><a href="{{ path('tb_testedgame_testedgame_addItems', {'testedGame_id': testedGame.id}) }}"><i class="fa fa-plus" aria-hidden="true"></i> Ajouter des items</a></li>
             <li><a href="{{ path('tb_testedgame_testedgame_editIcon', {'testedGame_id': testedGame.id}) }}"><i class="fa fa-image" aria-hidden="true"></i> Éditer l'icône</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="{{ path('tb_player_player_index', {'testedGame_id': testedGame.id}) }}"><i class="fa fa-play-circle" aria-hidden="true"></i> Jouer !</a></li>
             <li><a href="{{ path('tb_testedgame_testedgame_updateOnlineStatus', {'testedGame_id': testedGame.id}) }}">
                     {% if testedGame.isOnline == true %}<i class="fa fa-toggle-off" aria-hidden="true"></i> Set Offline
                     {% else %}<i class="fa fa-toggle-on" aria-hidden="true"></i> Set Online
@@ -48,7 +48,7 @@
 
     {% if testedGame.isOnline == false %}
         <div class="alert alert-danger">
-            Votre partie est actuellement hors-ligne. Elle n'est pas disponible sur le site.<a href="{{ path('tb_testedgame_testedgame_updateOnlineStatus', {'testedGame_id': testedGame.id}) }}">Cliquez-ici</a> pour passer votre partie en ligne.
+            Votre partie est actuellement hors-ligne. Elle n'est pas disponible sur le site. <a href="{{ path('tb_testedgame_testedgame_updateOnlineStatus', {'testedGame_id': testedGame.id}) }}">Cliquez-ici</a> pour passer votre partie en ligne.
         </div>
     {% elseif testedGame.isPrivate == true and not is_granted("ROLE_ADMIN") %}
         <div class="alert alert-warning">
@@ -104,21 +104,21 @@
                 </dl>
             </div>
             <div class="col-md-3 col-sm-6 col-xs-12">
-                <h3>Infos Systèmes</h3>
+                <h3>Infos Système</h3>
                 <dl>
-                    <dt>Partie officielle</dt>
+                    <dt>Partie officielle <span tabindex="0" data-trigger="focus" data-toggle="popover" data-content="Une partie officielle est certifiée par Clichés! comme de bonne facture. Seul un administrateur peut définir une partie comme officielle." title="Partie officielle"><i class="fa fa-info-circle"></i></span></dt>
                     <dd>{% if testedGame.isOfficial == true %}<span class="text-success">Oui</span>{% else %}Non{% endif %}</dd>
                 </dl>
                 <dl>
-                    <dt>En ligne ?</dt>
+                    <dt>En ligne ? <span tabindex="0" data-trigger="focus" data-toggle="popover" data-content="Lorsque votre partie n'est pas en ligne, seul.e vous y avez accès." title="Partie en ligne"><i class="fa fa-info-circle"></i></span></dt>
                     <dd>{% if testedGame.isOnline == true %}Oui{% else %}<span class="text-warning">Non</span>{% endif %}</dd>
                 </dl>
                 <dl>
-                    <dt>Partie privée ?</dt>
+                    <dt>Partie privée ? <span tabindex="0" data-trigger="focus" data-toggle="popover" data-content="Une partie privée n'est pas affichée en page d'accueil. Vous seul.e pouvez la diffuser en utilisant son permalien." title="Partie privée"><i class="fa fa-info-circle"></i></span></dt>
                     <dd>{% if testedGame.isPrivate == true %}<span class="text-warning">Oui</span>{% else %}Non{% endif %}</dd>
                 </dl>
                 <dl>
-                    <dt>Illustration</dt>
+                    <dt>Illustration  <span tabindex="0" data-trigger="focus" data-toggle="popover" data-content="Cette image est utilisée pour illustrer votre partie sur le site ou sur les réseaux sociaux lorsque vous partagez votre partie." title="Image d'illustration"><i class="fa fa-info-circle"></i></span></dt>
                     <dl>{% if testedGame.icon != null %}{{ render(controller('DATAImageBundle:Image:renderImage', {'view_id': 0, 'image_id': testedGame.icon.id, 'class': 'image-cliches-list-micro fancybox'})) }}{% endif %}</dl>
                 </dl>
             </div>
@@ -129,14 +129,14 @@
                     <dd>{{ tb_model_testeditem.getByTestedGame(testedGame)|length }}</dd>
                 </dl>
                 <dl>
-                    <dt>Affichage aléatoire</dt>
+                    <dt>Affichage aléatoire <span tabindex="0" data-trigger="focus" data-toggle="popover" data-content="Si l'affichage aléatoire est activé, les images seront affichées dans un ordre aléatoire à chaque chargement de partie. Cela rend le jeu plus difficile." title="Affichage aléatoire"><i class="fa fa-info-circle"></i></span></dt>
                     <dd>{% if testedGame.isRandomized == true %}Oui{% else %}Non{% endif %}</dd>
                 </dl>
             </div>
             <div class="col-md-3 col-sm-6 col-xs-12">
                 <h3>Infos Parties</h3>
                 <dl>
-                    <dt>Nombre de sessions</dt>
+                    <dt>Nombre de sessions <span tabindex="0" data-trigger="focus" data-toggle="popover" data-content="Cette information vous indique le nombre de fois durant lequel votre partie a été joué" title="Nombre de sessions"><i class="fa fa-info-circle"></i></span></dt>
                     <dd>
                         {% if is_granted("ROLE_ADMIN") %}
                             <a href="{{ path('tb_testedgame_testedsession_getByTestedGame', {'testedGame_id': testedGame.id}) }}">{{ tb_model_testedsession.getByTestedGame(testedGame)|length }} sessions</a>

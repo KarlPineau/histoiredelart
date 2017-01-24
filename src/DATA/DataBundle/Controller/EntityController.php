@@ -36,6 +36,29 @@ class EntityController extends Controller
                             ));
     }
 
+    public function getNoSameAsAction(Request $request)
+    {
+        $entities = $this->get('data_data.entity')->find('all', null, 'large');
+        $return = [];
+
+        foreach($entities as $entity) {
+            if($this->get('data_data.entity')->getSameAs($entity) == null) {
+                array_push($return, $entity);
+            }
+        }
+
+        $paginator  = $this->get('knp_paginator');
+        $listEntities = $paginator->paginate(
+            $return,
+            $request->query->get('page', 1)/*page number*/,
+            300/*limit per page*/
+        );
+
+        return $this->render('DATADataBundle:Entity:index.html.twig', array(
+            'listEntities' => $listEntities,
+        ));
+    }
+
     public function viewAction($id)
     {
         $em = $this->getDoctrine()->getManager();

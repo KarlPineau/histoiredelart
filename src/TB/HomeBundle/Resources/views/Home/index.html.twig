@@ -33,7 +33,7 @@
                 <div class="list-group">
                     <div class="list-group-item text-center list-group-item-btn">
                         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                            <a href="{{ path('tb_personalplace_testedgame_create') }}" class="btn btn-lg btn-block btn-success btn-list-group-item btn-list-group-item-radius-top"><i class="fa fa-plus" aria-hidden="true"></i> Créer une partie</a>
+                            <a href="{{ path('tb_testedgame_testedgame_create') }}" class="btn btn-lg btn-block btn-success btn-list-group-item btn-list-group-item-radius-top"><i class="fa fa-plus" aria-hidden="true"></i> Créer une partie</a>
                         {% else %}
                             <a href="{{ path('tb_home_home_registrationArg') }}" class="btn btn-lg btn-block btn-success btn-list-group-item btn-list-group-item-radius-top"><i class="fa fa-user" aria-hidden="true"></i> Inscris-toi et crée tes propres parties !</a>
                         {% endif %}

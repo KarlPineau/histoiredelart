@@ -54,7 +54,16 @@
                 <tbody>
                 {% for testedSession in testedSessions %}
                     <tr>
-                        <td><a href="{{ path('tb_testedgame_testedsession_view', {'testedSession_id': testedSession.id}) }}">{{ loop.index }}</a></td>
+                        <td>
+                            <a href="{{ path('tb_testedgame_testedsession_view', {'testedSession_id': testedSession.id}) }}">
+                                <div class="pull-right">
+                                    {% if tb_model_testeditemresultsession.getByTestedSession(testedSession) != null %}<span class="text-success" title="Le joueur a soumis un résultat"><i class="fa fa-check-square" aria-hidden="true"></i></span>
+                                    {% else %}<span class="text-warning" title="Le joueur n'a pas soumis de résultat"><i class="fa fa-check-square" aria-hidden="true"></i></span>
+                                    {% endif %}
+                                </div>
+                                #{{ loop.index }}
+                            </a>
+                        </td>
                         <td>
                             {{ testedSession.ipCreateUser }}
                             {% if testedSession.createUser != null %}
@@ -62,6 +71,11 @@
                             {% endif %}
                         </td>
                         <td>
+                            <div class="pull-right">
+                                {% if testedSession.tooSmallWindow == false %}<span class="text-success" title="L'écran était suffisamment large pour jouer"><i class="fa fa-desktop" aria-hidden="true"></i></span>
+                                {% elseif testedSession.tooSmallWindow == true %}<span class="text-warning" title="L'écran n'était pas suffisamment large pour jouer"><i class="fa fa-desktop" aria-hidden="true"></i></span>
+                                {% endif %}
+                            </div>
                             <a href="{{ path('tb_testedgame_testedgame_view', {'testedGame_id': testedSession.testedGame.id}) }}">{{ testedSession.testedGame.title }}</a>
                         </td>
                         <td>

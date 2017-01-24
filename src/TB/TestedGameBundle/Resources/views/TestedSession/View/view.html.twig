@@ -10,6 +10,7 @@
 {% block breadcrumb %}
     {{ parent() }}
     <li><a href="{{ path('tb_testedgame_testedgame_view', {'testedGame_id': testedSession.testedGame.id}) }}">{{ testedSession.testedGame.title }}</a></li>
+    <li><a href="{{ path('tb_testedgame_testedsession_getByTestedGame', {'testedGame_id': testedSession.testedGame.id}) }}">Liste des TestedSessions</a></li>
     <li class="active">Session #{{ testedSession.id }}</li>
 {% endblock %}
 
@@ -20,12 +21,12 @@
         </div>
     {% endfor %}
 
-    <div class="jumbotron">
-        <div class="row">
-            <div class="col-sm-6">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="jumbotron">
                 <h2>Infos Sessions</h2>
 
-                <dl>
+                <dl class="dl-horizontal">
                     <dt>Créateur</dt>
                     <dd>
                         {{ testedSession.ipCreateUser }}
@@ -36,30 +37,44 @@
                         {% endif %}
                     </dd>
                 </dl>
-                <dl>
+                <dl class="dl-horizontal">
                     <dt>Date de création</dt>
                     <dd>{{ testedSession.createDate|date('d-m-Y, H:i:s') }}</dd>
                 </dl>
-                <dl>
+                <dl class="dl-horizontal">
                     <dt>TooSmallWindows ?</dt>
                     <dd>{% if testedSession.tooSmallWindow == true %}<span class="text-danger">Oui</span>{% else %}Non{% endif %}</dd>
                 </dl>
-                <dl>
+                <dl class="dl-horizontal">
                     <dt>IsRandomized ?</dt>
                     <dd>{% if testedSession.isRandomized == true %}Oui{% else %}Non{% endif %}</dd>
                 </dl>
             </div>
-            <div class="col-sm-6">
-                <h2>Résultats</h2>
-                {% for resultSession in tb_model_testeditemresultsession.getByTestedSession(testedSession) %}
-                    {% if loop.index > 1 %}<hr />{% endif %}
-                    {% for result in tb_model_testeditemresult.getByTestedItemResultSession(resultSession) %}
-                        <div>
-                            {{ result.proposedLabel }} : {{ result.testedItem.itemLabel }}
-                        </div>
-                    {% endfor %}
+        </div>
+        <div class="col-sm-6">
+            <h2>Résultats</h2>
+            {% for resultSession in tb_model_testeditemresultsession.getByTestedSession(testedSession) %}
+                {% if loop.index > 1 %}<hr />{% endif %}
+                <strong>Essai n°{{ loop.index }}</strong>
+                <div class="list-group">
+                {% for result in tb_model_testeditemresult.getByTestedItemResultSession(resultSession) %}
+                    <div class="list-group-item">
+                        {% if result.proposedLabel == result.testedItem.itemLabel %}<span class="text-success"><i class="fa fa-circle" aria-hidden="true"></i></span>
+                        {% elseif result.proposedLabel != result.testedItem.itemLabel and result.proposedLabel != null %}<span class="text-warning"><i class="fa fa-circle" aria-hidden="true"></i></span>
+                        {% else %}<span class="text-default"><i class="fa fa-circle" aria-hidden="true"></i></span>
+                        {% endif %}
+
+                        {% if result.proposedLabel != null %}{{ result.proposedLabel }}{% else %}NULL{% endif %}
+                        <i class="fa fa-arrows-h" aria-hidden="true"></i>
+                        {{ result.testedItem.itemLabel }}
+                    </div>
                 {% endfor %}
-            </div>
+                </div>
+            {% else %}
+                <div class="alert alert-warning">
+                    Aucun résultat soumis.
+                </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

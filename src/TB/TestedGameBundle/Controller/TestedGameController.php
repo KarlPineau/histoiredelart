@@ -19,7 +19,7 @@ class TestedGameController extends Controller
         $testedGame = new TestedGame();
         $testedGame->setIsRandomized(false);
         $testedGame->setIsPrivate(false);
-        if($this->get('security.context')->isGranted('ROLE_ADMIN')) {
+        if($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             $testedGame->setIsOnline(false);
             $testedGame->setIsOfficial(true);
         } else {
@@ -39,7 +39,7 @@ class TestedGameController extends Controller
             $em->persist($testedGame);
             $em->flush();
 
-            if($this->get('security.context')->isGranted('ROLE_ADMIN')) {
+            if($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
                 $this->get('session')->getFlashBag()->add('notice', 'Félicitations, votre partie a bien été éditée.' );
                 return $this->redirect($this->generateUrl('tb_testedgame_testedgame_view', array('testedGame_id' => $testedGame->getId())));
             } else {
@@ -72,7 +72,7 @@ class TestedGameController extends Controller
             ->addMeta('property', 'twitter:card', 'summary_large_image')
         ;
 
-        if($this->get('security.context')->isGranted('ROLE_ADMIN')) {
+        if($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             $seoPage->addMeta('name', 'author', "Histoiredelart.fr");
         } else {
             $seoPage->addMeta('name', 'author', $testedGame->getCreateUser()->getUsername());
@@ -272,7 +272,7 @@ class TestedGameController extends Controller
         $this->get('tb_model.testedgame')->remove($testedGame);
 
         $this->get('session')->getFlashBag()->add('notice', 'Félicitations, votre partie a bien été supprimée.' );
-        if($this->get('security.context')->isGranted('ROLE_ADMIN')) {
+        if($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
             return $this->redirectToRoute('tb_administration_home_index');
         } else {
             return $this->redirectToRoute('tb_personalplace_home_index');
