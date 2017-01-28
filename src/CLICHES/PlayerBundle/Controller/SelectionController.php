@@ -11,12 +11,7 @@ class SelectionController extends Controller
     public function selectionAction($playerSession_id)
     {
         $em = $this->getDoctrine()->getManager();
-        $repositorySession = $em->getRepository('CLICHESPlayerBundle:PlayerSession');
-        $repositoryPlayerOeuvre = $em->getRepository('CLICHESPlayerBundle:PlayerOeuvre');
-        $selectionService = $this->container->get('cliches_player.playerselectionaction');
-
-        $playerSession = $repositorySession->findOneById($playerSession_id);
-          
+        $playerSession = $em->getRepository('CLICHESPlayerBundle:PlayerSession')->findOneById($playerSession_id);
         if ($playerSession === null) {throw $this->createNotFoundException('Session : [id='.$playerSession_id.'] inexistante.');}
 
         if(!empty($playerSession->getDateEnd()) AND date_diff(new \DateTime(), $playerSession->getDateEnd())->format('%h') > 0) {
@@ -24,8 +19,8 @@ class SelectionController extends Controller
             return $this->redirect($this->generateUrl('cliches_player_end_end', array('playerSession_id' => $playerSession->getId())));
         }
         
-        $passedPlayerOeuvres = $repositoryPlayerOeuvre->findByPlayerSession($playerSession);
-        $array_result = $selectionService->getRandViewForTeaching($playerSession->getTeaching(), $passedPlayerOeuvres);
+        $passedPlayerOeuvres = $em->getRepository('CLICHESPlayerBundle:PlayerOeuvre')->findByPlayerSession($playerSession);
+        $array_result = $this->get('cliches_player.playerselectionaction')->getRandViewForTeaching($playerSession->getTeaching(), $passedPlayerOeuvres);
 
         if($array_result[0] == 'no_enough_entities' OR $array_result[0] == 'no_entities') {
             $this->get('session')->getFlashBag()->add('notice', 'Oups... Il n\'a pas assez d\'oeuvres pour continuer.' );

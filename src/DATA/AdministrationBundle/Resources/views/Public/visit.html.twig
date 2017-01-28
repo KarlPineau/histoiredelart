@@ -1,0 +1,51 @@
+{% extends "DATAAdministrationBundle::layout.html.twig" %}
+
+{% block title %}Public - {{ parent() }}{% endblock %}
+
+{% block h1 %}Public{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li class="active">Public</li>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+        <h2>Visites : {{ visits.getTotalItemCount }}</h2>
+
+        <table class="table table-striped table-bordered">
+            <tr>
+                <th>#</th>
+                <th>Item</th>
+                <th>Context</th>
+                <th>Date</th>
+                <th>User</th>
+            </tr>
+            {% for visit in visits %}
+                <tr>
+                    <td>#{{ ((visits.getPaginationData.current-1)*100)+loop.index }}</td>
+                    <td>
+                        {% if visit.entity != null %}<a href="{{ path(data_data_entity_routing_service.getRoutingView(), {'id': visit.entity.id}) }}">{{ data_data_entity_service.getName(visit.entity) }}</a>
+                        {% elseif visit.teaching != null %}<a href="{{ path('data_teaching_teaching_view', {'slug': visit.teaching.slug}) }}">{{ visit.teaching.name }}</a>
+                        {% elseif visit.university != null %}<a href="{{ path('data_teaching_university_view', {'slug': visit.university.slug}) }}">{{ visit.university.name }}</a>
+                        {% endif %}
+                    </td>
+                    <td>{{ visit.context }}</td>
+                    <td>{{ visit.createDate|date('d-m-Y') }}</td>
+                    <td>{% if visit.createUser is not empty %}<small><a href="{{ path('cas_administration_user_view', {'id': visit.createUser.id}) }}">{{ visit.createUser.email }}</a></small>{% endif %}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">Aucune visite.</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <div class="text-center">{{ knp_pagination_render(visits) }}</div>
+    </div>
+{% endblock %}

@@ -3,20 +3,24 @@
 namespace DATA\AdministrationBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 class PublicController extends Controller
 {
-    public function indexAction()
+    public function visitAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $userRepository = $em->getRepository('CASUserBundle:User');
+        $visitsQuery = $em->getRepository('DATAPublicBundle:Visit')->findBy(array(), array('createDate' => 'DESC'));
 
-        $requiredAccess = count($userRepository->findBy(array('dataAccessRequired' => true)));
-        $access = count($userRepository->findBy(array('dataAccess' => true)));
+        $paginator  = $this->get('knp_paginator');
+        $visits = $paginator->paginate(
+            $visitsQuery,
+            $request->query->get('page', 1)/*page number*/,
+            300/*limit per page*/
+        );
 
-        return $this->render('DATAAdministrationBundle:Public:index.html.twig', array(
-            'requiredAccess' => $requiredAccess,
-            'access' => $access
+        return $this->render('DATAAdministrationBundle:Public:visit.html.twig', array(
+            'visits' => $visits,
         ));
     }
 }

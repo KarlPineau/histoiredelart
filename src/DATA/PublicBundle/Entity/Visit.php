@@ -42,6 +42,13 @@ class Visit
     protected $university;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="context", type="string", length=255, nullable=true)
+     */
+    protected $context;
+
+    /**
      * @ORM\ManyToOne(targetEntity="CAS\UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -210,5 +217,28 @@ class Visit
     public function getEntity()
     {
         return $this->entity;
+    }
+
+    /**
+     * Set context
+     *
+     * @param string $context
+     * @return Visit
+     */
+    public function setContext($context)
+    {
+        $this->context = $context;
+
+        return $this;
+    }
+
+    /**
+     * Get context
+     *
+     * @return string 
+     */
+    public function getContext()
+    {
+        return $this->context;
     }
 }

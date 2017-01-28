@@ -27,8 +27,7 @@ class ProposalChoiceController extends Controller
     public function proposalChoiceAction($playerOeuvre_id, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $repositoryPlayerOeuvre = $em->getRepository('CLICHESPlayerBundle:PlayerOeuvre');
-        $playerOeuvre = $repositoryPlayerOeuvre->findOneById($playerOeuvre_id);
+        $playerOeuvre = $em->getRepository('CLICHESPlayerBundle:PlayerOeuvre')->findOneById($playerOeuvre_id);
         if ($playerOeuvre === null) {throw $this->createNotFoundException('Session : [id='.$playerOeuvre_id.'] inexistante.');}
 
         $image = $em->getRepository('DATAImageBundle:Image')->findOneByView($playerOeuvre->getView());

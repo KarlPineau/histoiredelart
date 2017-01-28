@@ -47,8 +47,9 @@
                         {% endif %}
                     </td>
                     <td class="text-center">
-                        {% if playerSuggest.playerSuggestAccept == true %}<p class="text-success">Validé</p>
-                        {% else %}<p class="text-warning">Refusé</p>
+                        {% if playerSuggest.playerSuggestAccept == true and playerSuggest.playerSuggestTraitement == true %}<p class="text-success">Validé</p>
+                        {% elseif playerSuggest.playerSuggestAccept == false and playerSuggest.playerSuggestTraitement == true %}<p class="text-warning">Refusé</p>
+                        {% elseif playerSuggest.playerSuggestTraitement == false %}<p class="text-info">Non traité</p>
                         {% endif %}
                     </td>
                 </tr>

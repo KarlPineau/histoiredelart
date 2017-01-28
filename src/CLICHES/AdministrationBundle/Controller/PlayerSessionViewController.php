@@ -16,7 +16,7 @@ class PlayerSessionViewController extends Controller
         $listSessions = $paginator->paginate(
             $sessions,
             $request->query->get('page', 1)/*page number*/,
-            100/*limit per page*/
+            300/*limit per page*/
         );
         
         return $this->render('CLICHESAdministrationBundle:PlayerSessionView:index.html.twig', array(

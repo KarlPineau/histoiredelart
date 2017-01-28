@@ -22,6 +22,5 @@ class SearchController extends Controller
         return $this->render('DATAAdministrationBundle:Search:statistics.html.twig', array(
             'searches' => $searches,
         ));
-
     }
 }

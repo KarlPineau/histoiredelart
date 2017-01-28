@@ -16,13 +16,11 @@ class SessionController extends Controller
         if ($teaching === null) {throw $this->createNotFoundException('Enseignement : [id='.$teaching_id.'] inexistant.');}
 
         $session = new PlayerSession;
-        $current_user = $this->getUser();
-        if($current_user != null) {
-            $session->setCreateUser($current_user);
-        }
+        if($this->getUser() != null) {$session->setCreateUser($this->getUser());}
         $session->setIpPlayerUser($this->container->get('request')->getClientIp());
         $session->setHTTPUSERAGENT($_SERVER['HTTP_USER_AGENT']);
         $session->setProposalType($mode);
+        $session->setContext('webapp');
         if($mode == 'modeTest') {$session->setSimpleSession(true);} else {$session->setSimpleSession(false);}
 
         $session->setTeaching($teaching);

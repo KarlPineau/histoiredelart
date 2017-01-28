@@ -41,7 +41,7 @@
                         </div>
                         <div class="well">
                             <div class="pull-right" style="line-height: 31px;">
-                                <a href="{{ path('data_public_entity_view', {'id': playerProposal.playerOeuvre.view.entity.id}) }}" target="_blank">DATA</a>
+                                <a href="{{ path('data_public_entity_view', {'id': playerProposal.playerOeuvre.view.entity.id, 'context': 'cliches_result'}) }}" target="_blank">DATA</a>
                                 {% for source in sources %}
                                     <span class="glyphicon glyphicon-minus"></span>{% if source.authorityControl == true %}<span class="glyphicon glyphicon-thumbs-up" title="Ceci est une notice d'autorité"></span>{% endif %} <a href="{{ source.url }}" target="_blank" source-id="{{ source.id }}" context="player-result" class="source-link" >{{ source.title }}</a>
                                 {% endfor %}

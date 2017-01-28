@@ -23,13 +23,13 @@ class buildingAction
     }
 
     public function getListFieldsForBuilding() {
-        return [['field' => 'name', 'label' => 'Nom, Lieu'],
-                ['field' => 'auteur', 'label' => 'Auteur'],
-                ['field' => 'commanditaire', 'label' => 'Commanditaire'],
-                ['field' => 'datation', 'label' => 'Datation'],
-                ['field' => 'mattech', 'label' => 'Matières & Techniques'],
-                ['field' => 'dimensions', 'label' => 'Dimensions'],
-                ['field' => 'style', 'label' => 'Style / Mouvement']];
+        return [['field' => 'name', 'label' => 'Nom, Lieu', 'article' => 'le '],
+                ['field' => 'auteur', 'label' => 'Auteur', 'article' => 'l\''],
+                ['field' => 'commanditaire', 'label' => 'Commanditaire', 'article' => 'le '],
+                ['field' => 'datation', 'label' => 'Datation', 'article' => 'la '],
+                ['field' => 'mattech', 'label' => 'Matières & Techniques', 'article' => 'les '],
+                ['field' => 'dimensions', 'label' => 'Dimensions', 'article' => 'les '],
+                ['field' => 'style', 'label' => 'Style / Mouvement', 'article' => 'le ']];
     }
 
     public function getItemPropForField($field)

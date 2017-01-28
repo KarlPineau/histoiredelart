@@ -72,7 +72,7 @@ class EntityController extends Controller
         return $this->render('DATAPublicBundle:Entity:viewJson.html.twig', array('entity' => $arrayReturn));
     }
 
-    public function viewAction($id, Request $request)
+    public function viewAction($id, $context, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $entityService = $this->container->get('data_data.entity');
@@ -114,6 +114,7 @@ class EntityController extends Controller
         } else {
             $visit = new Visit();
             $visit->setEntity($entity);
+            if($context == "null") {$context = null;} $visit->setContext($context);
             $visit->setCreateUser($this->getUser());
             $em->persist($visit);
             $em->flush();

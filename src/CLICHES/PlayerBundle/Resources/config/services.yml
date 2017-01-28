@@ -16,7 +16,7 @@ services:
         arguments: [ "@doctrine.orm.entity_manager", "@security.context"]
     cliches_player.playerproposalchoiceaction:
         class: CLICHES\PlayerBundle\Service\playerProposalChoiceAction
-        arguments: [ "@doctrine.orm.entity_manager", "@data_data.entity"]
+        arguments: [ "@doctrine.orm.entity_manager", "@data_data.entity", "@cliches_player.playerproposalaction"]
     cliches_player.playerproposalfieldaction:
         class: CLICHES\PlayerBundle\Service\playerProposalFieldAction
         arguments: [ "@doctrine.orm.entity_manager", "@security.context", "@data_data.entity", "@data_image.view"]

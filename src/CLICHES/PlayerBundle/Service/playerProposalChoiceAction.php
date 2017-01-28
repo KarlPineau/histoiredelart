@@ -8,12 +8,14 @@ class playerProposalChoiceAction
 {
     protected $em;
     protected $entity;
+    protected $playerProposal;
 
 
-    public function __construct(EntityManager $EntityManager, \DATA\DataBundle\Service\entity $entity)
+    public function __construct(EntityManager $EntityManager, \DATA\DataBundle\Service\entity $entity, playerProposalAction $playerProposal)
     {
         $this->em = $EntityManager;
         $this->entity = $entity;
+        $this->playerProposal = $playerProposal;
     }
 
 
@@ -52,5 +54,42 @@ class playerProposalChoiceAction
         }
 
         return $values;
+    }
+
+    public function getDifficultyLevel($playerProposal) {
+        $difficultyLevelMax = 5;
+        $difficultyLevelMin = 2;
+        $difficultyLevelDefault = 3;
+        $previousDifficultyLevel = null;
+        $previousPlayerProposalChoice = null;
+
+        $playerSession = $playerProposal->getPlayerOeuvre()->getPlayerSession();
+        $previousPlayerOeuvres = $this->em->getRepository('CLICHESPlayerBundle:PlayerOeuvre')->findBy(array('playerSession' => $playerSession), array('createDate' => 'DESC'));
+
+        if(count($previousPlayerOeuvres) <= 1) {
+            return $difficultyLevelDefault;
+        } else {
+            foreach($previousPlayerOeuvres as $key => $previousPlayerOeuvre) {
+                $playerProposalChoice = $this->em->getRepository('CLICHESPlayerBundle:PlayerProposalChoice')->findOneBy(array('playerProposal' => $this->playerProposal->getPlayerProposalByPlayerOeuvre($previousPlayerOeuvre)));
+                if($playerProposalChoice != null and $playerProposalChoice->getPlayerProposalChoiceValueSelected() != null) {
+                    $previousDifficultyLevel = count($this->em->getRepository('CLICHESPlayerBundle:PlayerProposalChoiceValue')->findBy(array('playerProposalChoice' => $playerProposalChoice)));
+                    $previousPlayerProposalChoice = $playerProposalChoice;
+
+                    break;
+                }
+            }
+
+            if($previousPlayerProposalChoice != null) {
+                if ($previousPlayerProposalChoice->getCorrectAnswer() == true and $previousDifficultyLevel < $difficultyLevelMax) {
+                    return $previousDifficultyLevel + 1;
+                } elseif ($previousPlayerProposalChoice->getCorrectAnswer() == false and $previousDifficultyLevel > $difficultyLevelMin) {
+                    return $previousDifficultyLevel - 1;
+                } else {
+                    return $previousDifficultyLevel;
+                }
+            } else {
+                return $previousDifficultyLevel;
+            }
+        }
     }
 }

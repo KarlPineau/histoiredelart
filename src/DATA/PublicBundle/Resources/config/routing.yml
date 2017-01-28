@@ -25,10 +25,11 @@ data_public_entity_index:
             changefreq: monthly
 
 data_public_entity_view:
-    path:     /item/{id}
-    defaults: { _controller: DATAPublicBundle:Entity:view }
+    path:     /item/{id}/{context}
+    defaults: { _controller: DATAPublicBundle:Entity:view, context: "null" }
     requirements:
         id:  \d+
+        context: \S{0,255}
 
 data_public_entity_viewJson:
     path:     /item/{id}.json

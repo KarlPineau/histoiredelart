@@ -23,16 +23,16 @@ class artworkAction
     }
 
     public function getListFieldsForArtwork() {
-        return [['field' => 'sujet', 'label' => 'Sujet / Titre'],
-                ['field' => 'sujetIcono', 'label' => 'Sujet Iconographique'],
-                ['field' => 'auteur', 'label' => 'Auteur'],
-                ['field' => 'commanditaire', 'label' => 'Commanditaire'],
-                ['field' => 'provenance', 'label' => 'Provenance'],
-                ['field' => 'datation', 'label' => 'Datation'],
-                ['field' => 'mattech', 'label' => 'Matières & Techniques'],
-                ['field' => 'dimensions', 'label' => 'Dimensions'],
-                ['field' => 'style', 'label' => 'Style / Mouvement'],
-                ['field' => 'lieuDeConservation', 'label' => 'Lieu de Conservation']];
+        return [['field' => 'sujet', 'label' => 'Sujet / Titre', 'article' => 'le '],
+                ['field' => 'sujetIcono', 'label' => 'Sujet Iconographique', 'article' => 'le '],
+                ['field' => 'auteur', 'label' => 'Auteur', 'article' => 'l\''],
+                ['field' => 'commanditaire', 'label' => 'Commanditaire', 'article' => 'le '],
+                ['field' => 'provenance', 'label' => 'Provenance', 'article' => 'la '],
+                ['field' => 'datation', 'label' => 'Datation', 'article' => 'la '],
+                ['field' => 'mattech', 'label' => 'Matières & Techniques', 'article' => 'les '],
+                ['field' => 'dimensions', 'label' => 'Dimensions', 'article' => 'les '],
+                ['field' => 'style', 'label' => 'Style / Mouvement', 'article' => 'le '],
+                ['field' => 'lieuDeConservation', 'label' => 'Lieu de Conservation', 'article' => 'le ']];
     }
 
     public function getItemPropForField($field)

@@ -38,6 +38,13 @@ class PlayerProposalChoice
     /**
      * @var string
      *
+     * @ORM\Column(name="correctAnswer", type="boolean", nullable=true)
+     */
+    private $correctAnswer;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="field", type="string", length=255, nullable=false)
      */
     private $field;
@@ -197,5 +204,28 @@ class PlayerProposalChoice
     public function getPlayerProposalChoiceValueSelected()
     {
         return $this->playerProposalChoiceValueSelected;
+    }
+
+    /**
+     * Set correctAnswer
+     *
+     * @param boolean $correctAnswer
+     * @return PlayerProposalChoice
+     */
+    public function setCorrectAnswer($correctAnswer)
+    {
+        $this->correctAnswer = $correctAnswer;
+
+        return $this;
+    }
+
+    /**
+     * Get correctAnswer
+     *
+     * @return boolean 
+     */
+    public function getCorrectAnswer()
+    {
+        return $this->correctAnswer;
     }
 }

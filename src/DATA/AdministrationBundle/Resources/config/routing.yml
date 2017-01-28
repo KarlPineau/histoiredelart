@@ -1,6 +1,6 @@
 # Home :
 data_administration_home_index:
-    path:     /accueil
+    path:     /
     defaults: { _controller: DATAAdministrationBundle:Home:index }
 
 # Visualization :
@@ -28,6 +28,10 @@ data_administration_semanticEnrichment_generate:
 data_administration_public_index:
     path:     /gestion-public
     defaults: { _controller: DATAAdministrationBundle:Public:index }
+
+data_administration_public_visit:
+    path:     /visites
+    defaults: { _controller: DATAAdministrationBundle:Public:visit }
 
 #Reporting :
 data_administration_reporting_index:

@@ -12,8 +12,7 @@ class ResultChoiceController extends Controller
         $playerProposal = $em->getRepository('CLICHESPlayerBundle:PlayerProposal')->findOneById($playerProposal_id);
         if ($playerProposal === null) { throw $this->createNotFoundException('Session : [id='.$playerProposal_id.'] inexistante.'); }
 
-        $repositoryImage = $em->getRepository('DATAImageBundle:Image');
-        $image = $repositoryImage->findOneByView($playerProposal->getPlayerOeuvre()->getView());
+        $image = $em->getRepository('DATAImageBundle:Image')->findOneByView($playerProposal->getPlayerOeuvre()->getView());
         $seoPage = $this->container->get('sonata.seo.page');
         $seoPage
             ->addMeta('property', 'og:title', 'Clichés!')
@@ -23,6 +22,15 @@ class ResultChoiceController extends Controller
 
         $playerProposalChoices = $em->getRepository('CLICHESPlayerBundle:PlayerProposalChoice')->findByPlayerProposal($playerProposal);
         $sources = $this->container->get('data_data.entity')->getSources($playerProposal->getPlayerOeuvre()->getView()->getEntity());
+
+        foreach($playerProposalChoices as $playerProposalChoice) {
+            if($playerProposalChoice->getPlayerProposalChoiceValueSelected() == null or $playerProposalChoice->getPlayerProposalChoiceValueSelected()->getIsTrue() == false) {
+                $playerProposalChoice->setCorrectAnswer(false);
+            } elseif($playerProposalChoice->getPlayerProposalChoiceValueSelected()->getIsTrue() == true) {
+                $playerProposalChoice->setCorrectAnswer(true);
+            }
+        }
+        $em->flush();
 
         return $this->render('CLICHESPlayerBundle:Result:result.html.twig', array(
             'isSuggest' => false,

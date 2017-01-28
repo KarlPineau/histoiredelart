@@ -47,9 +47,9 @@ class PlayerSession
     /**
      * @var string
      *
-     * @ORM\Column(name="difficulty", type="string", nullable=true)
+     * @ORM\Column(name="proposalType", type="string", nullable=true)
      */
-    private $difficulty;
+    private $proposalType;
 
     /**
      * @var string
@@ -62,9 +62,45 @@ class PlayerSession
      * @var string
      * @Assert\Ip
      *
+     * @ORM\Column(name="context", type="string", length=255, nullable=true)
+     */
+    protected $context;
+
+    /**
+     * @var string
+     * @Assert\Ip
+     *
      * @ORM\Column(name="ipPlayerUser", type="string", length=255, nullable=true)
      */
     protected $ipPlayerUser;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="userFacebookId", type="integer", nullable=true)
+     */
+    private $userFacebookId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="userFacebookLocal", type="integer", nullable=true)
+     */
+    private $userFacebookLocal;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="userFacebookRef", type="integer", nullable=true)
+     */
+    private $userFacebookRef;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="userFacebookTimezone", type="integer", nullable=true)
+     */
+    private $userFacebookTimezone;
 
     /**
     * @ORM\ManyToOne(targetEntity="CAS\UserBundle\Entity\User")
@@ -340,5 +376,74 @@ class PlayerSession
     public function getHTTPUSERAGENT()
     {
         return $this->HTTP_USER_AGENT;
+    }
+
+    /**
+     * Set proposalType
+     *
+     * @param string $proposalType
+     * @return PlayerSession
+     */
+    public function setProposalType($proposalType)
+    {
+        $this->proposalType = $proposalType;
+
+        return $this;
+    }
+
+    /**
+     * Get proposalType
+     *
+     * @return string 
+     */
+    public function getProposalType()
+    {
+        return $this->proposalType;
+    }
+
+    /**
+     * Set context
+     *
+     * @param string $context
+     * @return PlayerSession
+     */
+    public function setContext($context)
+    {
+        $this->context = $context;
+
+        return $this;
+    }
+
+    /**
+     * Get context
+     *
+     * @return string 
+     */
+    public function getContext()
+    {
+        return $this->context;
+    }
+
+    /**
+     * Set userFacebookId
+     *
+     * @param integer $userFacebookId
+     * @return PlayerSession
+     */
+    public function setUserFacebookId($userFacebookId)
+    {
+        $this->userFacebookId = $userFacebookId;
+
+        return $this;
+    }
+
+    /**
+     * Get userFacebookId
+     *
+     * @return integer 
+     */
+    public function getUserFacebookId()
+    {
+        return $this->userFacebookId;
     }
 }

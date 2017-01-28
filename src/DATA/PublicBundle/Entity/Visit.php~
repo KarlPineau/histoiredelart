@@ -29,19 +29,6 @@ class Visit
      */
     protected $entity;
 
-
-    /**
-     * @ORM\ManyToOne(targetEntity="DATA\DataBundle\Entity\Building")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    protected $building;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="DATA\DataBundle\Entity\Artwork")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    protected $artwork;
-
     /**
      * @ORM\ManyToOne(targetEntity="DATA\TeachingBundle\Entity\Teaching")
      * @ORM\JoinColumn(nullable=true)
@@ -55,7 +42,14 @@ class Visit
     protected $university;
 
     /**
-     * @ORM\ManyToOne(targetEntity="KP\UserBundle\Entity\User")
+     * @var string
+     *
+     * @ORM\Column(name="context", type="string", length=255, nullable=true)
+     */
+    protected $context;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="CAS\UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
      */
     protected $createUser;
@@ -134,52 +128,6 @@ class Visit
     }
 
     /**
-     * Set building
-     *
-     * @param \DATA\DataBundle\Entity\Building $building
-     * @return Visit
-     */
-    public function setBuilding(\DATA\DataBundle\Entity\Building $building = null)
-    {
-        $this->building = $building;
-
-        return $this;
-    }
-
-    /**
-     * Get building
-     *
-     * @return \DATA\DataBundle\Entity\Building 
-     */
-    public function getBuilding()
-    {
-        return $this->building;
-    }
-
-    /**
-     * Set artwork
-     *
-     * @param \DATA\DataBundle\Entity\Artwork $artwork
-     * @return Visit
-     */
-    public function setArtwork(\DATA\DataBundle\Entity\Artwork $artwork = null)
-    {
-        $this->artwork = $artwork;
-
-        return $this;
-    }
-
-    /**
-     * Get artwork
-     *
-     * @return \DATA\DataBundle\Entity\Artwork 
-     */
-    public function getArtwork()
-    {
-        return $this->artwork;
-    }
-
-    /**
      * Set teaching
      *
      * @param \DATA\TeachingBundle\Entity\Teaching $teaching
@@ -228,10 +176,10 @@ class Visit
     /**
      * Set createUser
      *
-     * @param \KP\UserBundle\Entity\User $createUser
+     * @param \CAS\UserBundle\Entity\User $createUser
      * @return Visit
      */
-    public function setCreateUser(\KP\UserBundle\Entity\User $createUser = null)
+    public function setCreateUser(\CAS\UserBundle\Entity\User $createUser = null)
     {
         $this->createUser = $createUser;
 
@@ -241,10 +189,33 @@ class Visit
     /**
      * Get createUser
      *
-     * @return \KP\UserBundle\Entity\User 
+     * @return \CAS\UserBundle\Entity\User
      */
     public function getCreateUser()
     {
         return $this->createUser;
+    }
+
+    /**
+     * Set entity
+     *
+     * @param \DATA\DataBundle\Entity\Entity $entity
+     * @return Visit
+     */
+    public function setEntity(\DATA\DataBundle\Entity\Entity $entity = null)
+    {
+        $this->entity = $entity;
+
+        return $this;
+    }
+
+    /**
+     * Get entity
+     *
+     * @return \DATA\DataBundle\Entity\Entity 
+     */
+    public function getEntity()
+    {
+        return $this->entity;
     }
 }

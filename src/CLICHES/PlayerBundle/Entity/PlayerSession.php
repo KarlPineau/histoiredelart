@@ -60,11 +60,46 @@ class PlayerSession
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="context", type="string", length=255, nullable=true)
+     */
+    protected $context;
+
+    /**
+     * @var string
      * @Assert\Ip
      *
      * @ORM\Column(name="ipPlayerUser", type="string", length=255, nullable=true)
      */
     protected $ipPlayerUser;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="userFacebookId", type="string", nullable=true)
+     */
+    private $userFacebookId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="userFacebookLocal", type="string", nullable=true)
+     */
+    private $userFacebookLocal;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="userFacebookRef", type="string", nullable=true)
+     */
+    private $userFacebookRef;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="userFacebookTimezone", type="string", nullable=true)
+     */
+    private $userFacebookTimezone;
 
     /**
     * @ORM\ManyToOne(targetEntity="CAS\UserBundle\Entity\User")
@@ -363,5 +398,120 @@ class PlayerSession
     public function getProposalType()
     {
         return $this->proposalType;
+    }
+
+    /**
+     * Set context
+     *
+     * @param string $context
+     * @return PlayerSession
+     */
+    public function setContext($context)
+    {
+        $this->context = $context;
+
+        return $this;
+    }
+
+    /**
+     * Get context
+     *
+     * @return string 
+     */
+    public function getContext()
+    {
+        return $this->context;
+    }
+
+    /**
+     * Set userFacebookId
+     *
+     * @param string $userFacebookId
+     * @return PlayerSession
+     */
+    public function setUserFacebookId($userFacebookId)
+    {
+        $this->userFacebookId = $userFacebookId;
+
+        return $this;
+    }
+
+    /**
+     * Get userFacebookId
+     *
+     * @return string
+     */
+    public function getUserFacebookId()
+    {
+        return $this->userFacebookId;
+    }
+
+    /**
+     * Set userFacebookLocal
+     *
+     * @param string $userFacebookLocal
+     * @return string
+     */
+    public function setUserFacebookLocal($userFacebookLocal)
+    {
+        $this->userFacebookLocal = $userFacebookLocal;
+
+        return $this;
+    }
+
+    /**
+     * Get userFacebookLocal
+     *
+     * @return string
+     */
+    public function getUserFacebookLocal()
+    {
+        return $this->userFacebookLocal;
+    }
+
+    /**
+     * Set userFacebookRef
+     *
+     * @param string $userFacebookRef
+     * @return PlayerSession
+     */
+    public function setUserFacebookRef($userFacebookRef)
+    {
+        $this->userFacebookRef = $userFacebookRef;
+
+        return $this;
+    }
+
+    /**
+     * Get userFacebookRef
+     *
+     * @return string
+     */
+    public function getUserFacebookRef()
+    {
+        return $this->userFacebookRef;
+    }
+
+    /**
+     * Set userFacebookTimezone
+     *
+     * @param string $userFacebookTimezone
+     * @return PlayerSession
+     */
+    public function setUserFacebookTimezone($userFacebookTimezone)
+    {
+        $this->userFacebookTimezone = $userFacebookTimezone;
+
+        return $this;
+    }
+
+    /**
+     * Get userFacebookTimezone
+     *
+     * @return string
+     */
+    public function getUserFacebookTimezone()
+    {
+        return $this->userFacebookTimezone;
     }
 }
