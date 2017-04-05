@@ -20,13 +20,14 @@
 
                 <ul>
                     <li><a href="{{path('data_data_entity_index')}}">Liste des oeuvres</a></li>
-                    <li><a href="{{path('data_data_entity_getNoSameAs')}}">Sans SameAs</a></li>
+                    <li><a href="{{path('data_data_entity_getNoSameAs')}}">Sans SameAs</a> - <a href="{{path('data_data_entity_getWithSameAs')}}">Avec SameAs</a></li>
                 </ul>
                 <ul>
-                    <li><a href="{{path('data_search_searchindex_buildindex')}}">Construction de l'index de recherche</a>
+                    <li><a href="{{path('data_search_searchindex_buildindex')}}">Construction de l'index de recherche</a></li>
                 </ul>
                 <ul>
-                    <li><a href="{{path('data_administration_semanticEnrichment_generate')}}">Enrichissement sémantique</a>
+                    <li><a href="{{path('data_administration_semanticEnrichment_generate')}}">Enrichissement sémantique</a></li>
+                    <li><a href="{{ path('data_administration_entity_normalization') }}">Normalisation des données</a></li>
                 </ul>
                 <hr />
                 <h3>Stats :</h3>

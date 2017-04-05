@@ -1,8 +1,7 @@
 api_cliches_session_index:
-    path:     /session/{authToken}/{user_id}/{user_locale}/{user_ref}/{user_timezone}/{teaching_name}
+    path:     /session/%authToken%/{user_id}/{user_locale}/{user_ref}/{user_timezone}/{teaching_name}
     defaults: { _controller: APIClichesBundle:Session:index }
     requirements:
-        authToken: "Kp4r5jIN3A"
         user_id: \S{0,255}
         user_locale: \S{0,255}
         user_ref: \S{0,255}
@@ -10,23 +9,20 @@ api_cliches_session_index:
         teaching_name: \S{0,255}
 
 api_cliches_selection_index:
-    path:     /selection/{authToken}/{session_id}
+    path:     /selection/%authToken%/{session_id}
     defaults: { _controller: APIClichesBundle:Selection:index }
     requirements:
-        authToken: "Kp4r5jIN3A"
         session_id: \d+
 
 api_cliches_proposal_choice_index:
-    path:     /proposal/choice/{authToken}/{playerOeuvre_id}
+    path:     /proposal/choice/%authToken%/{playerOeuvre_id}
     defaults: { _controller: APIClichesBundle:ProposalChoice:index }
     requirements:
-        authToken: "Kp4r5jIN3A"
         playerOeuvre_id: \d+
 
 api_cliches_result_index:
-    path:     /result/{authToken}/{proposal_id}/{proposal_choice_value_id}
+    path:     /result/%authToken%/{proposal_id}/{proposal_choice_value_id}
     defaults: { _controller: APIClichesBundle:Result:index }
     requirements:
-        authToken: "Kp4r5jIN3A"
         proposal_id: \d+
         proposal_choice_value_id: \d+

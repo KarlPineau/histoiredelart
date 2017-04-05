@@ -1,0 +1,54 @@
+{# src/DATA/DataBundle/Resources/views/Artwork/index.html.twig #}
+ 
+{% extends "DATAAdministrationBundle::layout.html.twig" %}
+
+{% block title %}
+    Normalisation - {{ parent() }}
+{% endblock %} 
+    
+{% block h1 %}
+    Normalisation :
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li class="active">Normalisation</li>
+{% endblock %}    
+    
+{% block content %}
+<div class="row">
+    <section class="col-md-12">
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="alert col-md-12 alert-success">
+                {{ flashMessage }}
+            </div>
+            <br />
+        {% endfor %}
+
+        <table class="table table-striped table-bordered">
+            <caption>{{ changes|length }}</caption>
+            <tr>
+                <th>#</th>
+                <th>Entité</th>
+                <th>Champs</th>
+                <th>Valeur</th>
+                <th>Nouvelle</th>
+            </tr>
+            {% for change in changes %}
+                {% set entity = data_data_entity_service.getById(change.entity) %}
+                <tr>
+                    <td>{{ loop.index }} - {{ change.qwd }}</td>
+                    <td><a href="{{ path(data_data_entity_routing_service.getRoutingView(), {'id': entity.id}) }}" target="_blank">{{data_data_entity_service.getName(entity)}}</a></td>
+                    <td>{{ change.field }}</td>
+                    <td>{{ change.oldValue }}</td>
+                    <td>{{ change.newValue }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">Aucune normalisation.</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </section>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="col-sm-6 col-xs-12">
+        {% set relatedViews = data_data_entity_service.getViews(entity) %}
+        {% include 'DATAPublicBundle:Entity:View/view-views.html.twig' %}
+        {% set entityForInformation = entity %}
+        {% include 'DATAPublicBundle:Entity:View/view-informations.html.twig' %}
+    </div>
+    <div class="col-sm-6 col-xs-12">
+        {% for value in properties["wd-wikidata-alignment"].value %}
+            {% if value["label"] is not defined %}{% set value = value|merge({'label': 'Undefined'}) %}{% endif %}
+            {% if value["description"] is not defined %}{% set value = value|merge({'description': 'Undefined'}) %}{% endif %}
+            {% if value["title"] is not defined %}{% set value = value|merge({'title': 'Undefined'}) %}{% endif %}
+            {% if value["url"] is not defined %}{% set value = value|merge({'url': 'Undefined'}) %}{% endif %}
+
+            <div class="well">
+                <h3>{{ value["label"] }}</h3>
+                <strong>{{ value["description"] }} - {{ value["title"] }}</strong><br />
+                <a href="https:{{ value["url"] }}">Link</a><br />
+                <div class="btn-group">
+                    <a class="btn btn-success">Accepter</a>
+                    <a class="btn btn-danger">Refuser</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

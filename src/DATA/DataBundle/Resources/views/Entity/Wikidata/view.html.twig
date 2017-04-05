@@ -1,0 +1,51 @@
+{# src/DATA/DataBundle/Resources/views/Entity/view.html.twig #}
+ 
+{% extends "DATADataBundle::layout.html.twig" %}
+
+{% block title %}
+    Wikidata - {{ data_data_entity_service.getName(entity) }} - {{ parent() }}
+{% endblock %}
+    
+{% block h1 %}
+    {{ data_data_entity_service.getName(entity)|slice(0, 45) }}{% if data_data_entity_service.getName(entity)|length > 45 %}...{% endif %}
+{% endblock %}
+    
+{% block h1_extend %}
+
+{% endblock %}
+
+{% block breadcrumb %}
+    {{ parent() }}
+    <li><a href="{{path('data_data_entity_index')}}">Items</a></li>
+    <li><a href="{{ path('data_data_entity_view', {'id': entity.id}) }}">{{ data_data_entity_service.getName(entity)|slice(0, 60) }}{% if data_data_entity_service.getName(entity)|length > 60 %}...{% endif %}</a></li>
+    <li class="active">Wikidata</li>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <section id="content" class="col-sm-12">
+        {% for flashMessage in app.session.flashbag.get('notice') %}
+            <div class="alert alert-success">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+
+        {% if properties != null %}
+            {% if properties["wd-wikidata-alignment"] is defined %}
+                {% include "DATADataBundle:Entity:Wikidata/view-alignment.html.twig" %}
+            {% else %}
+                {% include "DATADataBundle:Entity:Wikidata/view-enrichment.html.twig" %}
+            {% endif %}
+        {% else %}
+            <div class="alert alert-warning">Cet item n'a pas encore été aligné avec des données de Wikidata</div>
+        {% endif %}
+
+    </section>
+</div>
+{% endblock %}
+
+{% block javascript_sub %}
+    {# javascripts  '@DATADataBundle/Resources/public/js/view.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts #}
+{% endblock %}

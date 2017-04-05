@@ -18,7 +18,7 @@ class AdministrationImportController extends Controller
                     $entity->getBuilding() == null AND
                     $this->get('data_data.entity')->getViews($entity) == null
                 ) {
-                    $em->remove($entity);
+                    $this->get('data_data.entity')->removeEntity($entity);
                 }
             }
             $em->flush();

@@ -7,11 +7,28 @@ data_data_entity_getNoSameAs:
     path:     /no-same-as
     defaults: { _controller: DATADataBundle:Entity:getNoSameAs }
 
+data_data_entity_getWithSameAs:
+    path:     /with-same-as
+    defaults: { _controller: DATADataBundle:Entity:getWithSameAs }
+
 data_data_entity_view:
     path:     /{id}
     defaults: { _controller: DATADataBundle:Entity:view }
     requirements:
         id:  \d+
+
+data_data_entity_wikidata:
+    path:     /{id}/wikidata
+    defaults: { _controller: DATADataBundle:EntityWikidata:index }
+    requirements:
+        id:  \d+
+
+data_data_entity_wikidata_removeProperty:
+    path:     /{id}/wikidata/remove-property/{id_property}
+    defaults: { _controller: DATADataBundle:EntityWikidata:removeWikidataProperty }
+    requirements:
+        id:  \d+
+        id_property: \d+
 
 data_data_entity_delete:
     path:     /delete/{id}

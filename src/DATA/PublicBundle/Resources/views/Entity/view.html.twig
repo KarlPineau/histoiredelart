@@ -7,6 +7,9 @@
     {% include 'DATAPublicBundle:Entity:View/view-meta.html.twig' %}
 {% endblock %}
 
+{% block jsonld %}
+{% endblock %}
+
 {% block title %}
     {{ data_data_entity_service.getName(entity) }} - {{ parent() }}
 {% endblock %}

@@ -20,6 +20,8 @@
             <span class="sr-only">Toggle Dropdown</span>
         </button>
         <ul class="dropdown-menu dropdown-menu-right">
+            <li><a href="{{ path(data_data_entity_routing_service.getRoutingViewWikidata(), {'id': entity.id}) }}" title="Version WikiData" ><i class="fa fa-wikipedia-w" aria-hidden="true"></i> Version WikiData</a></li>
+            <li role="separator" class="divider"></li>
             <li><a href="{{ path(data_data_entity_routing_service.getRoutingEdit(entity), {'slug': data_data_entity_service.getSlug(entity)}) }}" title="Editer" ><span class="glyphicon glyphicon-edit"></span> Editer</a></li>
             <li><a href="{{ path('data_data_entity_addview', {'id': entity.id}) }}" ><span class="glyphicon glyphicon-plus"></span> Nouvelle vue</a></li>
             <li role="separator" class="divider"></li>

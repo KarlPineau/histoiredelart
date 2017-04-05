@@ -58,4 +58,6 @@ class entityRouting
     public function getRoutingSwitch() {return 'data_data_entity_switch';}
 
     public function getRoutingDelete() {return 'data_data_entity_delete';}
+
+    public function getRoutingViewWikidata() {return 'data_data_entity_wikidata';}
 }

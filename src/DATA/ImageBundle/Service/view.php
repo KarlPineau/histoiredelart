@@ -72,7 +72,7 @@ class view
 
         $data = array();
         if(!empty($view->getVue())) {array_push($data, ['field' => 'vue', 'label' => 'Vue', 'value' => $view->getVue()]);}
-        if(!empty($view->getTitle())) {array_push($data, ['field' => 'title', 'label' => 'Vue', 'Titre' => $view->getTitle()]);}
+        if(!empty($view->getTitle())) {array_push($data, ['field' => 'title', 'label' => 'Vue', 'value' => $view->getTitle()]);}
         if(!empty($view->getIconography())) {array_push($data, ['field' => 'iconography', 'label' => 'Sujet iconographique', 'value' => $view->getIconography()]);}
         if(!empty($view->getLocation())) {array_push($data, ['field' => 'location', 'label' => 'Emplacement', 'value' => $view->getLocation()]);}
 
@@ -180,10 +180,14 @@ class view
 
     public function getThumbnail($view) {
         $image = $this->image->getOneByView($view);
-        if($this->request->getHttpHost() == 'localhost:8888') {
-            return $this->assets->getUrl($this->request->getScheme().'://' .$this->request->getHttpHost().'/histoiredelart/web/uploads/gallery/'.$image->getFileImage()->getImageName());
+        if($image != null) {
+            if ($this->request->getHttpHost() == 'localhost') {
+                return $this->assets->getUrl($this->request->getScheme() . '://' . $this->request->getHttpHost() . '/histoiredelart/web/uploads/gallery/' . $image->getFileImage()->getImageName());
+            } else {
+                return $this->assets->getUrl($this->request->getScheme() . '://' . $this->request->getHttpHost() . '/web/uploads/gallery/' . $image->getFileImage()->getImageName());
+            }
         } else {
-            return $this->assets->getUrl($this->request->getScheme().'://' .$this->request->getHttpHost().'/web/uploads/gallery/'.$image->getFileImage()->getImageName());
+            return null;
         }
 
     }

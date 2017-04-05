@@ -1,7 +1,21 @@
+# API DATA Item
 api_data_item_get:
-    path:     /item/get
+    path:     /item/get/%key_hda%/{entity_id}/{context}
     defaults: { _controller: APIDataBundle:Item:get }
+    requirements:
+        entity_id: \d+
+        context: webapp|messenger
 
+api_data_item_get_all:
+    path:     /items/get/all/%key_hda%
+    defaults: { _controller: APIDataBundle:Item:getAll }
+
+api_data_item_set:
+    path:     /super-administration/item/set/%key_hda_set%
+    defaults: { _controller: APIDataBundle:Item:updateData }
+
+# API DATA Search
 api_data_search_query:
     path:     /search
     defaults: { _controller: APIDataBundle:Search:query }
+

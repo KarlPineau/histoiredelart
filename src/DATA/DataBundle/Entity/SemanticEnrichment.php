@@ -44,6 +44,13 @@ class SemanticEnrichment
     private $uri;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="normalised", type="boolean", nullable=true)
+     */
+    private $normalised;
+
+    /**
      * @ORM\ManyToOne(targetEntity="CAS\UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -241,5 +248,28 @@ class SemanticEnrichment
     public function getUpdateUser()
     {
         return $this->updateUser;
+    }
+
+    /**
+     * Set normalised
+     *
+     * @param boolean $normalised
+     * @return SemanticEnrichment
+     */
+    public function setNormalised($normalised)
+    {
+        $this->normalised = $normalised;
+
+        return $this;
+    }
+
+    /**
+     * Get normalised
+     *
+     * @return boolean 
+     */
+    public function getNormalised()
+    {
+        return $this->normalised;
     }
 }

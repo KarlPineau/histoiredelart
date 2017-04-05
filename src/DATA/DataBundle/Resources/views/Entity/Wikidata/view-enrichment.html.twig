@@ -1,0 +1,35 @@
+<div class="row">
+    <div class="col-sm-6 col-xs-12">
+        {% set relatedViews = data_data_entity_service.getViews(entity) %}
+        {% include 'DATAPublicBundle:Entity:View/view-views.html.twig' %}
+        {% set entityForInformation = entity %}
+        {% include 'DATAPublicBundle:Entity:View/view-informations.html.twig' %}
+    </div>
+    <div class="col-sm-6 col-xs-12">
+        <div class="list-group">
+        {% for propertyContainer in properties %}
+            <dl class="list-group-item">
+                <dt>
+                    <div class="pull-right">
+                        {{ propertyContainer["property"]["access"] }}
+                        <a href="{{ path('data_data_entity_wikidata_removeProperty', {'id': propertyContainer["entity"], 'id_property': propertyContainer["id"]}) }}" class="btn btn-sm btn-danger">
+                            <i class="fa fa-remove"></i>
+                        </a>
+                    </div>
+                    {% if propertyContainer["property"]["label"] == "" %}Undefined{% endif %}
+                    {{ propertyContainer["property"]["label"]|capitalize }}
+                </dt>
+                <dd>
+                    {% if propertyContainer["value"] is iterable %}
+                        {% for subValue in propertyContainer["value"] %}
+                            {{ subValue["label"] }}
+                        {% endfor %}
+                    {% else %}
+                        {{ propertyContainer["value"] }}
+                    {% endif %}
+                </dd>
+            </dl>
+        {% endfor %}
+        </div>
+    </div>
+</div>

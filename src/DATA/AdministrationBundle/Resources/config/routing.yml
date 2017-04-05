@@ -19,6 +19,10 @@ data_administration_entity_generate:
     path:     /entity/generate
     defaults: { _controller: DATAAdministrationBundle:Entity:generate }
 
+data_administration_entity_normalization:
+    path:     /entity/normalization
+    defaults: { _controller: DATAAdministrationBundle:Entity:normalization }
+
 # Semantic Enrichment Managment
 data_administration_semanticEnrichment_generate:
     path:     /semantic-enrichment/generate

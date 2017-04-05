@@ -194,6 +194,99 @@ class entity
         return $this->em->getRepository('DATADataBundle:SameAs')->findByEntity($entity);
     }
 
+    public function getWikidataProperties($entity, $view=null) {
+        if($view != NULL) {$entity = $this->getByView($view);}
+        $fetch_properties =  $this->em->getRepository('DATADataBundle:EntityProperty')->findByEntity($entity);
+
+        $properties = array();
+        foreach($fetch_properties as $fetch_property) {
+            if($fetch_property->getProperty() === "wd-wikimedia-alignment") {
+                $values = array();
+                foreach(json_decode($fetch_property->getValue()) as $value) {
+                    $values[] = (array) $value;
+                }
+
+                $properties[$fetch_property->getProperty()] =
+                    [
+                        "entity" => $fetch_property->getEntity(),
+                        "property" => $fetch_property->getProperty(),
+                        "value" => $values,
+                    ];
+            } elseif($fetch_property->getProperty() !== "wd-wikimedia-alignment" and substr( $fetch_property->getProperty(), 0, 3 ) === "wd-") {
+                $values = array();
+                $property_label = null;
+                $property_id = null;
+
+                $getValues = json_decode($fetch_property->getValue());
+                if(count($getValues) == 0) {$values = null;}
+                else {
+                    /* Définition de la propriété : */
+                    if(property_exists($getValues, "labels")) {
+                        if (property_exists($getValues->labels, "fr")) {
+                            $property_label = $getValues->labels->fr->value;
+                        } elseif (property_exists($getValues->labels, "en")) {
+                            $property_label = $getValues->labels->en->value;
+                            $property_id = substr($fetch_property->getProperty(), 3);
+                        }
+                    } else {
+                        if($fetch_property->getProperty() == "wd-aliases") {
+                            $property_label = "Aliases";
+                            $property_id = "aliases";
+                        } elseif($fetch_property->getProperty() == "wd-label") {
+                            $property_label = "Label";
+                            $property_id = "label";
+
+                        } elseif($fetch_property->getProperty() == "wd-description") {
+                            $property_label = "Description";
+                            $property_id = "description";
+                        }
+                    }
+
+                    if($property_id == "aliases" OR $property_id == "label" OR $property_id == "description") {
+                        $label = "Undefined";
+                        if (property_exists($getValues, "fr")) {
+                            $label = $getValues->fr->value;
+                        } elseif (property_exists($getValues, "en")) {
+                            $label = $getValues->en->value;
+                        }
+                        $values[] = ["label" => $label];
+                    } elseif(property_exists($getValues, "value")) {
+                        foreach ($getValues->value as $value) {
+                            if (gettype($value) == "string") {
+                                $values[] = ["label" => $value];
+                            } else {
+                                $label = "";
+                                if (property_exists($value, "labels")) {
+                                    if (property_exists($value->labels, "fr")) {
+                                        $label = $value->labels->fr->value;
+                                    } elseif (property_exists($value->labels, "en")) {
+                                        $label = $value->labels->en->value;
+                                    }
+                                }
+
+                                $values[] = ["label" => $label, "qwd" => $value->value];
+                            }
+                        }
+                    }
+                }
+
+                $properties[$fetch_property->getProperty()] =
+                    [
+                        "id" => $fetch_property->getId(),
+                        "entity" => $fetch_property->getEntity(),
+                        "property" => [
+                            "access" => $fetch_property->getProperty(),
+                            "label" => $property_label,
+                            "id" => $property_id,
+                        ],
+                        "value" => $values,
+                    ];
+            }
+        }
+
+        return (count($properties) == 0) ? null : $properties;
+    }
+
     /* see also getSemanticEnrichment for single result */
     public function getSemanticEnrichments($entity) {
         return $this->em->getRepository('DATADataBundle:SemanticEnrichment')->findByEntity($entity);
